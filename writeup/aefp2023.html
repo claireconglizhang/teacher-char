@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Effects of Teacher Background Characteristics on Student Academic Performance and Confidence</title>
+    <meta charset="utf-8" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Effects of Teacher Background Characteristics on Student Academic Performance and Confidence
+]
+.subtitle[
+## IN PROGRESS
+]
+
+---
+
+
+
+
+
+
+# Research Significance
+
+#### Teacher quality matters 
+
+ - An extensive research body exploits within-teacher variation over time and shows that teacher quality has substantial impacts on student outcomes (e.g., Aaronson et al., 2007; Chetty et al., 2014; Clotfelter et al., 2007; Harris &amp; Sass, 2011)
+   - teacher quality is measured by teacher's value-added to student achievement
+
+#### Teacher background characteristics (TBCs) are widely used in teacher recruitment/evaluation/compensation
+
+ - From past to future, all over the world
+ - Advantages include:
+   - Computationally cheaper than value-added measures
+   - Practically easier than student/parent/peer/principal rating and observations
+   - Easy to measure and minimum measurement error
+ 
+---
+# Previous research: preparation and educational background
+
+ - Teacher certification/licensure and teacher value-added 
+   - Insignificant relationship (Aaronson et al., 2007;)
+   - Positive relationship (Clotfelter et al., 2007;)
+ 
+ - Teacher earned degree and teacher value-added 
+   - Insignificant relationship (Aaronson et al., 2007; Clotfelter et al., 2007; Harris &amp; Sass, 2011; Wayne &amp; Youngs, 2003)
+   - Graduate degree is found to be correlated with teacher quality ()
+
+---
+# Previous research: teaching experience
+
+ - Positive relationship between years of teaching and value-added (Clotfelter et al., 2007; Kane et al., 2008; Ladd &amp; Sorensen, 2017; Rockoff, 2004)
+   - students taught by novice teachers lag behind in terms of academic performance (Hill et al., 2019)
+ 
+ - Returns to teaching are larger in early years on job (Chetty et al., 2014; Clotfelter et al., 2007; Harris &amp; Sass, 2011; Kane et al., 2008; Papay &amp; Kraft, 2015)
+ 
+ - Average returns to teacher experience are larger for mathematics than reading (Harris &amp; Sass, 2011)
+ 
+ - A small research body found null effects of teacher experience on student outcomes (Aaronson et al., 2007)
+ 
+---
+# Previous research: teacher gender and gender match
+
+ - No causal evidence on teacher gender effect in general
+   - the observed difference in effectiveness between male and female teachers is driven by teacher-student gender match (Aaronson et al., 2007)
+ 
+ - Researchers have identified causal evidence on the effects of gender match on student learning (e.g., Dee, 2007)
+
+---
+# Current research
+
+#### TBCs of interest (using variable names going forward now; change later)
+
+ - Educational background 
+   - years of education (tchedu)
+   - graduate degree - master's and above (tchgrad)
+ - Teaching experience
+   - years of teaching (tchexp)
+   - novice teacher (tchnew)
+ - Teacher gender
+   - teacher gender (tchfemale)
+   - teacher-student gender match 
+
+#### Outcomes of interest
+
+ - Student academic performance (score)
+ - Student academic confidence (conf)
+ 
+---
+# Research Questions 
+
+What teacher background characteristics causally impact student academic performance and attitude?
+
+What are the magnitudes of these effects?
+
+---
+# Background: Population of interest
+
+Chinese middle school (grades 7-9) students and their core content teachers teaching:
+
+ - Chinese (Chinese language arts), English (foreign language), and math (general mathematics)
+ 
+ - which are the only core subjects that are mandate across all middle schools in the nation AND require three years of learning 
+
+---
+# Background: Random teacher-student assignment in Chinese middle schools
+
+Policy background (2006 Compulsory Education Law banned the sorting of students to teachers based on performance at elementary and middle school level)
+
+ - to comply, schools create either random or stratified homerooms of students and teacher groups upon students’ entry to school, then randomly assign a teacher group to each student homeroom
+ 
+ - students in the same homeroom share a homeroom schedule and teachers rotate to the homeroom to teach
+ 
+ - to further ensure equal education opportunity, students typically stay in the assigned homerooms and teachers follow them rising to higher grades throughout all years at the same school
+ 
+---
+# Data 
+
+We draw a large, nationally representative sample from the publicly available, baseline (2013/14) data of China Education Panel Survey (CEPS). Unit of analysis is school-grade-subject-student, hence, data is clustered in nature. Levels of clusters:
+
+ - School level
+   - CEPS randomly selected 112 schools from the nation but we restricted our sample schools to 85 public schools that reported that they randomly assigned teachers to students upon students' entry to middle school
+ 
+ - Homeroom/teacher level
+   - Within each school, CEPS randomly selected two homerooms from grade 7 and another two from grade 9
+   
+ - Students level
+   - Within each homeroom, CEPS surveyed all students, their parents, and core content teachers
+
+---
+&lt;img src="table01.png" style="width: 60%" /&gt;
+
+---
+# Research design A: identification strategy
+#### Assuming random assignment of teachers to students and identify average treatment effects/ATE
+
+ - Evidence of random assignment: covariates balance in the data (next slide)
+
+---
+&lt;img src="table02.png" style="width: 99%" /&gt;
+
+---
+# Research design A: estimation strategy
+ 
+ - Estimate each TBC on student outcomes separately
+ 
+ - Estimate a linear model by OLS (under random assignment assumption)
+   - control for school, grade, and subject fixed-effects and cluster standard errors at homeroom level
+   - maximize the estimation precision by accounting for a rich set of student-level covariates
+     - then add homeroom-level covariates as robustness check
+     - a unique covariate, cognitive test score (use cubic polynomial function)
+
+---
+# Research design B - identification strategy
+#### Relax random assignment assumption, using generalized random forests (Athey et al., 2019) to identify conditional average treatment effects/CATE
+
+ - Lots to learn/don't know if works
+ 
+ - Resources:
+   - https://www.science.org/doi/epdf/10.1126/science.aal4321
+   - https://grf-labs.github.io/grf/
+   - https://towardsdatascience.com/causal-machine-learning-for-econometrics-causal-forests-5ab3aec825a7
+
+---
+# Results part 1
+
+&lt;img src="table03.png" style="width: 99%" /&gt;
+
+---
+# Results part 2
+
+&lt;img src="table04.png" style="width: 99%" /&gt;
+
+---
+# Results part 3
+
+&lt;img src="table05.png" style="width: 99%" /&gt;
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

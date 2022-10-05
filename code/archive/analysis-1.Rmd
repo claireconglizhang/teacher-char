@@ -1,0 +1,271 @@
+---
+title: "Investigating the Causal Effects of Teacher Characteristics on Student Academic Performance and Attitude"
+output: html_document
+date: '2022-10-22'
+---
+
+Plan to examine three teacher characteristics, female, years of education, and years of teaching experience
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      include = FALSE,
+                      message = FALSE)
+pacman::p_load(tidyverse, janitor, rio, here, gtsummary, modelsummary, stargazer, huxtable, lfe, lubridate, psych)
+```
+
+
+```{r, functions}
+`%!in%` <- Negate(`%in%`)
+
+percentage <- function(x){
+  paste(round(100*x, 2), "%", sep="")
+}
+
+round3 <- function(x){
+  paste(round(x, digits = 3))
+}
+
+nmlz <- function(x){
+  x = (x-mean(x, na.rm = TRUE))/sd(x, na.rm = TRUE)
+  x
+}
+
+na_percentage <- function(x){
+  y = sum(is.na(x))/length(x)
+  paste(round(100*y, 2), "%", sep="")
+}
+
+mymean = function(x){
+  x = combn(rev(x), n()-1, FUN = mean, na.rm = TRUE)
+  x
+}
+```
+
+
+```{r}
+schid_full <- rio::import(here::here("data", "schid_full.csv"))
+schid_random <- rio::import(here::here("data", "schid_random.csv"))
+schid_nosorting <- rio::import(here::here("data", "schid_nosorting.csv"))
+schid_nochange <- rio::import(here::here("data", "schid_nochange.csv"))
+schid_nochange_2cls <- rio::import(here::here("data", "schid_nochange_2cls.csv"))
+
+full_stu_1 <- rio::import(here::here("data", "cepsw1studentEN.dta")) 
+full_stu_2 <- rio::import(here::here("data", "cepsw2studentEN.dta")) 
+# w2status, followed-up = 1, missing = 2, newcomer = 3
+full_stu <- inner_join(full_stu_1, full_stu_2) %>% ungroup() %>% filter(w2status == 1)
+
+full_tch_1 <- rio::import(here::here("data", "cepsw1teacherEN.dta")) %>% filter(grade9 == 0)
+full_tch_2 <- rio::import(here::here("data", "cepsw2teacherEN.dta"))
+```
+
+
+```{r, student variables}
+stu_var0 <- full_stu %>% 
+  select(ids,
+         schids,
+         clsids,
+         w2clsids,
+         fall,
+         mat_score = w2mat, # raw score
+         chn_score = w2chn, # raw score
+         eng_score = w2eng, # raw score
+         cog = w2cog3pl, # CEPS standardized, score/mean = 0, sd = 1
+         mat1 = stdmat, # CEPS standardized score/mean = 70, sd = 10
+         chn1 = stdchn, # CEPS standardized score/mean = 70, sd = 10
+         eng1 = stdeng, # CEPS standardized score/mean = 70, sd = 10
+         cog1 = cog3pl, # CEPS standardized score/mean = 0, sd = 1
+         female = stsex,
+         birthyear= a02a, #some birthyear are coded as 2020, which may be a typo for 2002, swap 2020 for 2002 
+         birthmonth = a02b, #some birthmonth are missing, recode 1 for NA
+         only = stonly,
+         rural = sthktype, 
+         migrant = stmigrant, 
+         medu = stmedu, 
+         fedu = stfedu,
+         income = steco_3c,
+         mat_conf = w2b02,
+         chn_conf = w2b03,
+         eng_conf = w2b04) %>% 
+  mutate(birthyear = ifelse(birthyear == 2020, 2002, birthyear),
+         birthmonth = ifelse(is.na(birthmonth), 1, birthmonth),
+         birth = ym(paste(birthyear, birthmonth, sep = "-")),
+         entry = ym("2013-9"),
+         age = floor(decimal_date(entry) - decimal_date(birth)), 
+         female = recode(female, '1' = 0, '0' = 1),
+         only = recode(only,'1' = 1, '2' = 0),
+         migrant = recode(migrant,'1' = 0, '2' = 1, '3' = 1),
+         medu = recode(medu, '1' = 0, '2' = 6, '3' = 9, '4' = 12, '5' = 12, '6' = 12, '7' = 14, '8' = 16, '9' = 19),
+         fedu = recode(fedu, '1' = 0, '2' = 6, '3' = 9, '4' = 12, '5' = 12, '6' = 12, '7' = 14, '8' = 16, '9' = 19),
+         income = recode(income, '1' = 0, '2' = 1, '3' = 2),
+         mat1 = (mat1-70)/10,
+         chn1 = (chn1-70)/10,
+         eng1 = (eng1-70)/10) %>% 
+  group_by(schids) %>% 
+  mutate(chn_score = nmlz(chn_score),
+         eng_score = nmlz(eng_score),
+         mat_score = nmlz(mat_score),
+         chn_conf = nmlz(chn_conf),
+         eng_conf = nmlz(eng_conf),
+         mat_conf = nmlz(mat_conf)) %>% 
+  ungroup() %>% 
+  group_by(clsids) %>% 
+  mutate(hrsize = n(),
+         hrfemale = mymean(female),
+         hrage = mymean(age),
+         hronly = mymean(only),
+         hrrural = mymean(rural),
+         hrmigrant = mymean(migrant),
+         hrmedu = mymean(medu),
+         hrfedu = mymean(fedu),
+         hrincome = mymean(income)) %>% 
+  ungroup() %>% 
+  select(-c(birthyear, birthmonth, entry, birth))
+```
+
+```{r}
+stu_var1 <- stu_var0 %>% 
+  pivot_longer(
+    cols = c(chn_score, eng_score, mat_score, chn_conf, eng_conf, mat_conf),
+    names_to = c("subject", ".value"),
+    names_sep="_") 
+```
+
+Missing on teacher characteristics:
+
+```{r}
+# The most painful structure of baseline teacher data is that it's in wide format. 
+# take tchfemale as an example, it is not one variable, it is four variables, hrc01 for teacher-advisor (TA), chnb01 for chinese teacher, engb01 for english teacher, and matb01 for math teacher. 
+# one messed up thing is, if the TA teaches Chinese, chnb01 will be coded missing
+
+tch_ta <- full_tch_1 %>% 
+  filter(hra01 %in% c(1,2,3)) %>% #hra01, the subject the TA teaches, 1=mat, 2=chn, 3=eng, 0=other
+  select(schids,
+         clsids,
+         tchfemale_ta = hrc01,
+         tchage_ta = hrc02, # initially I included age but turns out age is missing more than 3%; also there's very limit literature/less interests from researchers
+         tchexp_ta = hrc07,
+         tchedu_ta = hrc04,
+         subject = hra01) %>% 
+  mutate(ta_ta = 1) %>% 
+  complete(clsids, subject)
+
+tch_chn <- full_tch_1 %>% 
+  select(schids,
+         clsids,
+         tchfemale3 = chnb01,
+         tchage3 = chnb02,
+         tchexp3 = chnb07,
+         tchedu3 = chnb04) %>% 
+  mutate(subject = 2,
+         ta3 = 0)
+
+tch_eng <- full_tch_1 %>% 
+  select(schids,
+         clsids,
+         tchfemale3 = engb01,
+         tchage3 = engb02,
+         tchexp3 = engb07,
+         tchedu3 = engb04) %>% 
+  mutate(subject = 3,
+         ta3 = 0)
+
+tch_mat <- full_tch_1 %>% 
+  select(schids,
+         clsids,
+         tchfemale3 = matb01,
+         tchage3 = matb02,
+         tchexp3 = matb07,
+         tchedu3 = matb04) %>% 
+  mutate(subject = 1,
+         ta3 = 0)
+
+tch_subject <- rbind(tch_chn, tch_eng, tch_mat) 
+
+tch_char <- full_join(tch_ta, tch_subject) %>% 
+  ungroup() %>% 
+  mutate(tchfemale = coalesce(tchfemale_ta, tchfemale3),
+         tchage = coalesce(tchage_ta, tchage3),
+         tchexp = coalesce(tchexp_ta, tchexp3),
+         tchedu = coalesce(tchedu_ta, tchedu3),
+         ta = coalesce(ta_ta, ta3)) %>% 
+  drop_na(schids, clsids) %>% 
+  select(schids, clsids, subject, tchfemale, tchexp, tchedu, ta) %>% 
+  mutate(tchfemale = recode(tchfemale, '2' = 1, '1' = 0),
+         tchedu = recode(tchedu, '1' = 9, '2' = 12, '3' = 12, '4' = 14, '5' = 16, '6' = 16, '7' = 19),
+         tchexp = ifelse(tchexp <= 3, 1, 0),
+         subject = recode(subject, '1' = "mat", '2' = "chn", '3' = "eng"))
+
+apply(tch_char, 2, na_percentage)
+```
+
+Analytic sample and missingness:
+
+```{r}
+char0 <- left_join(stu_var1, tch_char) %>% ungroup()
+
+apply(char0, 2, na_percentage)
+```
+
+For now, drop NA on all variables but at some point in the future, can retain 1081 observations by using other methods to deal with missing values (like mean computation)
+
+```{r}
+char <- right_join(char0, schid_nosorting) %>% 
+  ungroup() %>% 
+  drop_na()
+```
+
+
+Covariates balance check:
+
+```{r, include = TRUE, results = "asis"}
+add_f <- function(model){
+  f <- summary(model)$P.fstat
+  star <- case_when(
+    f[4] >= 0.05 ~ "",
+    f[4]<0.05 & f[4]>=0.01 ~ "*",
+    f[4]<0.01 & f[4]>=0.001 ~ "**",
+    f[4] < 0.001 ~ "***")
+  paste(round(f[5], 3), star, " (df = ", f[3], "; ", f[6], ")", sep = "")
+}  
+
+random <- function(var){
+  felm(var ~ cog + female + age + only + rural + migrant + medu + fedu + income | schids + subject | 0 | clsids, char)
+}
+
+labels <- c("Cognitive Score",
+            "Female student",
+            "Age",
+            "Only child",
+            "Rural residency",
+            "Migrant worker family",
+            "Mother education (years)",
+            "Father education (years)",
+            "Family income")
+
+c1 <- random(char$tchfemale)
+c2 <- random(char$tchexp)
+c3 <- random(char$tchedu)
+c4 <- random(char$score)
+c5 <- random(char$conf)
+
+
+stargazer(c1, c2, c3, c4, c5, 
+          type = "html",
+          omit = c("Constant"),
+          dep.var.caption = "",
+          dep.var.labels = "",
+          covariate.labels = labels,
+          model.numbers = FALSE,
+          column.labels = c("Female teacher", "Teacher experience (years)", "Teacher education (years)", "Academic performance", "Academic confidence"),
+          star.cutoffs=c(0.05, 0.01, 0.001), 
+          digits = 3, 
+          flip = TRUE, 
+          no.space = TRUE,
+          notes.append=F, notes = c("*p$<$0.05, **p$<$0.01, ***p$<$0.001. Cells report coefficients and associated standard errors"),
+          notes.align="l",
+          add.lines = list(c("School FE", "Yes", "Yes", "Yes", "Yes", "Yes"),
+                           c("Subject FE", "Yes", "Yes", "Yes", "Yes", "Yes"),
+                           c("Classroom clustered SE", "Yes", "Yes", "Yes", "Yes", "Yes"),
+                           c("F-Statistics", add_f(c1), add_f(c2), add_f(c3), add_f(c4), add_f(c5))))
+```
+
