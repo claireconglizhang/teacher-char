@@ -28,8 +28,13 @@ style_mono_light(base_color = "#23395b",
 
 #### Teacher quality matters 
 
- - An extensive research body exploits within-teacher variation over time and shows that teacher quality has substantial impacts on student outcomes (e.g., Aaronson et al., 2007; Chetty et al., 2014; Clotfelter et al., 2007; Harris & Sass, 2011)
+ - An extensive research body exploits within-teacher variation over time and shows that teacher quality has substantial impacts on student outcomes (e.g., Aaronson et al., 2007; Chetty et al., 2014; Clotfelter et al., 2007; Harris & Sass, 2011; Rockoff, 2004)
    - teacher quality is measured by teacher's value-added to student achievement
+   - Rockoff (2004) reports that a 1 standard deviation difference in the quality of a student’s teacher (based on the distribution of teacher quality that emerges from the teacher fixed effects in his model) generates a 0.1 standard deviation difference in reading and math scores.
+
+
+---
+# Research Significance (cont'd)
 
 #### Teacher background characteristics (TBCs) are widely used in teacher recruitment/evaluation/compensation
 
