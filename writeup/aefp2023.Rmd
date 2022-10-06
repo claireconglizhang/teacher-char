@@ -125,18 +125,18 @@ Policy background (2006 Compulsory Education Law banned the sorting of students 
 ---
 # Data 
 
-We draw a large, nationally representative sample from the publicly available, baseline (2013/14) data of China Education Panel Survey (CEPS). Unit of analysis is school-grade-subject-student, hence, data is clustered in nature. Levels of clusters:
+We draw a large, nationally representative sample from the publicly available, baseline (2013/14) data of China Education Panel Survey (CEPS). Unit of analysis is student and data is clustered in nature. Levels of clusters:
 
  - School level
    - CEPS randomly selected 112 schools from the nation but we restricted our sample schools to 85 public schools that reported that they randomly assigned teachers to students upon students' entry to middle school
- 
  - Homeroom/teacher level
    - Within each school, CEPS randomly selected two homerooms from grade 7 and another two from grade 9
-   
  - Students level
    - Within each homeroom, CEPS surveyed all students, their parents, and core content teachers
 
 ---
+#### Table 1. Analytic sample descriptive statistics
+
 <img src="table01.png" style="width: 60%" />
 
 ---
@@ -146,7 +146,8 @@ We draw a large, nationally representative sample from the publicly available, b
  - Evidence of random assignment: covariates balance in the data (next slide)
 
 ---
-<img src="table02.png" style="width: 99%" />
+#### Table 2. Evidence of random assignment: covariates balance check
+<img src="table02.png" style="width: 90%" />
 
 ---
 # Research design A: estimation strategy

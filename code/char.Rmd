@@ -310,29 +310,26 @@ stargazer(c1, c2, c3, c4, c5, c6, c7, c8,
 #### Teacher educational background on student outcomes
 
 ```{r, include = TRUE, results = "asis"}
-ols1 <- function(pred, out){
-  felm(out ~ pred + poly(cog, 3) + female + age + only + rural + migrant + medu + fedu + income | schids + grade9 + subject | 0 | clsids, char)
-}
+m1 <- felm(score ~ tchedu + poly(cog, 3) + female + age + only + rural + migrant + medu + fedu + income | schids + grade9 + subject | 0 | clsids, char)
 
-ols2 <- function(pred, out){
-  felm(out ~ pred + poly(cog, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids + grade9 + subject | 0 | clsids, char)
-}
+m2 <- felm(score ~ tchedu + poly(cog, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids + grade9 + subject | 0 | clsids, char)
 
-m1 <- ols1(char$tchedu, char$score)
-m2 <- ols2(char$tchedu, char$score)
+m3 <- felm(score ~ tchgrad + poly(cog, 3) + female + age + only + rural + migrant + medu + fedu + income | schids + grade9 + subject | 0 | clsids, char)
 
-m3 <- ols1(char$tchgrad, char$score)
-m4 <- ols2(char$tchgrad, char$score)
+m4 <- felm(score ~ tchgrad + poly(cog, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids + grade9 + subject | 0 | clsids, char)
 
-m5 <- ols1(char$tchedu, char$conf)
-m6 <- ols2(char$tchedu, char$conf)
+m5 <- felm(conf ~ tchedu + poly(cog, 3) + female + age + only + rural + migrant + medu + fedu + income | schids + grade9 + subject | 0 | clsids, char)
 
-m7 <- ols1(char$tchgrad, char$conf)
-m8 <- ols2(char$tchgrad, char$conf)
+m6 <- felm(conf ~ tchedu + poly(cog, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids + grade9 + subject | 0 | clsids, char)
+
+m7 <- felm(conf ~ tchgrad + poly(cog, 3) + female + age + only + rural + migrant + medu + fedu + income | schids + grade9 + subject | 0 | clsids, char)
+
+m8 <- felm(conf ~ tchgrad + poly(cog, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids + grade9 + subject | 0 | clsids, char)
+
 
 stargazer(m1, m2, m3, m4, m5, m6, m7, m8,
           type = "html",
-          keep = c("\\bpred\\b"),
+          keep = c("\\btchedu\\b", "\\btchgrad\\b"),
           model.numbers = FALSE,
           dep.var.caption = "",
           dep.var.labels = "",
@@ -355,29 +352,26 @@ stargazer(m1, m2, m3, m4, m5, m6, m7, m8,
 #### Teacher experience on student outcomes
 
 ```{r, include = TRUE, results = "asis"}
-ols1 <- function(pred, out){
-  felm(out ~ pred + poly(cog, 3) + female + age + only + rural + migrant + medu + fedu + income | schids + grade9 + subject | 0 | clsids, char)
-}
+m1 <- felm(score ~ tchexp + poly(cog, 3) + female + age + only + rural + migrant + medu + fedu + income | schids + grade9 + subject | 0 | clsids, char)
 
-ols2 <- function(pred, out){
-  felm(out ~ pred + poly(cog, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids + grade9 + subject | 0 | clsids, char)
-}
+m2 <- felm(score ~ tchexp + poly(cog, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids + grade9 + subject | 0 | clsids, char)
 
-m1 <- ols1(char$tchexp, char$score)
-m2 <- ols2(char$tchexp, char$score)
+m3 <- felm(score ~ tchnew + poly(cog, 3) + female + age + only + rural + migrant + medu + fedu + income | schids + grade9 + subject | 0 | clsids, char)
 
-m3 <- ols1(char$tchnew, char$score)
-m4 <- ols2(char$tchnew, char$score)
+m4 <- felm(score ~ tchnew + poly(cog, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids + grade9 + subject | 0 | clsids, char)
 
-m5 <- ols1(char$tchexp, char$conf)
-m6 <- ols2(char$tchexp, char$conf)
+m5 <- felm(conf ~ tchexp + poly(cog, 3) + female + age + only + rural + migrant + medu + fedu + income | schids + grade9 + subject | 0 | clsids, char)
 
-m7 <- ols1(char$tchnew, char$conf)
-m8 <- ols2(char$tchnew, char$conf)
+m6 <- felm(conf ~ tchexp + poly(cog, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids + grade9 + subject | 0 | clsids, char)
+
+m7 <- felm(conf ~ tchnew + poly(cog, 3) + female + age + only + rural + migrant + medu + fedu + income | schids + grade9 + subject | 0 | clsids, char)
+
+m8 <- felm(conf ~ tchnew + poly(cog, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids + grade9 + subject | 0 | clsids, char)
+
 
 stargazer(m1, m2, m3, m4, m5, m6, m7, m8,
           type = "html",
-          keep = c("\\bpred\\b"),
+          keep = c("\\btchexp\\b", "\\btchnew\\b"),
           model.numbers = FALSE,
           dep.var.caption = "",
           dep.var.labels = "",
@@ -401,29 +395,26 @@ stargazer(m1, m2, m3, m4, m5, m6, m7, m8,
 #### Teacher gender on student outcomes
 
 ```{r, include = TRUE, results = "asis"}
-ols1 <- function(pred, out){
-  felm(out ~ pred + poly(cog, 3) + female + age + only + rural + migrant + medu + fedu + income | schids + grade9 + subject | 0 | clsids, char)
-}
+m1 <- felm(score ~ tchfemale + poly(cog, 3) + female + age + only + rural + migrant + medu + fedu + income | schids + grade9 + subject | 0 | clsids, char)
 
-ols2 <- function(pred, out){
-  felm(out ~ pred + poly(cog, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids + grade9 + subject | 0 | clsids, char)
-}
+m2 <- felm(score ~ tchfemale + poly(cog, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids + grade9 + subject | 0 | clsids, char)
 
-m1 <- ols1(char$tchfemale, char$score)
-m2 <- ols2(char$tchfemale, char$score)
+m3 <- felm(score ~ match + poly(cog, 3) + female + age + only + rural + migrant + medu + fedu + income | schids + grade9 + subject | 0 | clsids, char)
 
-m3 <- ols1(char$match, char$score)
-m4 <- ols2(char$match, char$score)
+m4 <- felm(score ~ match + poly(cog, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids + grade9 + subject | 0 | clsids, char)
 
-m5 <- ols1(char$tchfemale, char$conf)
-m6 <- ols2(char$tchfemale, char$conf)
+m5 <- felm(conf ~ tchfemale + poly(cog, 3) + female + age + only + rural + migrant + medu + fedu + income | schids + grade9 + subject | 0 | clsids, char)
 
-m7 <- ols1(char$match, char$conf)
-m8 <- ols2(char$match, char$conf)
+m6 <- felm(conf ~ tchfemale + poly(cog, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids + grade9 + subject | 0 | clsids, char)
+
+m7 <- felm(conf ~ match + poly(cog, 3) + female + age + only + rural + migrant + medu + fedu + income | schids + grade9 + subject | 0 | clsids, char)
+
+m8 <- felm(conf ~ match + poly(cog, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids + grade9 + subject | 0 | clsids, char)
+
 
 stargazer(m1, m2, m3, m4, m5, m6, m7, m8,
           type = "html",
-          keep = c("\\bpred\\b"),
+          keep = c("\\btchfemale\\b", "\\bmatch\\b"),
           model.numbers = FALSE,
           dep.var.caption = "",
           dep.var.labels = "",
