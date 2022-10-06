@@ -231,10 +231,10 @@ Table 1. Descriptive statistics of key variables
 
 ```{r}
 char %>% 
-  select(tchedu, tchgrad, tchexp, tchnew, tchfemale, match, score, conf) %>% 
+  select(tchedu, tchgrad, tchexp, tchnew, tchfemale, female, match, score, conf) %>% 
   tbl_summary(
     type = list(c("tchedu", "tchexp", "score", "conf") ~ "continuous",
-                c("tchgrad", "tchnew", "tchfemale", "match") ~ "dichotomous"),
+                c("tchgrad", "tchnew", "tchfemale", "match", "female") ~ "dichotomous"),
     statistic = list(all_continuous() ~ "{mean} ({min}, {max})",
                      all_categorical() ~ "{n} / {N} ({p}%)"),
     label = list(tchedu ~ "Teacher education (years)",
@@ -243,6 +243,7 @@ char %>%
                  tchnew ~ "Novice teacher (less than 3Y)",
                  tchfemale ~ "Female teacher",
                  match ~ "Teacher-student gender match",
+                 female ~ "Female student",
                  score ~ "Student academic performance",
                  conf ~ "Student academic confidence")
   )
