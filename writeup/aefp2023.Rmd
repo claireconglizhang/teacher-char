@@ -212,7 +212,7 @@ My hypothesis is:
  - Teacher gender does not have causal impact on either girls or boys
  - Gender match has causal impact on girls but not boys
  
-How do I address this bias?
+How do we address this bias?
 
-Propensity score weighting?
+Matching/weighting?
 
