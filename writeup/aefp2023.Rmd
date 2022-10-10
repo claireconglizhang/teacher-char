@@ -29,9 +29,10 @@ style_mono_light(base_color = "#23395b",
 #### Teacher quality matters 
 
  - An extensive research body exploits within-teacher variation over time and shows that teacher quality has substantial impacts on student outcomes (e.g., Aaronson et al., 2007; Chetty et al., 2014; Clotfelter et al., 2007; Harris & Sass, 2011; Rockoff, 2004)
-   - teacher quality is measured by teacher's value-added to student achievement
-   - Rockoff (2004) reports that a 1 standard deviation difference in the quality of a student’s teacher (based on the distribution of teacher quality that emerges from the teacher fixed effects in his model) generates a 0.1 standard deviation difference in reading and math scores.
-
+ 
+   - teacher quality is measured by teacher's value-added to student achievement in this line of research 
+   
+   - Rockoff (2004) reports that a 1 standard deviation difference in the quality of a student’s teacher (based on the distribution of teacher quality that emerges from the teacher fixed effects in his model) generates a 0.1 standard deviation difference in reading and math scores
 
 ---
 # Research Significance (cont'd)
@@ -39,6 +40,7 @@ style_mono_light(base_color = "#23395b",
 #### Teacher background characteristics (TBCs) are widely used in teacher recruitment/evaluation/compensation
 
  - From past to future, all over the world
+ 
  - Advantages include:
    - Computationally cheaper than value-added measures
    - Practically easier than student/parent/peer/principal rating and observations
@@ -53,7 +55,7 @@ style_mono_light(base_color = "#23395b",
  
  - Teacher earned degree and teacher value-added 
    - Insignificant relationship (Aaronson et al., 2007; Clotfelter et al., 2007; Harris & Sass, 2011; Wayne & Youngs, 2003)
-   - Graduate degree is found to be correlated with teacher quality ()
+   - Graduate degree is found to be correlated with teacher value-added (Guarino et al., 2013)
 
 ---
 # Previous research: teaching experience
@@ -70,10 +72,12 @@ style_mono_light(base_color = "#23395b",
 ---
 # Previous research: teacher gender and gender match
 
- - No causal evidence on teacher gender effect in general
-   - the observed difference in effectiveness between male and female teachers is driven by teacher-student gender match (Aaronson et al., 2007)
+ - No causal evidence on universal teacher gender effect; the observed difference in effectiveness between male and female teachers is driven by teacher-student gender match (Aaronson et al., 2007)
  
- - Researchers have identified causal evidence on the effects of gender match on student learning (e.g., Dee, 2007)
+ - Some argue that no universal teacher–student gender match effect either (Cho, 2012; Winter et al., 2013) 
+ 
+ - Some studies find evidence on the effects of gender match on student learning for both girls and boys (Dee, 2007; Sansone, 2017) 
+   - but some emphasize that gender match only impacts girls, not boys (Gong et al., 2018; Lim and Meer, 2017; Xu and Li, 2018)
 
 ---
 # Current research
@@ -141,7 +145,7 @@ We draw a large, nationally representative sample from the publicly available, b
 
 ---
 # Research design A: identification strategy
-#### Assuming random assignment of teachers to students and identify average treatment effects/ATE
+#### Independence assumption (suppose we have random assignment of teachers to students)
 
  - Evidence of random assignment: covariates balance in the data (next slide)
 
@@ -159,17 +163,6 @@ We draw a large, nationally representative sample from the publicly available, b
    - maximize the estimation precision by accounting for a rich set of student-level covariates
      - then add homeroom-level covariates as robustness check
      - a unique covariate, cognitive test score (use cubic polynomial function)
-
----
-# Research design B - identification strategy
-#### Relax random assignment assumption, using generalized random forests (Athey et al., 2019) to identify conditional average treatment effects/CATE
-
- - Lots to learn/don't know if works
- 
- - Resources:
-   - https://www.science.org/doi/epdf/10.1126/science.aal4321
-   - https://grf-labs.github.io/grf/
-   - https://towardsdatascience.com/causal-machine-learning-for-econometrics-causal-forests-5ab3aec825a7
 
 ---
 # Results part 1: the effects of teacher education background
@@ -203,16 +196,8 @@ We draw a large, nationally representative sample from the publicly available, b
 <img src="girlsVboys.png" style="width: 99%" />
 
 ---
-### Rethink teacher gender effects
+# Research design B - identification strategy
 
-There is a considerable literature body investigating the effects of teacher gender and gender match on student outcomes (e.g., Gong et al., 2018). However, the effects are likely to be overestimated due to the simultaneity of girls outperforming boys and female teachers outnumbering male teachers. Controlling for student gender (identical to gender fixed effects) does not make this bias go away (similar to oversampling issue).
+#### Conditional independence assumption (relaxing random assignment requirement) 
 
-My hypothesis is:
-
- - Teacher gender does not have causal impact on either girls or boys
- - Gender match has causal impact on girls but not boys
- 
-How do we address this bias?
-
-Matching/weighting?
-
+Doubly robust propensity score matching?

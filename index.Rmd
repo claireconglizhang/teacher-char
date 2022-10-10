@@ -2,10 +2,10 @@
 title: "Work in progress"
 output:
   html_document:
-    toc: TRUE
-    toc_depth: 3
-    toc_float: TRUE
-    theme: spacelab
+    toc: FALSE
+    # toc_depth: 3
+    # toc_float: TRUE
+    # theme: spacelab
 ---
 
 ```{r setup, include=FALSE}
