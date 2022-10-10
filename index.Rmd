@@ -1,0 +1,24 @@
+---
+title: "Work in progress"
+output:
+  html_document:
+    toc: TRUE
+    toc_depth: 3
+    toc_float: TRUE
+    theme: spacelab
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+```
+
+This page provides an overview of the project Claire and Anwesha currently working on. 
+It is not ready for sharing and none of the results reflects our true estimates.
+Please don't distribute.
+
+[Slides](./writeup/aefp2023.html)
+
+[Abstract](./writeup/aefp2023.doc)
+
+
