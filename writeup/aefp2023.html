@@ -196,11 +196,26 @@ We draw a large, nationally representative sample from the publicly available, b
 &lt;img src="girlsVboys.png" style="width: 99%" /&gt;
 
 ---
+### Rethinking teacher gender effect
+
+Teacher gender effect and gender match effect are two separate things.
+
+We found evidence that gender match has causal impact on female students.
+
+However, due to the coincidence of girls outperforming boys AND female teachers outnumbering male teachers in many educational settings (e.g., Chinese middle schools), the estimated teacher gender effect - although seems not biased - is not generalizable to the population of interest.
+
+Just like if you oversample white students (given the assumption that white students outperforming African American students) and estimate the effects of an variable in favor of white students on student outcomes, your point estimation is not generalizable to the population.
+
+---
 # Research design B - identification strategy
 
 #### Conditional independence assumption (relaxing random assignment requirement) 
 
-Doubly robust propensity score matching?
+Due to the methodological issue with teacher gender effects, and potential (although very small) selection bias, it looks like propensity score matching or weighting will help improving internal validity.
+
+Below is something from internet:
+
+"Despite some similarities, propensity score matching (PSM) and inverse probability of treatment weighting (IPTW) behave differently, mainly because matching selects some cases/controls and discards others, while IPTW includes all study units."
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
