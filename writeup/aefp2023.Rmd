@@ -137,7 +137,7 @@ We draw a large, nationally representative sample from the publicly available, b
 ---
 #### Table 1. Analytic sample descriptive statistics
 
-<img src="table01.png" style="width: 60%" />
+<img src="table01.png" style="width: 50%" />
 
 ---
 # Research design A: identification strategy
@@ -172,19 +172,47 @@ We draw a large, nationally representative sample from the publicly available, b
    - https://towardsdatascience.com/causal-machine-learning-for-econometrics-causal-forests-5ab3aec825a7
 
 ---
-# Results part 1
+# Results part 1: the effects of teacher education background
 
 <img src="table03.png" style="width: 99%" />
 
 ---
-# Results part 2
+# Results part 2: the effects of teacher experence
 
 <img src="table04.png" style="width: 99%" />
 
 ---
-# Results part 3
+# Results part 3: the effects of teacher gender
 
 <img src="table05.png" style="width: 99%" />
 
+---
+### However, the effects of teacher gender or gender match are likely biased
+#### Evidence 1: Girls outperform boys
 
+<img src="gap.png" style="width: 90%" />
+
+---
+#### Evidence 2: Gender match is in favor of girls due to the fact that female teachers outnumber male teachers
+
+<img src="matched.png" style="width: 60%" />
+
+---
+#### Evidence 3: the effects of teacher gender or gender match are larger for girls (compared to the average point estimates) but are not different from zero for boys
+
+<img src="girlsVboys.png" style="width: 99%" />
+
+---
+### Rethink teacher gender effects
+
+There is a considerable literature body investigating the effects of teacher gender and gender match on student outcomes (e.g., Gong et al., 2018). However, the effects are likely to be overestimated due to the simultaneity of girls outperforming boys and female teachers outnumbering male teachers. Controlling for student gender (identical to gender fixed effects) does not make this bias go away (similar to oversampling issue).
+
+My hypothesis is:
+
+ - Teacher gender does not have causal impact on either girls or boys
+ - Gender match has causal impact on girls but not boys
+ 
+How do I address this bias?
+
+Propensity score weighting?
 

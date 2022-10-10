@@ -329,10 +329,11 @@ m8 <- felm(conf ~ tchgrad + poly(cog, 3) + female + age + only + rural + migrant
 
 stargazer(m1, m2, m3, m4, m5, m6, m7, m8,
           type = "html",
+          omit = c("Constant"),
           keep = c("\\btchedu\\b", "\\btchgrad\\b"),
           model.numbers = FALSE,
           dep.var.caption = "",
-          dep.var.labels = "",
+          dep.var.labels = c("", ""),
           column.labels = c("Performance", "Performance", "Performance", "Performance", "Confidence", "Confidence", "Confidence", "Confidence"),
           star.cutoffs=c(0.05, 0.01, 0.001), 
           digits = 3, 
@@ -345,7 +346,7 @@ stargazer(m1, m2, m3, m4, m5, m6, m7, m8,
                            c("School FE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
                            c("Grade FE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
                            c("Subject FE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
-                           c("Classroom clustered SE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes")))
+                           c("Classroom clustered SE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes")))
 
 ```
 
@@ -374,7 +375,7 @@ stargazer(m1, m2, m3, m4, m5, m6, m7, m8,
           keep = c("\\btchexp\\b", "\\btchnew\\b"),
           model.numbers = FALSE,
           dep.var.caption = "",
-          dep.var.labels = "",
+          dep.var.labels = c("", ""),
           column.labels = c("Performance", "Performance", "Performance", "Performance", "Confidence", "Confidence", "Confidence", "Confidence"),
           star.cutoffs=c(0.05, 0.01, 0.001), 
           digits = 3, 
@@ -387,12 +388,61 @@ stargazer(m1, m2, m3, m4, m5, m6, m7, m8,
                            c("School FE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
                            c("Grade FE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
                            c("Subject FE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
-                           c("Classroom clustered SE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes")))
+                           c("Classroom clustered SE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes")))
 
 ```
 
 
 #### Teacher gender on student outcomes
+
+Before get to teacher gender/matched gender effects, look at the gender gap in academics:
+
+Gender gap:
+
+```{r, include = TRUE, results = "asis"}
+m1 <- felm(score ~ poly(cog, 3) + female + age + only + rural + migrant + medu + fedu + income | schids + grade9 + subject | 0 | clsids, char)
+
+m2 <- felm(score ~ poly(cog, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids + grade9 + subject | 0 | clsids, char)
+
+m3 <- felm(conf ~ poly(cog, 3) + female + age + only + rural + migrant + medu + fedu + income | schids + grade9 + subject | 0 | clsids, char)
+
+m4 <- felm(conf ~ poly(cog, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids + grade9 + subject | 0 | clsids, char)
+
+stargazer(m1, m2, m3, m4,
+          type = "html",
+          keep = c("\\bfemale\\b"),
+          model.numbers = FALSE,
+          dep.var.caption = "",
+          dep.var.labels = c("", ""),
+          column.labels = c("Performance", "Performance", "Confidence", "Confidence"),
+          star.cutoffs=c(0.05, 0.01, 0.001), 
+          digits = 3, 
+          flip = TRUE, 
+          no.space = TRUE,
+          notes.append=F, notes = c("*p$<$0.05, **p$<$0.01, ***p$<$0.001. Cells report coefficients and associated standard errors"),
+          notes.align="l",
+          add.lines = list(c("Student Covariates", "Yes", "Yes", "Yes", "Yes"),
+                           c("Homeroom Covariates", "No", "Yes", "No", "Yes"),
+                           c("School FE", "Yes", "Yes", "Yes", "Yes"),
+                           c("Grade FE", "Yes", "Yes", "Yes", "Yes"),
+                           c("Subject FE", "Yes", "Yes", "Yes", "Yes"),
+                           c("Classroom clustered SE", "Yes", "Yes", "Yes", "Yes")))
+
+```
+
+And due to reason that female teachers outnumber male teachers, the match variable is in favor of girls:
+
+```{r}
+char %>% 
+  mutate(female = factor(female, levels  = c(0,1), labels = c("Boys", "Girls")),
+         match = factor(match, levels  = c(0,1), labels = c("Not Matched", "Matched"))) %>% 
+  janitor::tabyl(female, match) %>% 
+  adorn_percentages("row") %>% 
+  adorn_pct_formatting(digits = 2) %>% 
+  adorn_ns()
+```
+
+For all students, teacher gender and matched gender effects:
 
 ```{r, include = TRUE, results = "asis"}
 m1 <- felm(score ~ tchfemale + poly(cog, 3) + female + age + only + rural + migrant + medu + fedu + income | schids + grade9 + subject | 0 | clsids, char)
@@ -417,7 +467,7 @@ stargazer(m1, m2, m3, m4, m5, m6, m7, m8,
           keep = c("\\btchfemale\\b", "\\bmatch\\b"),
           model.numbers = FALSE,
           dep.var.caption = "",
-          dep.var.labels = "",
+          dep.var.labels = c("", ""),
           column.labels = c("Performance", "Performance", "Performance", "Performance", "Confidence", "Confidence", "Confidence", "Confidence"),
           star.cutoffs=c(0.05, 0.01, 0.001), 
           digits = 3, 
@@ -430,6 +480,51 @@ stargazer(m1, m2, m3, m4, m5, m6, m7, m8,
                            c("School FE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
                            c("Grade FE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
                            c("Subject FE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
-                           c("Classroom clustered SE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes")))
+                           c("Classroom clustered SE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes")))
+
+```
+
+For girls vs boys:
+
+```{r, include = TRUE, results = "asis"}
+char1 <- char %>% filter(female == 1)
+char2 <- char %>% filter(female == 0)
+
+m1 <- felm(score ~ match + poly(cog, 3) + age + only + rural + migrant + medu + fedu + income | schids + grade9 + subject | 0 | clsids, char1)
+
+m2 <- felm(score ~ match + poly(cog, 3) + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids + grade9 + subject | 0 | clsids, char1)
+
+m3 <- felm(score ~ match + poly(cog, 3) + age + only + rural + migrant + medu + fedu + income | schids + grade9 + subject | 0 | clsids, char2)
+
+m4 <- felm(score ~ match + poly(cog, 3) + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids + grade9 + subject | 0 | clsids, char2)
+
+m5 <- felm(conf ~ match + poly(cog, 3) + age + only + rural + migrant + medu + fedu + income | schids + grade9 + subject | 0 | clsids, char1)
+
+m6 <- felm(conf ~ match + poly(cog, 3) + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids + grade9 + subject | 0 | clsids, char1)
+
+m7 <- felm(conf ~ match + poly(cog, 3) + age + only + rural + migrant + medu + fedu + income | schids + grade9 + subject | 0 | clsids, char2)
+
+m8 <- felm(conf ~ match + poly(cog, 3) + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids + grade9 + subject | 0 | clsids, char2)
+
+
+stargazer(m1, m2, m5, m6, m3, m4, m7, m8,
+          type = "html",
+          keep = c("\\bmatch\\b"),
+          model.numbers = FALSE,
+          dep.var.caption = "",
+          dep.var.labels = c("Girls Only", "Girls Only", "Boys Only", "Boys Only"),
+          column.labels = c("Performance", "Performance", "Confidence", "Confidence", "Performance", "Performance", "Confidence", "Confidence"),
+          star.cutoffs=c(0.05, 0.01, 0.001), 
+          digits = 3, 
+          flip = TRUE, 
+          no.space = TRUE,
+          notes.append=F, notes = c("*p$<$0.05, **p$<$0.01, ***p$<$0.001. Cells report coefficients and associated standard errors"),
+          notes.align="l",
+          add.lines = list(c("Student Covariates", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
+                           c("Homeroom Covariates", "No", "Yes", "No", "Yes", "No", "Yes", "No", "Yes"),
+                           c("School FE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
+                           c("Grade FE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
+                           c("Subject FE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
+                           c("Classroom clustered SE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes")))
 
 ```
