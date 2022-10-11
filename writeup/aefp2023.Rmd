@@ -176,17 +176,17 @@ We draw a large, nationally representative sample from the publicly available, b
      - a unique covariate, cognitive test score (use cubic polynomial function)
 
 ---
-# Results part 1: the effects of teacher education background ("tchgrad" is biased)
+# Results part 1: the effects of teacher education background
 
 <img src="table03.png" style="width: 99%" />
 
 ---
-# Results part 2: the effects of teacher experence 
+# Results part 2: the effects of teacher experience
 
 <img src="table04.png" style="width: 99%" />
 
 ---
-# Results part 3: the effects of teacher gender (both "tchfemale" and "match" are biased)
+# Results part 3: the effects of teacher gender 
 
 <img src="table05.png" style="width: 99%" />
 
