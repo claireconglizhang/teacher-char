@@ -262,6 +262,7 @@ add_f <- function(model){
   paste(round(f[5], 3), star, " (df = ", f[3], "; ", f[6], ")", sep = "")
 }  
 
+
 random <- function(var){
   felm(var ~ cog + female + age + only + rural + migrant + medu + fedu + income | schids + grade9 + subject | 0 | clsids, char)
 }
@@ -305,7 +306,10 @@ stargazer(c1, c2, c3, c4, c5, c6, c7, c8,
                            c("Subject FE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
                            c("Classroom clustered SE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
                            c("F-Statistics", add_f(c1), add_f(c2), add_f(c3), add_f(c4), add_f(c5), add_f(c6), add_f(c7), add_f(c8))))
+
+
 ```
+
 
 #### Teacher educational background on student outcomes
 
