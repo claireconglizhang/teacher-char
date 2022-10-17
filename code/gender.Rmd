@@ -3,7 +3,6 @@ title: "The effects of teacher gender and teacher-student gender match"
 output: html_document
 date: '2022-09-28'
 ---
-hello
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = FALSE,
@@ -136,9 +135,10 @@ tch_var <- full_tch_2 %>%
          tchedu = w2tchc04) %>% 
   mutate(tchfemale = recode(tchfemale, '2' = 1, '1' = 0),
          tchedu = recode(tchedu, '1' = 9, '2' = 12, '3' = 12, '4' = 14, '5' = 16, '6' = 16, '7' = 19)) %>% 
-  group_by(schadvisor = mymean(advisor), # need these only for dealing with missing data purpose
-           schexp = mymean(tchexp), 
-           schedu = mymean(tchedu)) %>% 
+  group_by(schids) %>% 
+  mutate(schadvisor = mymean(advisor), # need these only for dealing with missing data purpose
+         schexp = mymean(tchexp), 
+         schedu = mymean(tchedu)) %>% 
   ungroup()
 
 tch_var_chn <- tch_var %>% filter(subject == 2) 
