@@ -10,8 +10,9 @@
 
 
 
+<meta name="date" content="2022-09-28" />
 
-<title>Work in progress</title>
+<title>The effects of teacher gender and teacher-student gender match</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -361,25 +362,5040 @@ pre code {
 
 
 
-<h1 class="title toc-ignore">Work in progress</h1>
+<h1 class="title toc-ignore">The effects of teacher gender and
+teacher-student gender match</h1>
+<h4 class="date">2022-09-28</h4>
 
 </div>
 
 
-<p>This page provides an overview of the project Claire and Anwesha
-currently working on. It is not ready for sharing and none of the
-results reflects our true estimates. Please don’t distribute.</p>
-<div id="invistigating-the-causal-impact-of-teacher-human-capital-characteristics-on-student-learning" class="section level4">
-<h4>Invistigating the causal impact of teacher human capital
-characteristics on student learning</h4>
-<p><a href="./writeup/aefp_hcc.html">Slides</a></p>
-<p><a href="./writeup/aefp_hcc.doc">Abstract</a></p>
+<p>hello</p>
+<div id="missing-data" class="section level3">
+<h3>Missing data</h3>
+<pre><code>##        ids     clsids   w2clsids     schids       fall      match      score 
+##       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;     &quot;1.4%&quot;    &quot;1.09%&quot; 
+##       conf        cog       chn1       eng1       mat1       cog1     female 
+##    &quot;0.52%&quot;    &quot;0.98%&quot;    &quot;1.71%&quot;    &quot;1.69%&quot;    &quot;1.69%&quot;       &quot;0%&quot;       &quot;0%&quot; 
+##        age       only      rural    migrant       medu       fedu     income 
+##    &quot;2.42%&quot;       &quot;0%&quot;       &quot;0%&quot;    &quot;0.69%&quot;    &quot;0.21%&quot;    &quot;0.21%&quot;    &quot;0.25%&quot; 
+##  tchfemale    advisor     tchexp     tchedu     hrsize   hrfemale      hrage 
+##     &quot;1.4%&quot;    &quot;0.92%&quot;    &quot;4.78%&quot;    &quot;0.92%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot; 
+##     hronly    hrrural  hrmigrant     hrmedu     hrfedu   hrincome schadvisor 
+##       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;    &quot;0.92%&quot; 
+##     schexp     schedu 
+##    &quot;0.92%&quot;    &quot;0.92%&quot;</code></pre>
+<pre><code>##        ids     clsids   w2clsids     schids       fall      match      score 
+##       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;     &quot;0.9%&quot;    &quot;1.19%&quot; 
+##       conf        cog       chn1       eng1       mat1       cog1     female 
+##    &quot;0.54%&quot;    &quot;0.98%&quot;    &quot;1.71%&quot;    &quot;1.69%&quot;    &quot;1.69%&quot;       &quot;0%&quot;       &quot;0%&quot; 
+##        age       only      rural    migrant       medu       fedu     income 
+##    &quot;2.42%&quot;       &quot;0%&quot;       &quot;0%&quot;    &quot;0.69%&quot;    &quot;0.21%&quot;    &quot;0.21%&quot;    &quot;0.25%&quot; 
+##  tchfemale    advisor     tchexp     tchedu     hrsize   hrfemale      hrage 
+##     &quot;0.9%&quot;       &quot;0%&quot;    &quot;2.13%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot; 
+##     hronly    hrrural  hrmigrant     hrmedu     hrfedu   hrincome schadvisor 
+##       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot; 
+##     schexp     schedu 
+##       &quot;0%&quot;       &quot;0%&quot;</code></pre>
+<pre><code>##        ids     clsids   w2clsids     schids       fall      match      score 
+##       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;    &quot;1.08%&quot; 
+##       conf        cog       chn1       eng1       mat1       cog1     female 
+##    &quot;0.48%&quot;    &quot;0.98%&quot;    &quot;1.71%&quot;    &quot;1.69%&quot;    &quot;1.69%&quot;       &quot;0%&quot;       &quot;0%&quot; 
+##        age       only      rural    migrant       medu       fedu     income 
+##    &quot;2.42%&quot;       &quot;0%&quot;       &quot;0%&quot;    &quot;0.69%&quot;    &quot;0.21%&quot;    &quot;0.21%&quot;    &quot;0.25%&quot; 
+##  tchfemale    advisor     tchexp     tchedu     hrsize   hrfemale      hrage 
+##       &quot;0%&quot;       &quot;0%&quot;    &quot;2.63%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot; 
+##     hronly    hrrural  hrmigrant     hrmedu     hrfedu   hrincome schadvisor 
+##       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot; 
+##     schexp     schedu 
+##       &quot;0%&quot;       &quot;0%&quot;</code></pre>
+<pre><code>##        ids     clsids   w2clsids     schids       fall      match      score 
+##       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot; 
+##       conf        cog       chn1       eng1       mat1       cog1     female 
+##       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot; 
+##        age       only      rural    migrant       medu       fedu     income 
+##       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot; 
+##  tchfemale    advisor     tchexp     tchedu     hrsize   hrfemale      hrage 
+##       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot; 
+##     hronly    hrrural  hrmigrant     hrmedu     hrfedu   hrincome schadvisor 
+##       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot; 
+##     schexp     schedu 
+##       &quot;0%&quot;       &quot;0%&quot;</code></pre>
+<pre><code>##        ids     clsids   w2clsids     schids       fall      match      score 
+##       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot; 
+##       conf        cog       chn1       eng1       mat1       cog1     female 
+##       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot; 
+##        age       only      rural    migrant       medu       fedu     income 
+##       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot; 
+##  tchfemale    advisor     tchexp     tchedu     hrsize   hrfemale      hrage 
+##       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot; 
+##     hronly    hrrural  hrmigrant     hrmedu     hrfedu   hrincome schadvisor 
+##       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot; 
+##     schexp     schedu 
+##       &quot;0%&quot;       &quot;0%&quot;</code></pre>
+<pre><code>##        ids     clsids   w2clsids     schids       fall      match      score 
+##       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot; 
+##       conf        cog       chn1       eng1       mat1       cog1     female 
+##       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot; 
+##        age       only      rural    migrant       medu       fedu     income 
+##       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot; 
+##  tchfemale    advisor     tchexp     tchedu     hrsize   hrfemale      hrage 
+##       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot; 
+##     hronly    hrrural  hrmigrant     hrmedu     hrfedu   hrincome schadvisor 
+##       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot;       &quot;0%&quot; 
+##     schexp     schedu 
+##       &quot;0%&quot;       &quot;0%&quot;</code></pre>
 </div>
-<div id="invistigating-the-causal-impact-of-teacher-gender-on-student-learning" class="section level4">
-<h4>Invistigating the causal impact of teacher gender on student
-learning</h4>
-<p><a href="./writeup/aefp_gender.html">Slides</a></p>
-<p><a href="./writeup/aefp_gender.doc">Abstract</a></p>
+<div id="analytic-sample-descriptive-stats" class="section level3">
+<h3>Analytic sample descriptive stats</h3>
+<div id="xatqyjdffi" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#xatqyjdffi .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#xatqyjdffi .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#xatqyjdffi .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#xatqyjdffi .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#xatqyjdffi .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xatqyjdffi .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#xatqyjdffi .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#xatqyjdffi .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#xatqyjdffi .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#xatqyjdffi .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#xatqyjdffi .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#xatqyjdffi .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#xatqyjdffi .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#xatqyjdffi .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#xatqyjdffi .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#xatqyjdffi .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#xatqyjdffi .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xatqyjdffi .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#xatqyjdffi .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#xatqyjdffi .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xatqyjdffi .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#xatqyjdffi .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#xatqyjdffi .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xatqyjdffi .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xatqyjdffi .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#xatqyjdffi .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#xatqyjdffi .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xatqyjdffi .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#xatqyjdffi .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xatqyjdffi .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#xatqyjdffi .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xatqyjdffi .gt_left {
+  text-align: left;
+}
+
+#xatqyjdffi .gt_center {
+  text-align: center;
+}
+
+#xatqyjdffi .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#xatqyjdffi .gt_font_normal {
+  font-weight: normal;
+}
+
+#xatqyjdffi .gt_font_bold {
+  font-weight: bold;
+}
+
+#xatqyjdffi .gt_font_italic {
+  font-style: italic;
+}
+
+#xatqyjdffi .gt_super {
+  font-size: 65%;
+}
+
+#xatqyjdffi .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 75%;
+  vertical-align: 0.4em;
+}
+
+#xatqyjdffi .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#xatqyjdffi .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#xatqyjdffi .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#xatqyjdffi .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#xatqyjdffi .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#xatqyjdffi .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col"><strong>Characteristic</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col"><strong>N = 4,945</strong><sup class="gt_footnote_marks">1</sup></th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td class="gt_row gt_left">Teacher-student gender match</td>
+<td class="gt_row gt_center">2,458 / 4,945 (50%)</td></tr>
+    <tr><td class="gt_row gt_left">Female teacher</td>
+<td class="gt_row gt_center">3,967 / 4,945 (80%)</td></tr>
+    <tr><td class="gt_row gt_left">Female student</td>
+<td class="gt_row gt_center">2,464 / 4,945 (50%)</td></tr>
+    <tr><td class="gt_row gt_left">Score</td>
+<td class="gt_row gt_center">0.02 (-6.74, 2.24)</td></tr>
+    <tr><td class="gt_row gt_left">Confidence</td>
+<td class="gt_row gt_center">0.00 (-3.20, 2.40)</td></tr>
+  </tbody>
+  
+  <tfoot class="gt_footnotes">
+    <tr>
+      <td class="gt_footnote" colspan="2"><sup class="gt_footnote_marks">1</sup> n / N (%); Mean (Range)</td>
+    </tr>
+  </tfoot>
+</table>
+</div>
+<div id="lbarvwflcm" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#lbarvwflcm .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#lbarvwflcm .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#lbarvwflcm .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#lbarvwflcm .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#lbarvwflcm .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#lbarvwflcm .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#lbarvwflcm .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#lbarvwflcm .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#lbarvwflcm .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#lbarvwflcm .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#lbarvwflcm .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#lbarvwflcm .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#lbarvwflcm .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#lbarvwflcm .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#lbarvwflcm .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#lbarvwflcm .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#lbarvwflcm .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#lbarvwflcm .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#lbarvwflcm .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#lbarvwflcm .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#lbarvwflcm .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#lbarvwflcm .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#lbarvwflcm .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#lbarvwflcm .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#lbarvwflcm .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#lbarvwflcm .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#lbarvwflcm .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#lbarvwflcm .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#lbarvwflcm .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#lbarvwflcm .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#lbarvwflcm .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#lbarvwflcm .gt_left {
+  text-align: left;
+}
+
+#lbarvwflcm .gt_center {
+  text-align: center;
+}
+
+#lbarvwflcm .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#lbarvwflcm .gt_font_normal {
+  font-weight: normal;
+}
+
+#lbarvwflcm .gt_font_bold {
+  font-weight: bold;
+}
+
+#lbarvwflcm .gt_font_italic {
+  font-style: italic;
+}
+
+#lbarvwflcm .gt_super {
+  font-size: 65%;
+}
+
+#lbarvwflcm .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 75%;
+  vertical-align: 0.4em;
+}
+
+#lbarvwflcm .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#lbarvwflcm .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#lbarvwflcm .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#lbarvwflcm .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#lbarvwflcm .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#lbarvwflcm .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col"><strong>Characteristic</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col"><strong>N = 4,962</strong><sup class="gt_footnote_marks">1</sup></th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td class="gt_row gt_left">Teacher-student gender match</td>
+<td class="gt_row gt_center">2,490 / 4,962 (50%)</td></tr>
+    <tr><td class="gt_row gt_left">Female teacher</td>
+<td class="gt_row gt_center">4,439 / 4,962 (89%)</td></tr>
+    <tr><td class="gt_row gt_left">Female student</td>
+<td class="gt_row gt_center">2,473 / 4,962 (50%)</td></tr>
+    <tr><td class="gt_row gt_left">Score</td>
+<td class="gt_row gt_center">0.01 (-5.52, 3.70)</td></tr>
+    <tr><td class="gt_row gt_left">Confidence</td>
+<td class="gt_row gt_center">0.00 (-3.20, 3.15)</td></tr>
+  </tbody>
+  
+  <tfoot class="gt_footnotes">
+    <tr>
+      <td class="gt_footnote" colspan="2"><sup class="gt_footnote_marks">1</sup> n / N (%); Mean (Range)</td>
+    </tr>
+  </tfoot>
+</table>
+</div>
+<div id="faepzjnjws" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#faepzjnjws .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#faepzjnjws .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#faepzjnjws .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#faepzjnjws .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#faepzjnjws .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#faepzjnjws .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#faepzjnjws .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#faepzjnjws .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#faepzjnjws .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#faepzjnjws .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#faepzjnjws .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#faepzjnjws .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#faepzjnjws .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#faepzjnjws .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#faepzjnjws .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#faepzjnjws .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#faepzjnjws .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#faepzjnjws .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#faepzjnjws .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#faepzjnjws .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#faepzjnjws .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#faepzjnjws .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#faepzjnjws .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#faepzjnjws .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#faepzjnjws .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#faepzjnjws .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#faepzjnjws .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#faepzjnjws .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#faepzjnjws .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#faepzjnjws .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#faepzjnjws .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#faepzjnjws .gt_left {
+  text-align: left;
+}
+
+#faepzjnjws .gt_center {
+  text-align: center;
+}
+
+#faepzjnjws .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#faepzjnjws .gt_font_normal {
+  font-weight: normal;
+}
+
+#faepzjnjws .gt_font_bold {
+  font-weight: bold;
+}
+
+#faepzjnjws .gt_font_italic {
+  font-style: italic;
+}
+
+#faepzjnjws .gt_super {
+  font-size: 65%;
+}
+
+#faepzjnjws .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 75%;
+  vertical-align: 0.4em;
+}
+
+#faepzjnjws .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#faepzjnjws .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#faepzjnjws .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#faepzjnjws .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#faepzjnjws .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#faepzjnjws .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col"><strong>Characteristic</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col"><strong>N = 5,016</strong><sup class="gt_footnote_marks">1</sup></th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td class="gt_row gt_left">Teacher-student gender match</td>
+<td class="gt_row gt_center">2,493 / 5,016 (50%)</td></tr>
+    <tr><td class="gt_row gt_left">Female teacher</td>
+<td class="gt_row gt_center">2,953 / 5,016 (59%)</td></tr>
+    <tr><td class="gt_row gt_left">Female student</td>
+<td class="gt_row gt_center">2,498 / 5,016 (50%)</td></tr>
+    <tr><td class="gt_row gt_left">Score</td>
+<td class="gt_row gt_center">0.01 (-6.54, 3.14)</td></tr>
+    <tr><td class="gt_row gt_left">Confidence</td>
+<td class="gt_row gt_center">0.00 (-3.02, 3.31)</td></tr>
+  </tbody>
+  
+  <tfoot class="gt_footnotes">
+    <tr>
+      <td class="gt_footnote" colspan="2"><sup class="gt_footnote_marks">1</sup> n / N (%); Mean (Range)</td>
+    </tr>
+  </tfoot>
+</table>
+</div>
+</div>
+<div id="random-assignment-check" class="section level3">
+<h3>Random assignment check</h3>
+<table style="text-align:center">
+<tr>
+<td colspan="7" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="6">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+Female teacher
+</td>
+<td>
+Matched gender
+</td>
+<td>
+Female teacher
+</td>
+<td>
+Matched gender
+</td>
+<td>
+Female teacher
+</td>
+<td>
+Matched gender
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(1)
+</td>
+<td>
+(2)
+</td>
+<td>
+(3)
+</td>
+<td>
+(4)
+</td>
+<td>
+(5)
+</td>
+<td>
+(6)
+</td>
+</tr>
+<tr>
+<td colspan="7" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Baseline Chinese
+</td>
+<td>
+0.016
+</td>
+<td>
+0.018
+</td>
+<td>
+-0.018
+</td>
+<td>
+0.001
+</td>
+<td>
+-0.026
+</td>
+<td>
+0.025<sup>*</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.010)
+</td>
+<td>
+(0.013)
+</td>
+<td>
+(0.009)
+</td>
+<td>
+(0.008)
+</td>
+<td>
+(0.013)
+</td>
+<td>
+(0.012)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Baseline English
+</td>
+<td>
+-0.002
+</td>
+<td>
+-0.023<sup>*</sup>
+</td>
+<td>
+0.004
+</td>
+<td>
+-0.003
+</td>
+<td>
+0.003
+</td>
+<td>
+-0.003
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.015)
+</td>
+<td>
+(0.009)
+</td>
+<td>
+(0.010)
+</td>
+<td>
+(0.009)
+</td>
+<td>
+(0.017)
+</td>
+<td>
+(0.013)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Baseline math
+</td>
+<td>
+-0.0003
+</td>
+<td>
+0.003
+</td>
+<td>
+0.013
+</td>
+<td>
+0.003
+</td>
+<td>
+0.033<sup>*</sup>
+</td>
+<td>
+-0.004
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.014)
+</td>
+<td>
+(0.010)
+</td>
+<td>
+(0.011)
+</td>
+<td>
+(0.006)
+</td>
+<td>
+(0.015)
+</td>
+<td>
+(0.012)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Baseline cognitive
+</td>
+<td>
+-0.008
+</td>
+<td>
+0.011
+</td>
+<td>
+-0.011
+</td>
+<td>
+0.0005
+</td>
+<td>
+-0.047<sup>*</sup>
+</td>
+<td>
+-0.003
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.012)
+</td>
+<td>
+(0.011)
+</td>
+<td>
+(0.009)
+</td>
+<td>
+(0.005)
+</td>
+<td>
+(0.019)
+</td>
+<td>
+(0.012)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Female student
+</td>
+<td>
+-0.016
+</td>
+<td>
+0.606<sup>***</sup>
+</td>
+<td>
+0.005
+</td>
+<td>
+0.791<sup>***</sup>
+</td>
+<td>
+0.002
+</td>
+<td>
+0.164
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.010)
+</td>
+<td>
+(0.083)
+</td>
+<td>
+(0.006)
+</td>
+<td>
+(0.064)
+</td>
+<td>
+(0.010)
+</td>
+<td>
+(0.085)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Age
+</td>
+<td>
+0.011
+</td>
+<td>
+0.003
+</td>
+<td>
+0.011
+</td>
+<td>
+-0.006
+</td>
+<td>
+-0.001
+</td>
+<td>
+-0.011
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.013)
+</td>
+<td>
+(0.013)
+</td>
+<td>
+(0.010)
+</td>
+<td>
+(0.009)
+</td>
+<td>
+(0.014)
+</td>
+<td>
+(0.014)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Only child
+</td>
+<td>
+-0.013
+</td>
+<td>
+0.003
+</td>
+<td>
+0.001
+</td>
+<td>
+0.008
+</td>
+<td>
+-0.001
+</td>
+<td>
+-0.007
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.009)
+</td>
+<td>
+(0.018)
+</td>
+<td>
+(0.007)
+</td>
+<td>
+(0.016)
+</td>
+<td>
+(0.012)
+</td>
+<td>
+(0.023)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Rural residency
+</td>
+<td>
+-0.007
+</td>
+<td>
+-0.020
+</td>
+<td>
+-0.002
+</td>
+<td>
+0.004
+</td>
+<td>
+0.014
+</td>
+<td>
+0.003
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.008)
+</td>
+<td>
+(0.015)
+</td>
+<td>
+(0.007)
+</td>
+<td>
+(0.014)
+</td>
+<td>
+(0.016)
+</td>
+<td>
+(0.020)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Migrant worker family
+</td>
+<td>
+-0.017
+</td>
+<td>
+-0.006
+</td>
+<td>
+0.011
+</td>
+<td>
+0.014
+</td>
+<td>
+0.006
+</td>
+<td>
+0.003
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.010)
+</td>
+<td>
+(0.016)
+</td>
+<td>
+(0.008)
+</td>
+<td>
+(0.012)
+</td>
+<td>
+(0.018)
+</td>
+<td>
+(0.025)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Mother education (years)
+</td>
+<td>
+-0.002
+</td>
+<td>
+-0.002
+</td>
+<td>
+-0.001
+</td>
+<td>
+-0.002
+</td>
+<td>
+0.0002
+</td>
+<td>
+0.004
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.001)
+</td>
+<td>
+(0.003)
+</td>
+<td>
+(0.001)
+</td>
+<td>
+(0.002)
+</td>
+<td>
+(0.002)
+</td>
+<td>
+(0.003)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Father education (years)
+</td>
+<td>
+-0.001
+</td>
+<td>
+-0.003
+</td>
+<td>
+0.001
+</td>
+<td>
+0.002
+</td>
+<td>
+0.001
+</td>
+<td>
+0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.001)
+</td>
+<td>
+(0.002)
+</td>
+<td>
+(0.001)
+</td>
+<td>
+(0.002)
+</td>
+<td>
+(0.002)
+</td>
+<td>
+(0.003)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Family income
+</td>
+<td>
+0.014
+</td>
+<td>
+-0.004
+</td>
+<td>
+0.019<sup>*</sup>
+</td>
+<td>
+-0.009
+</td>
+<td>
+0.031<sup>**</sup>
+</td>
+<td>
+-0.017
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.011)
+</td>
+<td>
+(0.013)
+</td>
+<td>
+(0.007)
+</td>
+<td>
+(0.010)
+</td>
+<td>
+(0.011)
+</td>
+<td>
+(0.017)
+</td>
+</tr>
+<tr>
+<td colspan="7" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+School Fixed Effects
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Clusterred SE
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+F-Statistics
+</td>
+<td>
+1.281 (df = 12; 62)
+</td>
+<td>
+15.874*** (df = 12; 62)
+</td>
+<td>
+0.806 (df = 12; 62)
+</td>
+<td>
+35.06*** (df = 12; 62)
+</td>
+<td>
+2.51** (df = 12; 62)
+</td>
+<td>
+1.71 (df = 12; 62)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+4,945
+</td>
+<td>
+4,945
+</td>
+<td>
+4,962
+</td>
+<td>
+4,962
+</td>
+<td>
+5,016
+</td>
+<td>
+5,016
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+R<sup>2</sup>
+</td>
+<td>
+0.589
+</td>
+<td>
+0.372
+</td>
+<td>
+0.622
+</td>
+<td>
+0.629
+</td>
+<td>
+0.455
+</td>
+<td>
+0.042
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+0.582
+</td>
+<td>
+0.362
+</td>
+<td>
+0.616
+</td>
+<td>
+0.624
+</td>
+<td>
+0.447
+</td>
+<td>
+0.027
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Residual Std. Error
+</td>
+<td>
+0.257 (df = 4870)
+</td>
+<td>
+0.399 (df = 4870)
+</td>
+<td>
+0.190 (df = 4887)
+</td>
+<td>
+0.307 (df = 4887)
+</td>
+<td>
+0.366 (df = 4941)
+</td>
+<td>
+0.493 (df = 4941)
+</td>
+</tr>
+<tr>
+<td colspan="7" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td colspan="6" style="text-align:left">
+<em>p&lt;0.05, <strong>p&lt;0.01, </strong></em>p&lt;0.001. Cells report
+coefficients and associated standard errors
+</td>
+</tr>
+</table>
+<p>Before get to teacher gender/matched gender effects, look at the
+gender gap in academics:</p>
+<p>Gender gap:</p>
+<table style="text-align:center">
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="9">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+Chinese
+</td>
+<td>
+Chinese
+</td>
+<td>
+Chinese
+</td>
+<td>
+English
+</td>
+<td>
+English
+</td>
+<td>
+English
+</td>
+<td>
+Math
+</td>
+<td>
+Math
+</td>
+<td>
+Math
+</td>
+</tr>
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+female
+</td>
+<td>
+0.193<sup>***</sup>
+</td>
+<td>
+0.182<sup>***</sup>
+</td>
+<td>
+0.185<sup>***</sup>
+</td>
+<td>
+0.097<sup>***</sup>
+</td>
+<td>
+0.089<sup>***</sup>
+</td>
+<td>
+0.090<sup>***</sup>
+</td>
+<td>
+-0.067<sup>***</sup>
+</td>
+<td>
+-0.073<sup>**</sup>
+</td>
+<td>
+-0.072<sup>**</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.022)
+</td>
+<td>
+(0.022)
+</td>
+<td>
+(0.023)
+</td>
+<td>
+(0.023)
+</td>
+<td>
+(0.024)
+</td>
+<td>
+(0.023)
+</td>
+<td>
+(0.019)
+</td>
+<td>
+(0.024)
+</td>
+<td>
+(0.025)
+</td>
+</tr>
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Student Covariates
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Homeroom Covariates
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Teacher Covariates
+</td>
+<td>
+No
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+School FE
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+School clustered SE
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+4,945
+</td>
+<td>
+4,945
+</td>
+<td>
+4,945
+</td>
+<td>
+4,962
+</td>
+<td>
+4,962
+</td>
+<td>
+4,962
+</td>
+<td>
+5,016
+</td>
+<td>
+5,016
+</td>
+<td>
+5,016
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+R<sup>2</sup>
+</td>
+<td>
+0.611
+</td>
+<td>
+0.614
+</td>
+<td>
+0.615
+</td>
+<td>
+0.710
+</td>
+<td>
+0.711
+</td>
+<td>
+0.712
+</td>
+<td>
+0.625
+</td>
+<td>
+0.626
+</td>
+<td>
+0.629
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+0.605
+</td>
+<td>
+0.607
+</td>
+<td>
+0.607
+</td>
+<td>
+0.705
+</td>
+<td>
+0.705
+</td>
+<td>
+0.707
+</td>
+<td>
+0.619
+</td>
+<td>
+0.620
+</td>
+<td>
+0.622
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Residual Std. Error
+</td>
+<td>
+0.617 (df = 4862)
+</td>
+<td>
+0.615 (df = 4853)
+</td>
+<td>
+0.615 (df = 4849)
+</td>
+<td>
+0.538 (df = 4879)
+</td>
+<td>
+0.538 (df = 4870)
+</td>
+<td>
+0.537 (df = 4866)
+</td>
+<td>
+0.611 (df = 4933)
+</td>
+<td>
+0.611 (df = 4924)
+</td>
+<td>
+0.609 (df = 4920)
+</td>
+</tr>
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td colspan="9" style="text-align:left">
+<em>p&lt;0.05, <strong>p&lt;0.01, </strong></em>p&lt;0.001. Cells report
+coefficients and associated standard errors
+</td>
+</tr>
+</table>
+<p>Why “match” is endogenous:</p>
+<p>Separate girls and boys, gender match effect on Chinese score:</p>
+<table style="text-align:center">
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="9">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+Chinese score
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+match
+</td>
+<td>
+0.109
+</td>
+<td>
+0.059
+</td>
+<td>
+0.080
+</td>
+<td>
+-0.105
+</td>
+<td>
+-0.092
+</td>
+<td>
+-0.132
+</td>
+<td>
+0.106<sup>***</sup>
+</td>
+<td>
+0.094<sup>***</sup>
+</td>
+<td>
+0.094<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.080)
+</td>
+<td>
+(0.074)
+</td>
+<td>
+(0.099)
+</td>
+<td>
+(0.085)
+</td>
+<td>
+(0.083)
+</td>
+<td>
+(0.099)
+</td>
+<td>
+(0.025)
+</td>
+<td>
+(0.024)
+</td>
+<td>
+(0.024)
+</td>
+</tr>
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Student Covariates
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Homeroom Covariates
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Teacher Covariates
+</td>
+<td>
+No
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+School FE
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+School clustered SE
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+2,464
+</td>
+<td>
+2,464
+</td>
+<td>
+2,464
+</td>
+<td>
+2,481
+</td>
+<td>
+2,481
+</td>
+<td>
+2,481
+</td>
+<td>
+4,945
+</td>
+<td>
+4,945
+</td>
+<td>
+4,945
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+R<sup>2</sup>
+</td>
+<td>
+0.537
+</td>
+<td>
+0.543
+</td>
+<td>
+0.544
+</td>
+<td>
+0.615
+</td>
+<td>
+0.617
+</td>
+<td>
+0.618
+</td>
+<td>
+0.606
+</td>
+<td>
+0.610
+</td>
+<td>
+0.610
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+0.521
+</td>
+<td>
+0.526
+</td>
+<td>
+0.525
+</td>
+<td>
+0.601
+</td>
+<td>
+0.602
+</td>
+<td>
+0.603
+</td>
+<td>
+0.599
+</td>
+<td>
+0.602
+</td>
+<td>
+0.603
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Residual Std. Error
+</td>
+<td>
+0.563 (df = 2381)
+</td>
+<td>
+0.561 (df = 2372)
+</td>
+<td>
+0.561 (df = 2369)
+</td>
+<td>
+0.660 (df = 2398)
+</td>
+<td>
+0.659 (df = 2389)
+</td>
+<td>
+0.659 (df = 2386)
+</td>
+<td>
+0.621 (df = 4862)
+</td>
+<td>
+0.618 (df = 4853)
+</td>
+<td>
+0.618 (df = 4850)
+</td>
+</tr>
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td colspan="9" style="text-align:left">
+<em>p&lt;0.05, <strong>p&lt;0.01, </strong></em>p&lt;0.001. Cells report
+coefficients and associated standard errors
+</td>
+</tr>
+</table>
+<p>Separate girls and boys, gender match effect on English score:</p>
+<table style="text-align:center">
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="9">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+English score
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+match
+</td>
+<td>
+0.044
+</td>
+<td>
+-0.006
+</td>
+<td>
+0.015
+</td>
+<td>
+0.075
+</td>
+<td>
+0.096
+</td>
+<td>
+0.060
+</td>
+<td>
+0.092<sup>***</sup>
+</td>
+<td>
+0.084<sup>***</sup>
+</td>
+<td>
+0.084<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.057)
+</td>
+<td>
+(0.055)
+</td>
+<td>
+(0.045)
+</td>
+<td>
+(0.064)
+</td>
+<td>
+(0.059)
+</td>
+<td>
+(0.046)
+</td>
+<td>
+(0.022)
+</td>
+<td>
+(0.022)
+</td>
+<td>
+(0.021)
+</td>
+</tr>
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Student Covariates
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Homeroom Covariates
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Teacher Covariates
+</td>
+<td>
+No
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+School FE
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+School clustered SE
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+2,473
+</td>
+<td>
+2,473
+</td>
+<td>
+2,473
+</td>
+<td>
+2,489
+</td>
+<td>
+2,489
+</td>
+<td>
+2,489
+</td>
+<td>
+4,962
+</td>
+<td>
+4,962
+</td>
+<td>
+4,962
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+R<sup>2</sup>
+</td>
+<td>
+0.688
+</td>
+<td>
+0.689
+</td>
+<td>
+0.691
+</td>
+<td>
+0.703
+</td>
+<td>
+0.704
+</td>
+<td>
+0.706
+</td>
+<td>
+0.710
+</td>
+<td>
+0.711
+</td>
+<td>
+0.712
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+0.678
+</td>
+<td>
+0.678
+</td>
+<td>
+0.679
+</td>
+<td>
+0.693
+</td>
+<td>
+0.693
+</td>
+<td>
+0.694
+</td>
+<td>
+0.705
+</td>
+<td>
+0.705
+</td>
+<td>
+0.707
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Residual Std. Error
+</td>
+<td>
+0.487 (df = 2390)
+</td>
+<td>
+0.487 (df = 2381)
+</td>
+<td>
+0.486 (df = 2378)
+</td>
+<td>
+0.578 (df = 2406)
+</td>
+<td>
+0.578 (df = 2397)
+</td>
+<td>
+0.577 (df = 2394)
+</td>
+<td>
+0.538 (df = 4879)
+</td>
+<td>
+0.538 (df = 4870)
+</td>
+<td>
+0.537 (df = 4867)
+</td>
+</tr>
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td colspan="9" style="text-align:left">
+<em>p&lt;0.05, <strong>p&lt;0.01, </strong></em>p&lt;0.001. Cells report
+coefficients and associated standard errors
+</td>
+</tr>
+</table>
+<p>Separate girls and boys, gender match effect on math score:</p>
+<table style="text-align:center">
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="9">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+Math score
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+match
+</td>
+<td>
+0.133<sup>*</sup>
+</td>
+<td>
+0.149<sup>*</sup>
+</td>
+<td>
+0.145<sup>*</sup>
+</td>
+<td>
+0.003
+</td>
+<td>
+0.015
+</td>
+<td>
+0.011
+</td>
+<td>
+0.048<sup>*</sup>
+</td>
+<td>
+0.048<sup>*</sup>
+</td>
+<td>
+0.048
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.058)
+</td>
+<td>
+(0.065)
+</td>
+<td>
+(0.063)
+</td>
+<td>
+(0.044)
+</td>
+<td>
+(0.047)
+</td>
+<td>
+(0.049)
+</td>
+<td>
+(0.024)
+</td>
+<td>
+(0.024)
+</td>
+<td>
+(0.025)
+</td>
+</tr>
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Student Covariates
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Homeroom Covariates
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Teacher Covariates
+</td>
+<td>
+No
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+School FE
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+School clustered SE
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+2,498
+</td>
+<td>
+2,498
+</td>
+<td>
+2,498
+</td>
+<td>
+2,518
+</td>
+<td>
+2,518
+</td>
+<td>
+2,518
+</td>
+<td>
+5,016
+</td>
+<td>
+5,016
+</td>
+<td>
+5,016
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+R<sup>2</sup>
+</td>
+<td>
+0.613
+</td>
+<td>
+0.616
+</td>
+<td>
+0.618
+</td>
+<td>
+0.649
+</td>
+<td>
+0.650
+</td>
+<td>
+0.653
+</td>
+<td>
+0.625
+</td>
+<td>
+0.626
+</td>
+<td>
+0.628
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+0.600
+</td>
+<td>
+0.602
+</td>
+<td>
+0.603
+</td>
+<td>
+0.637
+</td>
+<td>
+0.637
+</td>
+<td>
+0.639
+</td>
+<td>
+0.619
+</td>
+<td>
+0.619
+</td>
+<td>
+0.621
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Residual Std. Error
+</td>
+<td>
+0.586 (df = 2415)
+</td>
+<td>
+0.585 (df = 2406)
+</td>
+<td>
+0.584 (df = 2403)
+</td>
+<td>
+0.628 (df = 2435)
+</td>
+<td>
+0.627 (df = 2426)
+</td>
+<td>
+0.626 (df = 2423)
+</td>
+<td>
+0.611 (df = 4933)
+</td>
+<td>
+0.611 (df = 4924)
+</td>
+<td>
+0.610 (df = 4921)
+</td>
+</tr>
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td colspan="9" style="text-align:left">
+<em>p&lt;0.05, <strong>p&lt;0.01, </strong></em>p&lt;0.001. Cells report
+coefficients and associated standard errors
+</td>
+</tr>
+</table>
+<p>Separate girls and boys, gender match effect on Chinese
+confidence:</p>
+<table style="text-align:center">
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="9">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+Chinese confidence
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+match
+</td>
+<td>
+0.149
+</td>
+<td>
+0.106
+</td>
+<td>
+0.031
+</td>
+<td>
+-0.097
+</td>
+<td>
+-0.168
+</td>
+<td>
+-0.187
+</td>
+<td>
+0.121<sup>***</sup>
+</td>
+<td>
+0.112<sup>***</sup>
+</td>
+<td>
+0.116<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.117)
+</td>
+<td>
+(0.125)
+</td>
+<td>
+(0.101)
+</td>
+<td>
+(0.116)
+</td>
+<td>
+(0.115)
+</td>
+<td>
+(0.116)
+</td>
+<td>
+(0.031)
+</td>
+<td>
+(0.031)
+</td>
+<td>
+(0.031)
+</td>
+</tr>
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Student Covariates
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Homeroom Covariates
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Teacher Covariates
+</td>
+<td>
+No
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+School FE
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+School clustered SE
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+2,464
+</td>
+<td>
+2,464
+</td>
+<td>
+2,464
+</td>
+<td>
+2,481
+</td>
+<td>
+2,481
+</td>
+<td>
+2,481
+</td>
+<td>
+4,945
+</td>
+<td>
+4,945
+</td>
+<td>
+4,945
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+R<sup>2</sup>
+</td>
+<td>
+0.079
+</td>
+<td>
+0.087
+</td>
+<td>
+0.096
+</td>
+<td>
+0.073
+</td>
+<td>
+0.079
+</td>
+<td>
+0.080
+</td>
+<td>
+0.076
+</td>
+<td>
+0.082
+</td>
+<td>
+0.085
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+0.047
+</td>
+<td>
+0.052
+</td>
+<td>
+0.061
+</td>
+<td>
+0.041
+</td>
+<td>
+0.043
+</td>
+<td>
+0.044
+</td>
+<td>
+0.061
+</td>
+<td>
+0.064
+</td>
+<td>
+0.068
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Residual Std. Error
+</td>
+<td>
+0.899 (df = 2381)
+</td>
+<td>
+0.897 (df = 2372)
+</td>
+<td>
+0.893 (df = 2369)
+</td>
+<td>
+1.014 (df = 2398)
+</td>
+<td>
+1.013 (df = 2389)
+</td>
+<td>
+1.013 (df = 2386)
+</td>
+<td>
+0.960 (df = 4862)
+</td>
+<td>
+0.958 (df = 4853)
+</td>
+<td>
+0.957 (df = 4850)
+</td>
+</tr>
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td colspan="9" style="text-align:left">
+<em>p&lt;0.05, <strong>p&lt;0.01, </strong></em>p&lt;0.001. Cells report
+coefficients and associated standard errors
+</td>
+</tr>
+</table>
+<p>Separate girls and boys, gender match effect on English
+confidence:</p>
+<table style="text-align:center">
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="9">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+English confidence
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+match
+</td>
+<td>
+0.103
+</td>
+<td>
+-0.012
+</td>
+<td>
+0.009
+</td>
+<td>
+0.008
+</td>
+<td>
+0.053
+</td>
+<td>
+-0.025
+</td>
+<td>
+0.133<sup>**</sup>
+</td>
+<td>
+0.132<sup>**</sup>
+</td>
+<td>
+0.130<sup>**</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.136)
+</td>
+<td>
+(0.111)
+</td>
+<td>
+(0.097)
+</td>
+<td>
+(0.103)
+</td>
+<td>
+(0.091)
+</td>
+<td>
+(0.094)
+</td>
+<td>
+(0.040)
+</td>
+<td>
+(0.041)
+</td>
+<td>
+(0.040)
+</td>
+</tr>
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Student Covariates
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Homeroom Covariates
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Teacher Covariates
+</td>
+<td>
+No
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+School FE
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+School clustered SE
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+2,473
+</td>
+<td>
+2,473
+</td>
+<td>
+2,473
+</td>
+<td>
+2,489
+</td>
+<td>
+2,489
+</td>
+<td>
+2,489
+</td>
+<td>
+4,962
+</td>
+<td>
+4,962
+</td>
+<td>
+4,962
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+R<sup>2</sup>
+</td>
+<td>
+0.242
+</td>
+<td>
+0.251
+</td>
+<td>
+0.256
+</td>
+<td>
+0.261
+</td>
+<td>
+0.267
+</td>
+<td>
+0.270
+</td>
+<td>
+0.261
+</td>
+<td>
+0.266
+</td>
+<td>
+0.269
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+0.216
+</td>
+<td>
+0.223
+</td>
+<td>
+0.226
+</td>
+<td>
+0.236
+</td>
+<td>
+0.239
+</td>
+<td>
+0.242
+</td>
+<td>
+0.249
+</td>
+<td>
+0.252
+</td>
+<td>
+0.255
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Residual Std. Error
+</td>
+<td>
+0.827 (df = 2390)
+</td>
+<td>
+0.824 (df = 2381)
+</td>
+<td>
+0.822 (df = 2378)
+</td>
+<td>
+0.877 (df = 2406)
+</td>
+<td>
+0.875 (df = 2397)
+</td>
+<td>
+0.874 (df = 2394)
+</td>
+<td>
+0.860 (df = 4879)
+</td>
+<td>
+0.859 (df = 4870)
+</td>
+<td>
+0.857 (df = 4867)
+</td>
+</tr>
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td colspan="9" style="text-align:left">
+<em>p&lt;0.05, <strong>p&lt;0.01, </strong></em>p&lt;0.001. Cells report
+coefficients and associated standard errors
+</td>
+</tr>
+</table>
+<p>Separate girls and boys, gender match effect on math confidence:</p>
+<table style="text-align:center">
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="9">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+Math confidence
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+match
+</td>
+<td>
+0.127
+</td>
+<td>
+0.094
+</td>
+<td>
+0.072
+</td>
+<td>
+-0.032
+</td>
+<td>
+0.014
+</td>
+<td>
+-0.033
+</td>
+<td>
+0.017
+</td>
+<td>
+0.019
+</td>
+<td>
+0.018
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.070)
+</td>
+<td>
+(0.083)
+</td>
+<td>
+(0.073)
+</td>
+<td>
+(0.060)
+</td>
+<td>
+(0.062)
+</td>
+<td>
+(0.063)
+</td>
+<td>
+(0.036)
+</td>
+<td>
+(0.036)
+</td>
+<td>
+(0.036)
+</td>
+</tr>
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Student Covariates
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Homeroom Covariates
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Teacher Covariates
+</td>
+<td>
+No
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+School FE
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+School clustered SE
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+2,498
+</td>
+<td>
+2,498
+</td>
+<td>
+2,498
+</td>
+<td>
+2,518
+</td>
+<td>
+2,518
+</td>
+<td>
+2,518
+</td>
+<td>
+5,016
+</td>
+<td>
+5,016
+</td>
+<td>
+5,016
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+R<sup>2</sup>
+</td>
+<td>
+0.276
+</td>
+<td>
+0.282
+</td>
+<td>
+0.285
+</td>
+<td>
+0.242
+</td>
+<td>
+0.247
+</td>
+<td>
+0.252
+</td>
+<td>
+0.232
+</td>
+<td>
+0.236
+</td>
+<td>
+0.239
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+0.252
+</td>
+<td>
+0.255
+</td>
+<td>
+0.257
+</td>
+<td>
+0.217
+</td>
+<td>
+0.218
+</td>
+<td>
+0.222
+</td>
+<td>
+0.220
+</td>
+<td>
+0.222
+</td>
+<td>
+0.224
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Residual Std. Error
+</td>
+<td>
+0.806 (df = 2415)
+</td>
+<td>
+0.805 (df = 2406)
+</td>
+<td>
+0.803 (df = 2403)
+</td>
+<td>
+0.917 (df = 2435)
+</td>
+<td>
+0.916 (df = 2426)
+</td>
+<td>
+0.913 (df = 2423)
+</td>
+<td>
+0.876 (df = 4933)
+</td>
+<td>
+0.874 (df = 4924)
+</td>
+<td>
+0.873 (df = 4921)
+</td>
+</tr>
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td colspan="9" style="text-align:left">
+<em>p&lt;0.05, <strong>p&lt;0.01, </strong></em>p&lt;0.001. Cells report
+coefficients and associated standard errors
+</td>
+</tr>
+</table>
 </div>
 
 

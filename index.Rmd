@@ -17,8 +17,16 @@ This page provides an overview of the project Claire and Anwesha currently worki
 It is not ready for sharing and none of the results reflects our true estimates.
 Please don't distribute.
 
-[Slides](./writeup/aefp2023.html)
+#### Invistigating the causal impact of teacher human capital characteristics on student learning
 
-[Abstract](./writeup/aefp2023.doc)
+[Slides](./writeup/aefp_hcc.html)
+
+[Abstract](./writeup/aefp_hcc.doc)
+
+#### Invistigating the causal impact of teacher gender on student learning
+
+[Slides](./writeup/aefp_gender.html)
+
+[Abstract](./writeup/aefp_gender.doc)
 
 
