@@ -350,17 +350,17 @@ Before get to teacher gender/matched gender effects, look at the gender gap in a
 Gender gap:
 
 ```{r, include = TRUE, results = "asis"}
-m1 <- felm(score ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + female + age + only + rural + migrant + medu + fedu + income | schids | 0 |schids, chn)
-m2 <- felm(score ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 |schids, chn)
-m3 <- felm(score ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchfemale + tchexp + tchedu | schids | 0 |schids, chn)
+m1 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + female + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, chn)
+m2 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, chn)
+m3 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchfemale + tchexp + tchedu | schids | 0 | schids, chn)
 
-m4 <- felm(score ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + female + age + only + rural + migrant + medu + fedu + income | schids | 0 |schids, eng)
-m5 <- felm(score ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 |schids, eng)
-m6 <- felm(score ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchfemale + tchexp + tchedu | schids | 0 |schids, eng)
+m4 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + female + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, eng)
+m5 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, eng)
+m6 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchfemale + tchexp + tchedu | schids | 0 | schids, eng)
 
-m7 <- felm(score ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + female + age + only + rural + migrant + medu + fedu + income | schids | 0 |schids, mat)
-m8 <- felm(score ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 |schids, mat)
-m9 <- felm(score ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchfemale + tchexp + tchedu | schids | 0 |schids, mat)
+m7 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + female + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, mat)
+m8 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, mat)
+m9 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchfemale + tchexp + tchedu | schids | 0 | schids, mat)
 
 
 stargazer(m1, m2, m3, m4, m5, m6, m7, m8, m9,
@@ -420,17 +420,17 @@ Separate girls and boys, gender match effect on Chinese score:
 chn1 <- chn %>% filter(female == 1)
 chn2 <- chn %>% filter(female == 0)
 
-m1 <- felm(score ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income | schids | 0 |schids, chn1)
-m2 <- felm(score ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 |schids, chn1)
-m3 <- felm(score ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 |schids, chn1)
+m1 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, chn1)
+m2 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, chn1)
+m3 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 | schids, chn1)
 
-m4 <- felm(score ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income | schids | 0 |schids, chn2)
-m5 <- felm(score ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 |schids, chn2)
-m6 <- felm(score ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 |schids, chn2)
+m4 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, chn2)
+m5 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, chn2)
+m6 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 | schids, chn2)
 
-m7 <- felm(score ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income | schids | 0 |schids, chn)
-m8 <- felm(score ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 |schids, chn)
-m9 <- felm(score ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 |schids, chn)
+m7 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, chn)
+m8 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, chn)
+m9 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 | schids, chn)
 
 
 stargazer(m1, m2, m3, m4, m5, m6, m7, m8, m9,
@@ -460,17 +460,17 @@ Separate girls and boys, gender match effect on English score:
 eng1 <- eng %>% filter(female == 1)
 eng2 <- eng %>% filter(female == 0)
 
-m1 <- felm(score ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income | schids | 0 |schids, eng1)
-m2 <- felm(score ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 |schids, eng1)
-m3 <- felm(score ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 |schids, eng1)
+m1 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, eng1)
+m2 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, eng1)
+m3 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 | schids, eng1)
 
-m4 <- felm(score ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income | schids | 0 |schids, eng2)
-m5 <- felm(score ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 |schids, eng2)
-m6 <- felm(score ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 |schids, eng2)
+m4 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, eng2)
+m5 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, eng2)
+m6 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 | schids, eng2)
 
-m7 <- felm(score ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income | schids | 0 |schids, eng)
-m8 <- felm(score ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 |schids, eng)
-m9 <- felm(score ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 |schids, eng)
+m7 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, eng)
+m8 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, eng)
+m9 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 | schids, eng)
 
 
 stargazer(m1, m2, m3, m4, m5, m6, m7, m8, m9,
@@ -500,17 +500,17 @@ Separate girls and boys, gender match effect on math score:
 mat1 <- mat %>% filter(female == 1)
 mat2 <- mat %>% filter(female == 0)
 
-m1 <- felm(score ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income | schids | 0 |schids, mat1)
-m2 <- felm(score ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 |schids, mat1)
-m3 <- felm(score ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 |schids, mat1)
+m1 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, mat1)
+m2 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, mat1)
+m3 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 | schids, mat1)
 
-m4 <- felm(score ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income | schids | 0 |schids, mat2)
-m5 <- felm(score ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 |schids, mat2)
-m6 <- felm(score ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 |schids, mat2)
+m4 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, mat2)
+m5 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, mat2)
+m6 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 | schids, mat2)
 
-m7 <- felm(score ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income | schids | 0 |schids, mat)
-m8 <- felm(score ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 |schids, mat)
-m9 <- felm(score ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 |schids, mat)
+m7 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, mat)
+m8 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, mat)
+m9 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 | schids, mat)
 
 
 stargazer(m1, m2, m3, m4, m5, m6, m7, m8, m9,
@@ -541,17 +541,17 @@ Separate girls and boys, gender match effect on Chinese confidence:
 chn1 <- chn %>% filter(female == 1)
 chn2 <- chn %>% filter(female == 0)
 
-m1 <- felm(conf ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income | schids | 0 |schids, chn1)
-m2 <- felm(conf ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 |schids, chn1)
-m3 <- felm(conf ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 |schids, chn1)
+m1 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, chn1)
+m2 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, chn1)
+m3 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 | schids, chn1)
 
-m4 <- felm(conf ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income | schids | 0 |schids, chn2)
-m5 <- felm(conf ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 |schids, chn2)
-m6 <- felm(conf ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 |schids, chn2)
+m4 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, chn2)
+m5 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, chn2)
+m6 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 | schids, chn2)
 
-m7 <- felm(conf ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income | schids | 0 |schids, chn)
-m8 <- felm(conf ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 |schids, chn)
-m9 <- felm(conf ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 |schids, chn)
+m7 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, chn)
+m8 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, chn)
+m9 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 | schids, chn)
 
 
 stargazer(m1, m2, m3, m4, m5, m6, m7, m8, m9,
@@ -581,17 +581,17 @@ Separate girls and boys, gender match effect on English confidence:
 eng1 <- eng %>% filter(female == 1)
 eng2 <- eng %>% filter(female == 0)
 
-m1 <- felm(conf ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income | schids | 0 |schids, eng1)
-m2 <- felm(conf ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 |schids, eng1)
-m3 <- felm(conf ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 |schids, eng1)
+m1 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, eng1)
+m2 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, eng1)
+m3 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 | schids, eng1)
 
-m4 <- felm(conf ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income | schids | 0 |schids, eng2)
-m5 <- felm(conf ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 |schids, eng2)
-m6 <- felm(conf ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 |schids, eng2)
+m4 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, eng2)
+m5 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, eng2)
+m6 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 | schids, eng2)
 
-m7 <- felm(conf ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income | schids | 0 |schids, eng)
-m8 <- felm(conf ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 |schids, eng)
-m9 <- felm(conf ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 |schids, eng)
+m7 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, eng)
+m8 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, eng)
+m9 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 | schids, eng)
 
 
 stargazer(m1, m2, m3, m4, m5, m6, m7, m8, m9,
@@ -621,17 +621,17 @@ Separate girls and boys, gender match effect on math confidence:
 mat1 <- mat %>% filter(female == 1)
 mat2 <- mat %>% filter(female == 0)
 
-m1 <- felm(conf ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income | schids | 0 |schids, mat1)
-m2 <- felm(conf ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 |schids, mat1)
-m3 <- felm(conf ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 |schids, mat1)
+m1 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, mat1)
+m2 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, mat1)
+m3 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 | schids, mat1)
 
-m4 <- felm(conf ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income | schids | 0 |schids, mat2)
-m5 <- felm(conf ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 |schids, mat2)
-m6 <- felm(conf ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 |schids, mat2)
+m4 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, mat2)
+m5 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, mat2)
+m6 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 | schids, mat2)
 
-m7 <- felm(conf ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income | schids | 0 |schids, mat)
-m8 <- felm(conf ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 |schids, mat)
-m9 <- felm(conf ~ poly(cog, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 |schids, mat)
+m7 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, mat)
+m8 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, mat)
+m9 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + match + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 | schids, mat)
 
 
 stargazer(m1, m2, m3, m4, m5, m6, m7, m8, m9,
