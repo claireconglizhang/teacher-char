@@ -390,84 +390,96 @@ characteristics</h1>
 <li>years of teaching (tchexp)</li>
 <li>1-2 years (tchexp1)</li>
 <li>3-4 years (tchexp2)</li>
-<li>5-9 years (tchexp3)</li>
-<li>10-14 years (tchexp4)</li>
-<li>15-24 years (tchexp5)</li>
+<li>5-6 years (tchexp3)</li>
+<li>7-9 years (tchexp4)</li>
+<li>10-24 years (tchexp5)</li>
 <li>25+ years (tchexp6)</li>
 </ul></li>
 </ul>
 </div>
 <div id="missing-data" class="section level3">
 <h3>Missing data</h3>
-<pre><code>##       ids    clsids  w2clsids    schids      fall    tchedu   tchgrad    tchexp 
-##      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;   &quot;0.92%&quot;   &quot;0.92%&quot;   &quot;4.78%&quot; 
-##   tchexp1   tchexp2   tchexp3   tchexp4   tchexp5   tchexp6     score      conf 
-##   &quot;4.78%&quot;   &quot;4.78%&quot;   &quot;4.78%&quot;   &quot;4.78%&quot;   &quot;4.78%&quot;   &quot;4.78%&quot;   &quot;1.09%&quot;   &quot;0.52%&quot; 
-##       cog      chn1      eng1      mat1      cog1    female       age      only 
-##   &quot;0.98%&quot;   &quot;1.71%&quot;   &quot;1.69%&quot;   &quot;1.69%&quot;      &quot;0%&quot;      &quot;0%&quot;   &quot;2.42%&quot;      &quot;0%&quot; 
-##     rural   migrant      medu      fedu    income tchfemale   advisor    hrsize 
-##      &quot;0%&quot;   &quot;0.69%&quot;   &quot;0.21%&quot;   &quot;0.21%&quot;   &quot;0.25%&quot;    &quot;1.4%&quot;   &quot;0.92%&quot;      &quot;0%&quot; 
-##  hrfemale     hrage    hronly   hrrural hrmigrant    hrmedu    hrfedu  hrincome 
-##      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;</code></pre>
-<pre><code>##       ids    clsids  w2clsids    schids      fall    tchedu   tchgrad    tchexp 
-##      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;   &quot;2.13%&quot; 
-##   tchexp1   tchexp2   tchexp3   tchexp4   tchexp5   tchexp6     score      conf 
-##   &quot;2.13%&quot;   &quot;2.13%&quot;   &quot;2.13%&quot;   &quot;2.13%&quot;   &quot;2.13%&quot;   &quot;2.13%&quot;   &quot;1.19%&quot;   &quot;0.54%&quot; 
-##       cog      chn1      eng1      mat1      cog1    female       age      only 
-##   &quot;0.98%&quot;   &quot;1.71%&quot;   &quot;1.69%&quot;   &quot;1.69%&quot;      &quot;0%&quot;      &quot;0%&quot;   &quot;2.42%&quot;      &quot;0%&quot; 
-##     rural   migrant      medu      fedu    income tchfemale   advisor    hrsize 
-##      &quot;0%&quot;   &quot;0.69%&quot;   &quot;0.21%&quot;   &quot;0.21%&quot;   &quot;0.25%&quot;    &quot;0.9%&quot;      &quot;0%&quot;      &quot;0%&quot; 
-##  hrfemale     hrage    hronly   hrrural hrmigrant    hrmedu    hrfedu  hrincome 
-##      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;</code></pre>
-<pre><code>##       ids    clsids  w2clsids    schids      fall    tchedu   tchgrad    tchexp 
-##      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;   &quot;2.63%&quot; 
-##   tchexp1   tchexp2   tchexp3   tchexp4   tchexp5   tchexp6     score      conf 
-##   &quot;2.63%&quot;   &quot;2.63%&quot;   &quot;2.63%&quot;   &quot;2.63%&quot;   &quot;2.63%&quot;   &quot;2.63%&quot;   &quot;1.08%&quot;   &quot;0.48%&quot; 
-##       cog      chn1      eng1      mat1      cog1    female       age      only 
-##   &quot;0.98%&quot;   &quot;1.71%&quot;   &quot;1.69%&quot;   &quot;1.69%&quot;      &quot;0%&quot;      &quot;0%&quot;   &quot;2.42%&quot;      &quot;0%&quot; 
-##     rural   migrant      medu      fedu    income tchfemale   advisor    hrsize 
-##      &quot;0%&quot;   &quot;0.69%&quot;   &quot;0.21%&quot;   &quot;0.21%&quot;   &quot;0.25%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot; 
-##  hrfemale     hrage    hronly   hrrural hrmigrant    hrmedu    hrfedu  hrincome 
-##      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;</code></pre>
-<pre><code>##       ids    clsids  w2clsids    schids      fall    tchedu   tchgrad    tchexp 
+<pre><code>##       ids    clsids  w2clsids    schids      fall    tchedu   tchgrad  tchmajor 
+##      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;   &quot;0.92%&quot;   &quot;0.92%&quot;   &quot;0.92%&quot; 
+##    tchexp   tchexp1   tchexp2   tchexp3   tchexp4   tchexp5   tchexp6     score 
+##   &quot;4.78%&quot;   &quot;4.78%&quot;   &quot;4.78%&quot;   &quot;4.78%&quot;   &quot;4.78%&quot;   &quot;4.78%&quot;   &quot;4.78%&quot;   &quot;1.09%&quot; 
+##      conf       cog      chn1      eng1      mat1      cog1    female       age 
+##   &quot;0.52%&quot;   &quot;0.98%&quot;   &quot;1.71%&quot;   &quot;1.69%&quot;   &quot;1.69%&quot;      &quot;0%&quot;      &quot;0%&quot;   &quot;2.42%&quot; 
+##      only     rural   migrant      medu      fedu    income tchfemale   advisor 
+##      &quot;0%&quot;      &quot;0%&quot;   &quot;0.69%&quot;   &quot;0.21%&quot;   &quot;0.21%&quot;   &quot;0.25%&quot;    &quot;1.4%&quot;   &quot;0.92%&quot; 
+##    hrsize  hrfemale     hrage    hronly   hrrural hrmigrant    hrmedu    hrfedu 
 ##      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot; 
-##   tchexp1   tchexp2   tchexp3   tchexp4   tchexp5   tchexp6     score      conf 
+##  hrincome 
+##      &quot;0%&quot;</code></pre>
+<pre><code>##       ids    clsids  w2clsids    schids      fall    tchedu   tchgrad  tchmajor 
 ##      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot; 
-##       cog      chn1      eng1      mat1      cog1    female       age      only 
+##    tchexp   tchexp1   tchexp2   tchexp3   tchexp4   tchexp5   tchexp6     score 
+##   &quot;2.13%&quot;   &quot;2.13%&quot;   &quot;2.13%&quot;   &quot;2.13%&quot;   &quot;2.13%&quot;   &quot;2.13%&quot;   &quot;2.13%&quot;   &quot;1.19%&quot; 
+##      conf       cog      chn1      eng1      mat1      cog1    female       age 
+##   &quot;0.54%&quot;   &quot;0.98%&quot;   &quot;1.71%&quot;   &quot;1.69%&quot;   &quot;1.69%&quot;      &quot;0%&quot;      &quot;0%&quot;   &quot;2.42%&quot; 
+##      only     rural   migrant      medu      fedu    income tchfemale   advisor 
+##      &quot;0%&quot;      &quot;0%&quot;   &quot;0.69%&quot;   &quot;0.21%&quot;   &quot;0.21%&quot;   &quot;0.25%&quot;    &quot;0.9%&quot;      &quot;0%&quot; 
+##    hrsize  hrfemale     hrage    hronly   hrrural hrmigrant    hrmedu    hrfedu 
 ##      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot; 
-##     rural   migrant      medu      fedu    income tchfemale   advisor    hrsize 
+##  hrincome 
+##      &quot;0%&quot;</code></pre>
+<pre><code>##       ids    clsids  w2clsids    schids      fall    tchedu   tchgrad  tchmajor 
 ##      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot; 
-##  hrfemale     hrage    hronly   hrrural hrmigrant    hrmedu    hrfedu  hrincome 
-##      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;</code></pre>
-<pre><code>##       ids    clsids  w2clsids    schids      fall    tchedu   tchgrad    tchexp 
+##    tchexp   tchexp1   tchexp2   tchexp3   tchexp4   tchexp5   tchexp6     score 
+##   &quot;2.63%&quot;   &quot;2.63%&quot;   &quot;2.63%&quot;   &quot;2.63%&quot;   &quot;2.63%&quot;   &quot;2.63%&quot;   &quot;2.63%&quot;   &quot;1.08%&quot; 
+##      conf       cog      chn1      eng1      mat1      cog1    female       age 
+##   &quot;0.48%&quot;   &quot;0.98%&quot;   &quot;1.71%&quot;   &quot;1.69%&quot;   &quot;1.69%&quot;      &quot;0%&quot;      &quot;0%&quot;   &quot;2.42%&quot; 
+##      only     rural   migrant      medu      fedu    income tchfemale   advisor 
+##      &quot;0%&quot;      &quot;0%&quot;   &quot;0.69%&quot;   &quot;0.21%&quot;   &quot;0.21%&quot;   &quot;0.25%&quot;      &quot;0%&quot;      &quot;0%&quot; 
+##    hrsize  hrfemale     hrage    hronly   hrrural hrmigrant    hrmedu    hrfedu 
 ##      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot; 
-##   tchexp1   tchexp2   tchexp3   tchexp4   tchexp5   tchexp6     score      conf 
+##  hrincome 
+##      &quot;0%&quot;</code></pre>
+<pre><code>##       ids    clsids  w2clsids    schids      fall    tchedu   tchgrad  tchmajor 
 ##      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot; 
-##       cog      chn1      eng1      mat1      cog1    female       age      only 
+##    tchexp   tchexp1   tchexp2   tchexp3   tchexp4   tchexp5   tchexp6     score 
 ##      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot; 
-##     rural   migrant      medu      fedu    income tchfemale   advisor    hrsize 
+##      conf       cog      chn1      eng1      mat1      cog1    female       age 
 ##      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot; 
-##  hrfemale     hrage    hronly   hrrural hrmigrant    hrmedu    hrfedu  hrincome 
-##      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;</code></pre>
-<pre><code>##       ids    clsids  w2clsids    schids      fall    tchedu   tchgrad    tchexp 
+##      only     rural   migrant      medu      fedu    income tchfemale   advisor 
 ##      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot; 
-##   tchexp1   tchexp2   tchexp3   tchexp4   tchexp5   tchexp6     score      conf 
+##    hrsize  hrfemale     hrage    hronly   hrrural hrmigrant    hrmedu    hrfedu 
 ##      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot; 
-##       cog      chn1      eng1      mat1      cog1    female       age      only 
+##  hrincome 
+##      &quot;0%&quot;</code></pre>
+<pre><code>##       ids    clsids  w2clsids    schids      fall    tchedu   tchgrad  tchmajor 
 ##      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot; 
-##     rural   migrant      medu      fedu    income tchfemale   advisor    hrsize 
+##    tchexp   tchexp1   tchexp2   tchexp3   tchexp4   tchexp5   tchexp6     score 
 ##      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot; 
-##  hrfemale     hrage    hronly   hrrural hrmigrant    hrmedu    hrfedu  hrincome 
-##      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;</code></pre>
+##      conf       cog      chn1      eng1      mat1      cog1    female       age 
+##      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot; 
+##      only     rural   migrant      medu      fedu    income tchfemale   advisor 
+##      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot; 
+##    hrsize  hrfemale     hrage    hronly   hrrural hrmigrant    hrmedu    hrfedu 
+##      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot; 
+##  hrincome 
+##      &quot;0%&quot;</code></pre>
+<pre><code>##       ids    clsids  w2clsids    schids      fall    tchedu   tchgrad  tchmajor 
+##      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot; 
+##    tchexp   tchexp1   tchexp2   tchexp3   tchexp4   tchexp5   tchexp6     score 
+##      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot; 
+##      conf       cog      chn1      eng1      mat1      cog1    female       age 
+##      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot; 
+##      only     rural   migrant      medu      fedu    income tchfemale   advisor 
+##      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot; 
+##    hrsize  hrfemale     hrage    hronly   hrrural hrmigrant    hrmedu    hrfedu 
+##      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot;      &quot;0%&quot; 
+##  hrincome 
+##      &quot;0%&quot;</code></pre>
 </div>
 <div id="analytic-sample-descriptive-stats" class="section level3">
 <h3>Analytic sample descriptive stats</h3>
-<div id="dkqqciuaxo" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="znvwgzjbhx" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#dkqqciuaxo .gt_table {
+#znvwgzjbhx .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -492,7 +504,7 @@ characteristics</h1>
   border-left-color: #D3D3D3;
 }
 
-#dkqqciuaxo .gt_heading {
+#znvwgzjbhx .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -504,7 +516,7 @@ characteristics</h1>
   border-right-color: #D3D3D3;
 }
 
-#dkqqciuaxo .gt_title {
+#znvwgzjbhx .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -516,7 +528,7 @@ characteristics</h1>
   border-bottom-width: 0;
 }
 
-#dkqqciuaxo .gt_subtitle {
+#znvwgzjbhx .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -528,13 +540,13 @@ characteristics</h1>
   border-top-width: 0;
 }
 
-#dkqqciuaxo .gt_bottom_border {
+#znvwgzjbhx .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#dkqqciuaxo .gt_col_headings {
+#znvwgzjbhx .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -549,7 +561,7 @@ characteristics</h1>
   border-right-color: #D3D3D3;
 }
 
-#dkqqciuaxo .gt_col_heading {
+#znvwgzjbhx .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -569,7 +581,7 @@ characteristics</h1>
   overflow-x: hidden;
 }
 
-#dkqqciuaxo .gt_column_spanner_outer {
+#znvwgzjbhx .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -581,15 +593,15 @@ characteristics</h1>
   padding-right: 4px;
 }
 
-#dkqqciuaxo .gt_column_spanner_outer:first-child {
+#znvwgzjbhx .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#dkqqciuaxo .gt_column_spanner_outer:last-child {
+#znvwgzjbhx .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#dkqqciuaxo .gt_column_spanner {
+#znvwgzjbhx .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -601,7 +613,7 @@ characteristics</h1>
   width: 100%;
 }
 
-#dkqqciuaxo .gt_group_heading {
+#znvwgzjbhx .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -626,7 +638,7 @@ characteristics</h1>
   vertical-align: middle;
 }
 
-#dkqqciuaxo .gt_empty_group_heading {
+#znvwgzjbhx .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -641,15 +653,15 @@ characteristics</h1>
   vertical-align: middle;
 }
 
-#dkqqciuaxo .gt_from_md > :first-child {
+#znvwgzjbhx .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#dkqqciuaxo .gt_from_md > :last-child {
+#znvwgzjbhx .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#dkqqciuaxo .gt_row {
+#znvwgzjbhx .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -668,7 +680,7 @@ characteristics</h1>
   overflow-x: hidden;
 }
 
-#dkqqciuaxo .gt_stub {
+#znvwgzjbhx .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -681,7 +693,7 @@ characteristics</h1>
   padding-right: 5px;
 }
 
-#dkqqciuaxo .gt_stub_row_group {
+#znvwgzjbhx .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -695,11 +707,11 @@ characteristics</h1>
   vertical-align: top;
 }
 
-#dkqqciuaxo .gt_row_group_first td {
+#znvwgzjbhx .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#dkqqciuaxo .gt_summary_row {
+#znvwgzjbhx .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -709,16 +721,16 @@ characteristics</h1>
   padding-right: 5px;
 }
 
-#dkqqciuaxo .gt_first_summary_row {
+#znvwgzjbhx .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#dkqqciuaxo .gt_first_summary_row.thick {
+#znvwgzjbhx .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#dkqqciuaxo .gt_last_summary_row {
+#znvwgzjbhx .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -728,7 +740,7 @@ characteristics</h1>
   border-bottom-color: #D3D3D3;
 }
 
-#dkqqciuaxo .gt_grand_summary_row {
+#znvwgzjbhx .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -738,7 +750,7 @@ characteristics</h1>
   padding-right: 5px;
 }
 
-#dkqqciuaxo .gt_first_grand_summary_row {
+#znvwgzjbhx .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -748,11 +760,11 @@ characteristics</h1>
   border-top-color: #D3D3D3;
 }
 
-#dkqqciuaxo .gt_striped {
+#znvwgzjbhx .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#dkqqciuaxo .gt_table_body {
+#znvwgzjbhx .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -761,7 +773,7 @@ characteristics</h1>
   border-bottom-color: #D3D3D3;
 }
 
-#dkqqciuaxo .gt_footnotes {
+#znvwgzjbhx .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -775,7 +787,7 @@ characteristics</h1>
   border-right-color: #D3D3D3;
 }
 
-#dkqqciuaxo .gt_footnote {
+#znvwgzjbhx .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -784,7 +796,7 @@ characteristics</h1>
   padding-right: 5px;
 }
 
-#dkqqciuaxo .gt_sourcenotes {
+#znvwgzjbhx .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -798,7 +810,7 @@ characteristics</h1>
   border-right-color: #D3D3D3;
 }
 
-#dkqqciuaxo .gt_sourcenote {
+#znvwgzjbhx .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -806,64 +818,64 @@ characteristics</h1>
   padding-right: 5px;
 }
 
-#dkqqciuaxo .gt_left {
+#znvwgzjbhx .gt_left {
   text-align: left;
 }
 
-#dkqqciuaxo .gt_center {
+#znvwgzjbhx .gt_center {
   text-align: center;
 }
 
-#dkqqciuaxo .gt_right {
+#znvwgzjbhx .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#dkqqciuaxo .gt_font_normal {
+#znvwgzjbhx .gt_font_normal {
   font-weight: normal;
 }
 
-#dkqqciuaxo .gt_font_bold {
+#znvwgzjbhx .gt_font_bold {
   font-weight: bold;
 }
 
-#dkqqciuaxo .gt_font_italic {
+#znvwgzjbhx .gt_font_italic {
   font-style: italic;
 }
 
-#dkqqciuaxo .gt_super {
+#znvwgzjbhx .gt_super {
   font-size: 65%;
 }
 
-#dkqqciuaxo .gt_footnote_marks {
+#znvwgzjbhx .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#dkqqciuaxo .gt_asterisk {
+#znvwgzjbhx .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#dkqqciuaxo .gt_indent_1 {
+#znvwgzjbhx .gt_indent_1 {
   text-indent: 5px;
 }
 
-#dkqqciuaxo .gt_indent_2 {
+#znvwgzjbhx .gt_indent_2 {
   text-indent: 10px;
 }
 
-#dkqqciuaxo .gt_indent_3 {
+#znvwgzjbhx .gt_indent_3 {
   text-indent: 15px;
 }
 
-#dkqqciuaxo .gt_indent_4 {
+#znvwgzjbhx .gt_indent_4 {
   text-indent: 20px;
 }
 
-#dkqqciuaxo .gt_indent_5 {
+#znvwgzjbhx .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -882,18 +894,18 @@ characteristics</h1>
 <td class="gt_row gt_center">118 / 4,754 (2.5%)</td></tr>
     <tr><td class="gt_row gt_left">Experience (in years)</td>
 <td class="gt_row gt_center">16 (1, 35)</td></tr>
-    <tr><td class="gt_row gt_left">0-3 years of experience</td>
-<td class="gt_row gt_center">378 / 4,754 (8.0%)</td></tr>
-    <tr><td class="gt_row gt_left">4-6 years of experience</td>
+    <tr><td class="gt_row gt_left">1-2 years of experience</td>
+<td class="gt_row gt_center">107 / 4,754 (2.3%)</td></tr>
+    <tr><td class="gt_row gt_left">3-4 years of experience</td>
+<td class="gt_row gt_center">24 / 4,754 (0.5%)</td></tr>
+    <tr><td class="gt_row gt_left">5-6 years of experience</td>
+<td class="gt_row gt_center">247 / 4,754 (5.2%)</td></tr>
+    <tr><td class="gt_row gt_left">7-12 years of experience</td>
 <td class="gt_row gt_center">301 / 4,754 (6.3%)</td></tr>
-    <tr><td class="gt_row gt_left">7-9 years of experience</td>
-<td class="gt_row gt_center">586 / 4,754 (12%)</td></tr>
-    <tr><td class="gt_row gt_left">10-12 years of experience</td>
-<td class="gt_row gt_center">542 / 4,754 (11%)</td></tr>
-    <tr><td class="gt_row gt_left">13-15 years of experience</td>
-<td class="gt_row gt_center">489 / 4,754 (10%)</td></tr>
-    <tr><td class="gt_row gt_left">16+ years of experience</td>
-<td class="gt_row gt_center">2,458 / 4,754 (52%)</td></tr>
+    <tr><td class="gt_row gt_left">13-24 years of experience</td>
+<td class="gt_row gt_center">419 / 4,754 (8.8%)</td></tr>
+    <tr><td class="gt_row gt_left">25+ years of experience</td>
+<td class="gt_row gt_center">3,489 / 4,754 (73%)</td></tr>
     <tr><td class="gt_row gt_left">Score</td>
 <td class="gt_row gt_center">0.01 (-6.74, 2.24)</td></tr>
     <tr><td class="gt_row gt_left">Confidence</td>
@@ -907,12 +919,12 @@ characteristics</h1>
   </tfoot>
 </table>
 </div>
-<div id="wahfsdgvqr" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="xjggewstvp" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#wahfsdgvqr .gt_table {
+#xjggewstvp .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -937,7 +949,7 @@ characteristics</h1>
   border-left-color: #D3D3D3;
 }
 
-#wahfsdgvqr .gt_heading {
+#xjggewstvp .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -949,7 +961,7 @@ characteristics</h1>
   border-right-color: #D3D3D3;
 }
 
-#wahfsdgvqr .gt_title {
+#xjggewstvp .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -961,7 +973,7 @@ characteristics</h1>
   border-bottom-width: 0;
 }
 
-#wahfsdgvqr .gt_subtitle {
+#xjggewstvp .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -973,13 +985,13 @@ characteristics</h1>
   border-top-width: 0;
 }
 
-#wahfsdgvqr .gt_bottom_border {
+#xjggewstvp .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#wahfsdgvqr .gt_col_headings {
+#xjggewstvp .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -994,7 +1006,7 @@ characteristics</h1>
   border-right-color: #D3D3D3;
 }
 
-#wahfsdgvqr .gt_col_heading {
+#xjggewstvp .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1014,7 +1026,7 @@ characteristics</h1>
   overflow-x: hidden;
 }
 
-#wahfsdgvqr .gt_column_spanner_outer {
+#xjggewstvp .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1026,15 +1038,15 @@ characteristics</h1>
   padding-right: 4px;
 }
 
-#wahfsdgvqr .gt_column_spanner_outer:first-child {
+#xjggewstvp .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#wahfsdgvqr .gt_column_spanner_outer:last-child {
+#xjggewstvp .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#wahfsdgvqr .gt_column_spanner {
+#xjggewstvp .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1046,7 +1058,7 @@ characteristics</h1>
   width: 100%;
 }
 
-#wahfsdgvqr .gt_group_heading {
+#xjggewstvp .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1071,7 +1083,7 @@ characteristics</h1>
   vertical-align: middle;
 }
 
-#wahfsdgvqr .gt_empty_group_heading {
+#xjggewstvp .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1086,15 +1098,15 @@ characteristics</h1>
   vertical-align: middle;
 }
 
-#wahfsdgvqr .gt_from_md > :first-child {
+#xjggewstvp .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#wahfsdgvqr .gt_from_md > :last-child {
+#xjggewstvp .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#wahfsdgvqr .gt_row {
+#xjggewstvp .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1113,7 +1125,7 @@ characteristics</h1>
   overflow-x: hidden;
 }
 
-#wahfsdgvqr .gt_stub {
+#xjggewstvp .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1126,7 +1138,7 @@ characteristics</h1>
   padding-right: 5px;
 }
 
-#wahfsdgvqr .gt_stub_row_group {
+#xjggewstvp .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1140,11 +1152,11 @@ characteristics</h1>
   vertical-align: top;
 }
 
-#wahfsdgvqr .gt_row_group_first td {
+#xjggewstvp .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#wahfsdgvqr .gt_summary_row {
+#xjggewstvp .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1154,16 +1166,16 @@ characteristics</h1>
   padding-right: 5px;
 }
 
-#wahfsdgvqr .gt_first_summary_row {
+#xjggewstvp .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#wahfsdgvqr .gt_first_summary_row.thick {
+#xjggewstvp .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#wahfsdgvqr .gt_last_summary_row {
+#xjggewstvp .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1173,7 +1185,7 @@ characteristics</h1>
   border-bottom-color: #D3D3D3;
 }
 
-#wahfsdgvqr .gt_grand_summary_row {
+#xjggewstvp .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1183,7 +1195,7 @@ characteristics</h1>
   padding-right: 5px;
 }
 
-#wahfsdgvqr .gt_first_grand_summary_row {
+#xjggewstvp .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1193,11 +1205,11 @@ characteristics</h1>
   border-top-color: #D3D3D3;
 }
 
-#wahfsdgvqr .gt_striped {
+#xjggewstvp .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#wahfsdgvqr .gt_table_body {
+#xjggewstvp .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1206,7 +1218,7 @@ characteristics</h1>
   border-bottom-color: #D3D3D3;
 }
 
-#wahfsdgvqr .gt_footnotes {
+#xjggewstvp .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1220,7 +1232,7 @@ characteristics</h1>
   border-right-color: #D3D3D3;
 }
 
-#wahfsdgvqr .gt_footnote {
+#xjggewstvp .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -1229,7 +1241,7 @@ characteristics</h1>
   padding-right: 5px;
 }
 
-#wahfsdgvqr .gt_sourcenotes {
+#xjggewstvp .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1243,7 +1255,7 @@ characteristics</h1>
   border-right-color: #D3D3D3;
 }
 
-#wahfsdgvqr .gt_sourcenote {
+#xjggewstvp .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1251,64 +1263,64 @@ characteristics</h1>
   padding-right: 5px;
 }
 
-#wahfsdgvqr .gt_left {
+#xjggewstvp .gt_left {
   text-align: left;
 }
 
-#wahfsdgvqr .gt_center {
+#xjggewstvp .gt_center {
   text-align: center;
 }
 
-#wahfsdgvqr .gt_right {
+#xjggewstvp .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#wahfsdgvqr .gt_font_normal {
+#xjggewstvp .gt_font_normal {
   font-weight: normal;
 }
 
-#wahfsdgvqr .gt_font_bold {
+#xjggewstvp .gt_font_bold {
   font-weight: bold;
 }
 
-#wahfsdgvqr .gt_font_italic {
+#xjggewstvp .gt_font_italic {
   font-style: italic;
 }
 
-#wahfsdgvqr .gt_super {
+#xjggewstvp .gt_super {
   font-size: 65%;
 }
 
-#wahfsdgvqr .gt_footnote_marks {
+#xjggewstvp .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#wahfsdgvqr .gt_asterisk {
+#xjggewstvp .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#wahfsdgvqr .gt_indent_1 {
+#xjggewstvp .gt_indent_1 {
   text-indent: 5px;
 }
 
-#wahfsdgvqr .gt_indent_2 {
+#xjggewstvp .gt_indent_2 {
   text-indent: 10px;
 }
 
-#wahfsdgvqr .gt_indent_3 {
+#xjggewstvp .gt_indent_3 {
   text-indent: 15px;
 }
 
-#wahfsdgvqr .gt_indent_4 {
+#xjggewstvp .gt_indent_4 {
   text-indent: 20px;
 }
 
-#wahfsdgvqr .gt_indent_5 {
+#xjggewstvp .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1327,18 +1339,18 @@ characteristics</h1>
 <td class="gt_row gt_center">115 / 4,855 (2.4%)</td></tr>
     <tr><td class="gt_row gt_left">Experience (in years)</td>
 <td class="gt_row gt_center">17 (1, 34)</td></tr>
-    <tr><td class="gt_row gt_left">0-3 years of experience</td>
-<td class="gt_row gt_center">339 / 4,855 (7.0%)</td></tr>
-    <tr><td class="gt_row gt_left">4-6 years of experience</td>
+    <tr><td class="gt_row gt_left">1-2 years of experience</td>
+<td class="gt_row gt_center">90 / 4,855 (1.9%)</td></tr>
+    <tr><td class="gt_row gt_left">3-4 years of experience</td>
+<td class="gt_row gt_center">111 / 4,855 (2.3%)</td></tr>
+    <tr><td class="gt_row gt_left">5-6 years of experience</td>
+<td class="gt_row gt_center">138 / 4,855 (2.8%)</td></tr>
+    <tr><td class="gt_row gt_left">7-12 years of experience</td>
 <td class="gt_row gt_center">374 / 4,855 (7.7%)</td></tr>
-    <tr><td class="gt_row gt_left">7-9 years of experience</td>
-<td class="gt_row gt_center">388 / 4,855 (8.0%)</td></tr>
-    <tr><td class="gt_row gt_left">10-12 years of experience</td>
-<td class="gt_row gt_center">624 / 4,855 (13%)</td></tr>
-    <tr><td class="gt_row gt_left">13-15 years of experience</td>
-<td class="gt_row gt_center">412 / 4,855 (8.5%)</td></tr>
-    <tr><td class="gt_row gt_left">16+ years of experience</td>
-<td class="gt_row gt_center">2,718 / 4,855 (56%)</td></tr>
+    <tr><td class="gt_row gt_left">13-24 years of experience</td>
+<td class="gt_row gt_center">207 / 4,855 (4.3%)</td></tr>
+    <tr><td class="gt_row gt_left">25+ years of experience</td>
+<td class="gt_row gt_center">3,754 / 4,855 (77%)</td></tr>
     <tr><td class="gt_row gt_left">Score</td>
 <td class="gt_row gt_center">0.02 (-5.52, 3.70)</td></tr>
     <tr><td class="gt_row gt_left">Confidence</td>
@@ -1352,12 +1364,12 @@ characteristics</h1>
   </tfoot>
 </table>
 </div>
-<div id="roekqzocnd" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="bhfvhncnnf" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#roekqzocnd .gt_table {
+#bhfvhncnnf .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1382,7 +1394,7 @@ characteristics</h1>
   border-left-color: #D3D3D3;
 }
 
-#roekqzocnd .gt_heading {
+#bhfvhncnnf .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1394,7 +1406,7 @@ characteristics</h1>
   border-right-color: #D3D3D3;
 }
 
-#roekqzocnd .gt_title {
+#bhfvhncnnf .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1406,7 +1418,7 @@ characteristics</h1>
   border-bottom-width: 0;
 }
 
-#roekqzocnd .gt_subtitle {
+#bhfvhncnnf .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1418,13 +1430,13 @@ characteristics</h1>
   border-top-width: 0;
 }
 
-#roekqzocnd .gt_bottom_border {
+#bhfvhncnnf .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#roekqzocnd .gt_col_headings {
+#bhfvhncnnf .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1439,7 +1451,7 @@ characteristics</h1>
   border-right-color: #D3D3D3;
 }
 
-#roekqzocnd .gt_col_heading {
+#bhfvhncnnf .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1459,7 +1471,7 @@ characteristics</h1>
   overflow-x: hidden;
 }
 
-#roekqzocnd .gt_column_spanner_outer {
+#bhfvhncnnf .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1471,15 +1483,15 @@ characteristics</h1>
   padding-right: 4px;
 }
 
-#roekqzocnd .gt_column_spanner_outer:first-child {
+#bhfvhncnnf .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#roekqzocnd .gt_column_spanner_outer:last-child {
+#bhfvhncnnf .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#roekqzocnd .gt_column_spanner {
+#bhfvhncnnf .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1491,7 +1503,7 @@ characteristics</h1>
   width: 100%;
 }
 
-#roekqzocnd .gt_group_heading {
+#bhfvhncnnf .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1516,7 +1528,7 @@ characteristics</h1>
   vertical-align: middle;
 }
 
-#roekqzocnd .gt_empty_group_heading {
+#bhfvhncnnf .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1531,15 +1543,15 @@ characteristics</h1>
   vertical-align: middle;
 }
 
-#roekqzocnd .gt_from_md > :first-child {
+#bhfvhncnnf .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#roekqzocnd .gt_from_md > :last-child {
+#bhfvhncnnf .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#roekqzocnd .gt_row {
+#bhfvhncnnf .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1558,7 +1570,7 @@ characteristics</h1>
   overflow-x: hidden;
 }
 
-#roekqzocnd .gt_stub {
+#bhfvhncnnf .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1571,7 +1583,7 @@ characteristics</h1>
   padding-right: 5px;
 }
 
-#roekqzocnd .gt_stub_row_group {
+#bhfvhncnnf .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1585,11 +1597,11 @@ characteristics</h1>
   vertical-align: top;
 }
 
-#roekqzocnd .gt_row_group_first td {
+#bhfvhncnnf .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#roekqzocnd .gt_summary_row {
+#bhfvhncnnf .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1599,16 +1611,16 @@ characteristics</h1>
   padding-right: 5px;
 }
 
-#roekqzocnd .gt_first_summary_row {
+#bhfvhncnnf .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#roekqzocnd .gt_first_summary_row.thick {
+#bhfvhncnnf .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#roekqzocnd .gt_last_summary_row {
+#bhfvhncnnf .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1618,7 +1630,7 @@ characteristics</h1>
   border-bottom-color: #D3D3D3;
 }
 
-#roekqzocnd .gt_grand_summary_row {
+#bhfvhncnnf .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1628,7 +1640,7 @@ characteristics</h1>
   padding-right: 5px;
 }
 
-#roekqzocnd .gt_first_grand_summary_row {
+#bhfvhncnnf .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1638,11 +1650,11 @@ characteristics</h1>
   border-top-color: #D3D3D3;
 }
 
-#roekqzocnd .gt_striped {
+#bhfvhncnnf .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#roekqzocnd .gt_table_body {
+#bhfvhncnnf .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1651,7 +1663,7 @@ characteristics</h1>
   border-bottom-color: #D3D3D3;
 }
 
-#roekqzocnd .gt_footnotes {
+#bhfvhncnnf .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1665,7 +1677,7 @@ characteristics</h1>
   border-right-color: #D3D3D3;
 }
 
-#roekqzocnd .gt_footnote {
+#bhfvhncnnf .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -1674,7 +1686,7 @@ characteristics</h1>
   padding-right: 5px;
 }
 
-#roekqzocnd .gt_sourcenotes {
+#bhfvhncnnf .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1688,7 +1700,7 @@ characteristics</h1>
   border-right-color: #D3D3D3;
 }
 
-#roekqzocnd .gt_sourcenote {
+#bhfvhncnnf .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1696,64 +1708,64 @@ characteristics</h1>
   padding-right: 5px;
 }
 
-#roekqzocnd .gt_left {
+#bhfvhncnnf .gt_left {
   text-align: left;
 }
 
-#roekqzocnd .gt_center {
+#bhfvhncnnf .gt_center {
   text-align: center;
 }
 
-#roekqzocnd .gt_right {
+#bhfvhncnnf .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#roekqzocnd .gt_font_normal {
+#bhfvhncnnf .gt_font_normal {
   font-weight: normal;
 }
 
-#roekqzocnd .gt_font_bold {
+#bhfvhncnnf .gt_font_bold {
   font-weight: bold;
 }
 
-#roekqzocnd .gt_font_italic {
+#bhfvhncnnf .gt_font_italic {
   font-style: italic;
 }
 
-#roekqzocnd .gt_super {
+#bhfvhncnnf .gt_super {
   font-size: 65%;
 }
 
-#roekqzocnd .gt_footnote_marks {
+#bhfvhncnnf .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#roekqzocnd .gt_asterisk {
+#bhfvhncnnf .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#roekqzocnd .gt_indent_1 {
+#bhfvhncnnf .gt_indent_1 {
   text-indent: 5px;
 }
 
-#roekqzocnd .gt_indent_2 {
+#bhfvhncnnf .gt_indent_2 {
   text-indent: 10px;
 }
 
-#roekqzocnd .gt_indent_3 {
+#bhfvhncnnf .gt_indent_3 {
   text-indent: 15px;
 }
 
-#roekqzocnd .gt_indent_4 {
+#bhfvhncnnf .gt_indent_4 {
   text-indent: 20px;
 }
 
-#roekqzocnd .gt_indent_5 {
+#bhfvhncnnf .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1772,18 +1784,18 @@ characteristics</h1>
 <td class="gt_row gt_center">128 / 4,887 (2.6%)</td></tr>
     <tr><td class="gt_row gt_left">Experience (in years)</td>
 <td class="gt_row gt_center">17 (1, 39)</td></tr>
-    <tr><td class="gt_row gt_left">0-3 years of experience</td>
-<td class="gt_row gt_center">228 / 4,887 (4.7%)</td></tr>
-    <tr><td class="gt_row gt_left">4-6 years of experience</td>
+    <tr><td class="gt_row gt_left">1-2 years of experience</td>
+<td class="gt_row gt_center">36 / 4,887 (0.7%)</td></tr>
+    <tr><td class="gt_row gt_left">3-4 years of experience</td>
+<td class="gt_row gt_center">91 / 4,887 (1.9%)</td></tr>
+    <tr><td class="gt_row gt_left">5-6 years of experience</td>
+<td class="gt_row gt_center">101 / 4,887 (2.1%)</td></tr>
+    <tr><td class="gt_row gt_left">7-12 years of experience</td>
 <td class="gt_row gt_center">242 / 4,887 (5.0%)</td></tr>
-    <tr><td class="gt_row gt_left">7-9 years of experience</td>
-<td class="gt_row gt_center">481 / 4,887 (9.8%)</td></tr>
-    <tr><td class="gt_row gt_left">10-12 years of experience</td>
-<td class="gt_row gt_center">555 / 4,887 (11%)</td></tr>
-    <tr><td class="gt_row gt_left">13-15 years of experience</td>
-<td class="gt_row gt_center">673 / 4,887 (14%)</td></tr>
-    <tr><td class="gt_row gt_left">16+ years of experience</td>
-<td class="gt_row gt_center">2,708 / 4,887 (55%)</td></tr>
+    <tr><td class="gt_row gt_left">13-24 years of experience</td>
+<td class="gt_row gt_center">295 / 4,887 (6.0%)</td></tr>
+    <tr><td class="gt_row gt_left">25+ years of experience</td>
+<td class="gt_row gt_center">3,936 / 4,887 (81%)</td></tr>
     <tr><td class="gt_row gt_left">Score</td>
 <td class="gt_row gt_center">0.01 (-6.54, 3.14)</td></tr>
     <tr><td class="gt_row gt_left">Confidence</td>
@@ -3410,6 +3422,421 @@ coefficients and associated standard errors
 </td>
 </tr>
 </table>
+<table style="text-align:center">
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="9">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+Chinese
+</td>
+<td>
+Chinese
+</td>
+<td>
+Chinese
+</td>
+<td>
+English
+</td>
+<td>
+English
+</td>
+<td>
+English
+</td>
+<td>
+Math
+</td>
+<td>
+Math
+</td>
+<td>
+Math
+</td>
+</tr>
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+tchmajor
+</td>
+<td>
+0.302<sup>**</sup>
+</td>
+<td>
+0.258
+</td>
+<td>
+0.223
+</td>
+<td>
+-0.019
+</td>
+<td>
+-0.044
+</td>
+<td>
+-0.040
+</td>
+<td>
+0.042
+</td>
+<td>
+0.029
+</td>
+<td>
+0.076
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.105)
+</td>
+<td>
+(0.160)
+</td>
+<td>
+(0.170)
+</td>
+<td>
+(0.072)
+</td>
+<td>
+(0.076)
+</td>
+<td>
+(0.052)
+</td>
+<td>
+(0.104)
+</td>
+<td>
+(0.102)
+</td>
+<td>
+(0.074)
+</td>
+</tr>
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Student Covariates
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Homeroom Covariates
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Teacher Covariates
+</td>
+<td>
+No
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+School FE
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+School clustered SE
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+4,754
+</td>
+<td>
+4,754
+</td>
+<td>
+4,754
+</td>
+<td>
+4,855
+</td>
+<td>
+4,855
+</td>
+<td>
+4,855
+</td>
+<td>
+4,887
+</td>
+<td>
+4,887
+</td>
+<td>
+4,887
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+R<sup>2</sup>
+</td>
+<td>
+0.612
+</td>
+<td>
+0.615
+</td>
+<td>
+0.616
+</td>
+<td>
+0.709
+</td>
+<td>
+0.710
+</td>
+<td>
+0.711
+</td>
+<td>
+0.618
+</td>
+<td>
+0.619
+</td>
+<td>
+0.622
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+0.606
+</td>
+<td>
+0.608
+</td>
+<td>
+0.608
+</td>
+<td>
+0.704
+</td>
+<td>
+0.705
+</td>
+<td>
+0.706
+</td>
+<td>
+0.611
+</td>
+<td>
+0.612
+</td>
+<td>
+0.615
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Residual Std. Error
+</td>
+<td>
+0.617 (df = 4671)
+</td>
+<td>
+0.615 (df = 4662)
+</td>
+<td>
+0.615 (df = 4660)
+</td>
+<td>
+0.538 (df = 4771)
+</td>
+<td>
+0.537 (df = 4762)
+</td>
+<td>
+0.536 (df = 4760)
+</td>
+<td>
+0.617 (df = 4803)
+</td>
+<td>
+0.617 (df = 4794)
+</td>
+<td>
+0.615 (df = 4792)
+</td>
+</tr>
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td colspan="9" style="text-align:left">
+<em>p&lt;0.05, <strong>p&lt;0.01, </strong></em>p&lt;0.001. Cells report
+coefficients and associated standard errors
+</td>
+</tr>
+</table>
 </div>
 <div id="teacher-experience-on-student-outcomes" class="section level4">
 <h4>Teacher experience on student outcomes</h4>
@@ -3828,6 +4255,23 @@ coefficients and associated standard errors
 </td>
 </tr>
 </table>
+<pre><code>## Warning in chol.default(mat, pivot = TRUE, tol = tol): the matrix is either
+## rank-deficient or indefinite
+
+## Warning in chol.default(mat, pivot = TRUE, tol = tol): the matrix is either
+## rank-deficient or indefinite
+
+## Warning in chol.default(mat, pivot = TRUE, tol = tol): the matrix is either
+## rank-deficient or indefinite
+
+## Warning in chol.default(mat, pivot = TRUE, tol = tol): the matrix is either
+## rank-deficient or indefinite
+
+## Warning in chol.default(mat, pivot = TRUE, tol = tol): the matrix is either
+## rank-deficient or indefinite
+
+## Warning in chol.default(mat, pivot = TRUE, tol = tol): the matrix is either
+## rank-deficient or indefinite</code></pre>
 <table style="text-align:center">
 <tr>
 <td colspan="10" style="border-bottom: 1px solid black">
@@ -3879,62 +4323,56 @@ Math
 tchexp1
 </td>
 <td>
-0.048
+0.108
 </td>
 <td>
--0.034
+-0.100
 </td>
 <td>
--0.090
+-0.208
 </td>
 <td>
-0.179
 </td>
 <td>
-0.186
 </td>
 <td>
-0.235<sup>*</sup>
 </td>
 <td>
-0.151
 </td>
 <td>
-0.250
 </td>
 <td>
-0.234<sup>*</sup>
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
 </td>
 <td>
-(0.178)
+(0.164)
 </td>
 <td>
-(0.179)
+(0.159)
 </td>
 <td>
-(0.214)
+(0.171)
 </td>
 <td>
-(0.121)
+(0.000)
 </td>
 <td>
-(0.105)
+(0.000)
 </td>
 <td>
-(0.110)
+(0.000)
 </td>
 <td>
-(0.165)
+(0.000)
 </td>
 <td>
-(0.156)
+(0.000)
 </td>
 <td>
-(0.113)
+(0.000)
 </td>
 </tr>
 <tr>
@@ -4141,10 +4579,13 @@ R<sup>2</sup>
 0.611
 </td>
 <td>
-0.614
+0.615
 </td>
 <td>
 0.615
+</td>
+<td>
+0.709
 </td>
 <td>
 0.710
@@ -4153,13 +4594,840 @@ R<sup>2</sup>
 0.711
 </td>
 <td>
+0.618
+</td>
+<td>
+0.619
+</td>
+<td>
+0.622
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+0.605
+</td>
+<td>
+0.607
+</td>
+<td>
+0.608
+</td>
+<td>
+0.704
+</td>
+<td>
+0.705
+</td>
+<td>
+0.706
+</td>
+<td>
+0.611
+</td>
+<td>
+0.612
+</td>
+<td>
+0.615
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Residual Std. Error
+</td>
+<td>
+0.617 (df = 4671)
+</td>
+<td>
+0.616 (df = 4662)
+</td>
+<td>
+0.615 (df = 4660)
+</td>
+<td>
+0.538 (df = 4772)
+</td>
+<td>
+0.537 (df = 4763)
+</td>
+<td>
+0.536 (df = 4761)
+</td>
+<td>
+0.617 (df = 4804)
+</td>
+<td>
+0.617 (df = 4795)
+</td>
+<td>
+0.615 (df = 4793)
+</td>
+</tr>
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td colspan="9" style="text-align:left">
+<em>p&lt;0.05, <strong>p&lt;0.01, </strong></em>p&lt;0.001. Cells report
+coefficients and associated standard errors
+</td>
+</tr>
+</table>
+<table style="text-align:center">
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="9">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+Chinese
+</td>
+<td>
+Chinese
+</td>
+<td>
+Chinese
+</td>
+<td>
+English
+</td>
+<td>
+English
+</td>
+<td>
+English
+</td>
+<td>
+Math
+</td>
+<td>
+Math
+</td>
+<td>
+Math
+</td>
+</tr>
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+tchexp2
+</td>
+<td>
+-0.871<sup>***</sup>
+</td>
+<td>
+-0.704<sup>***</sup>
+</td>
+<td>
+-0.842<sup>***</sup>
+</td>
+<td>
+0.100
+</td>
+<td>
+0.144
+</td>
+<td>
+0.248<sup>*</sup>
+</td>
+<td>
+-0.018
+</td>
+<td>
+0.076
+</td>
+<td>
+0.070
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.015)
+</td>
+<td>
+(0.061)
+</td>
+<td>
+(0.075)
+</td>
+<td>
+(0.083)
+</td>
+<td>
+(0.120)
+</td>
+<td>
+(0.110)
+</td>
+<td>
+(0.154)
+</td>
+<td>
+(0.174)
+</td>
+<td>
+(0.125)
+</td>
+</tr>
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Student Covariates
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Homeroom Covariates
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Teacher Covariates
+</td>
+<td>
+No
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+School FE
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+School clustered SE
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+4,754
+</td>
+<td>
+4,754
+</td>
+<td>
+4,754
+</td>
+<td>
+4,855
+</td>
+<td>
+4,855
+</td>
+<td>
+4,855
+</td>
+<td>
+4,887
+</td>
+<td>
+4,887
+</td>
+<td>
+4,887
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+R<sup>2</sup>
+</td>
+<td>
+0.614
+</td>
+<td>
+0.616
+</td>
+<td>
+0.617
+</td>
+<td>
+0.709
+</td>
+<td>
+0.710
+</td>
+<td>
 0.712
 </td>
 <td>
 0.618
 </td>
 <td>
-0.620
+0.619
+</td>
+<td>
+0.622
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+0.607
+</td>
+<td>
+0.608
+</td>
+<td>
+0.609
+</td>
+<td>
+0.704
+</td>
+<td>
+0.705
+</td>
+<td>
+0.706
+</td>
+<td>
+0.611
+</td>
+<td>
+0.612
+</td>
+<td>
+0.615
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Residual Std. Error
+</td>
+<td>
+0.616 (df = 4671)
+</td>
+<td>
+0.615 (df = 4662)
+</td>
+<td>
+0.614 (df = 4660)
+</td>
+<td>
+0.538 (df = 4771)
+</td>
+<td>
+0.537 (df = 4762)
+</td>
+<td>
+0.536 (df = 4760)
+</td>
+<td>
+0.617 (df = 4803)
+</td>
+<td>
+0.617 (df = 4794)
+</td>
+<td>
+0.615 (df = 4792)
+</td>
+</tr>
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td colspan="9" style="text-align:left">
+<em>p&lt;0.05, <strong>p&lt;0.01, </strong></em>p&lt;0.001. Cells report
+coefficients and associated standard errors
+</td>
+</tr>
+</table>
+<table style="text-align:center">
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="9">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+Chinese
+</td>
+<td>
+Chinese
+</td>
+<td>
+Chinese
+</td>
+<td>
+English
+</td>
+<td>
+English
+</td>
+<td>
+English
+</td>
+<td>
+Math
+</td>
+<td>
+Math
+</td>
+<td>
+Math
+</td>
+</tr>
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+tchexp3
+</td>
+<td>
+0.287
+</td>
+<td>
+0.301
+</td>
+<td>
+0.326
+</td>
+<td>
+0.151
+</td>
+<td>
+0.125
+</td>
+<td>
+0.130
+</td>
+<td>
+0.308
+</td>
+<td>
+0.379<sup>*</sup>
+</td>
+<td>
+0.340<sup>**</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.266)
+</td>
+<td>
+(0.242)
+</td>
+<td>
+(0.273)
+</td>
+<td>
+(0.167)
+</td>
+<td>
+(0.146)
+</td>
+<td>
+(0.156)
+</td>
+<td>
+(0.198)
+</td>
+<td>
+(0.164)
+</td>
+<td>
+(0.117)
+</td>
+</tr>
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Student Covariates
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Homeroom Covariates
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Teacher Covariates
+</td>
+<td>
+No
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+No
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+School FE
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+School clustered SE
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+4,754
+</td>
+<td>
+4,754
+</td>
+<td>
+4,754
+</td>
+<td>
+4,855
+</td>
+<td>
+4,855
+</td>
+<td>
+4,855
+</td>
+<td>
+4,887
+</td>
+<td>
+4,887
+</td>
+<td>
+4,887
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+R<sup>2</sup>
+</td>
+<td>
+0.612
+</td>
+<td>
+0.615
+</td>
+<td>
+0.616
+</td>
+<td>
+0.710
+</td>
+<td>
+0.710
+</td>
+<td>
+0.712
+</td>
+<td>
+0.619
+</td>
+<td>
+0.621
 </td>
 <td>
 0.623
@@ -4173,7 +5441,7 @@ Adjusted R<sup>2</sup>
 0.605
 </td>
 <td>
-0.607
+0.608
 </td>
 <td>
 0.608
@@ -4191,10 +5459,10 @@ Adjusted R<sup>2</sup>
 0.612
 </td>
 <td>
-0.613
+0.614
 </td>
 <td>
-0.615
+0.616
 </td>
 </tr>
 <tr>
@@ -4202,10 +5470,10 @@ Adjusted R<sup>2</sup>
 Residual Std. Error
 </td>
 <td>
-0.618 (df = 4671)
+0.617 (df = 4671)
 </td>
 <td>
-0.616 (df = 4662)
+0.615 (df = 4662)
 </td>
 <td>
 0.615 (df = 4660)
@@ -4220,10 +5488,10 @@ Residual Std. Error
 0.536 (df = 4760)
 </td>
 <td>
-0.617 (df = 4803)
+0.616 (df = 4803)
 </td>
 <td>
-0.616 (df = 4794)
+0.615 (df = 4794)
 </td>
 <td>
 0.614 (df = 4792)
@@ -4291,7 +5559,7 @@ Math
 </tr>
 <tr>
 <td style="text-align:left">
-tchexp2
+tchexp4
 </td>
 <td>
 0.112
@@ -4706,65 +5974,65 @@ Math
 </tr>
 <tr>
 <td style="text-align:left">
-tchexp3
+tchexp5
 </td>
 <td>
-0.067
+0.036
 </td>
 <td>
-0.090
+0.048
 </td>
 <td>
-0.095
+0.053
 </td>
 <td>
--0.038
+-0.015
 </td>
 <td>
--0.047
+0.011
 </td>
 <td>
--0.074
+0.026
 </td>
 <td>
-0.165<sup>*</sup>
+0.215<sup>**</sup>
 </td>
 <td>
-0.129
+0.195<sup>*</sup>
 </td>
 <td>
-0.129
+0.155
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
 </td>
 <td>
-(0.137)
+(0.153)
 </td>
 <td>
-(0.129)
+(0.145)
 </td>
 <td>
-(0.120)
+(0.134)
 </td>
 <td>
-(0.036)
-</td>
-<td>
-(0.036)
-</td>
-<td>
-(0.050)
-</td>
-<td>
-(0.066)
+(0.078)
 </td>
 <td>
 (0.068)
 </td>
 <td>
-(0.070)
+(0.053)
+</td>
+<td>
+(0.074)
+</td>
+<td>
+(0.077)
+</td>
+<td>
+(0.082)
 </td>
 </tr>
 <tr>
@@ -4968,7 +6236,7 @@ Observations
 R<sup>2</sup>
 </td>
 <td>
-0.612
+0.611
 </td>
 <td>
 0.615
@@ -4992,7 +6260,7 @@ R<sup>2</sup>
 0.620
 </td>
 <td>
-0.623
+0.622
 </td>
 </tr>
 <tr>
@@ -5032,10 +6300,10 @@ Adjusted R<sup>2</sup>
 Residual Std. Error
 </td>
 <td>
-0.617 (df = 4671)
+0.618 (df = 4671)
 </td>
 <td>
-0.615 (df = 4662)
+0.616 (df = 4662)
 </td>
 <td>
 0.615 (df = 4660)
@@ -5121,65 +6389,65 @@ Math
 </tr>
 <tr>
 <td style="text-align:left">
-tchexp4
+tchexp6
 </td>
 <td>
--0.064
+-0.089
 </td>
 <td>
--0.106
+-0.080
 </td>
 <td>
--0.111
+-0.061
 </td>
 <td>
--0.011
+-0.036
 </td>
 <td>
-0.039
+-0.014
 </td>
 <td>
-0.045
+-0.034
 </td>
 <td>
-0.024
+-0.145<sup>*</sup>
 </td>
 <td>
-0.002
+-0.153<sup>*</sup>
 </td>
 <td>
-0.002
+-0.142<sup>*</sup>
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
 </td>
 <td>
-(0.092)
+(0.083)
 </td>
 <td>
-(0.098)
+(0.086)
 </td>
 <td>
-(0.092)
+(0.085)
 </td>
 <td>
-(0.065)
-</td>
-<td>
-(0.069)
-</td>
-<td>
-(0.058)
-</td>
-<td>
-(0.051)
-</td>
-<td>
-(0.055)
+(0.047)
 </td>
 <td>
 (0.046)
+</td>
+<td>
+(0.047)
+</td>
+<td>
+(0.067)
+</td>
+<td>
+(0.071)
+</td>
+<td>
+(0.056)
 </td>
 </tr>
 <tr>
@@ -5389,7 +6657,7 @@ R<sup>2</sup>
 0.615
 </td>
 <td>
-0.616
+0.615
 </td>
 <td>
 0.709
@@ -5401,13 +6669,13 @@ R<sup>2</sup>
 0.711
 </td>
 <td>
-0.618
-</td>
-<td>
 0.619
 </td>
 <td>
-0.622
+0.621
+</td>
+<td>
+0.623
 </td>
 </tr>
 <tr>
@@ -5433,13 +6701,13 @@ Adjusted R<sup>2</sup>
 0.706
 </td>
 <td>
-0.611
+0.613
 </td>
 <td>
-0.612
+0.613
 </td>
 <td>
-0.614
+0.616
 </td>
 </tr>
 <tr>
@@ -5465,840 +6733,10 @@ Residual Std. Error
 0.536 (df = 4760)
 </td>
 <td>
-0.617 (df = 4803)
+0.616 (df = 4803)
 </td>
 <td>
-0.617 (df = 4794)
-</td>
-<td>
-0.615 (df = 4792)
-</td>
-</tr>
-<tr>
-<td colspan="10" style="border-bottom: 1px solid black">
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-<em>Note:</em>
-</td>
-<td colspan="9" style="text-align:left">
-<em>p&lt;0.05, <strong>p&lt;0.01, </strong></em>p&lt;0.001. Cells report
-coefficients and associated standard errors
-</td>
-</tr>
-</table>
-<table style="text-align:center">
-<tr>
-<td colspan="10" style="border-bottom: 1px solid black">
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td colspan="9">
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-Chinese
-</td>
-<td>
-Chinese
-</td>
-<td>
-Chinese
-</td>
-<td>
-English
-</td>
-<td>
-English
-</td>
-<td>
-English
-</td>
-<td>
-Math
-</td>
-<td>
-Math
-</td>
-<td>
-Math
-</td>
-</tr>
-<tr>
-<td colspan="10" style="border-bottom: 1px solid black">
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-tchexp5
-</td>
-<td>
-0.001
-</td>
-<td>
--0.006
-</td>
-<td>
-0.021
-</td>
-<td>
-0.026
-</td>
-<td>
-0.023
-</td>
-<td>
-0.007
-</td>
-<td>
--0.075
-</td>
-<td>
--0.055
-</td>
-<td>
--0.065
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-(0.125)
-</td>
-<td>
-(0.124)
-</td>
-<td>
-(0.130)
-</td>
-<td>
-(0.063)
-</td>
-<td>
-(0.066)
-</td>
-<td>
-(0.045)
-</td>
-<td>
-(0.081)
-</td>
-<td>
-(0.090)
-</td>
-<td>
-(0.077)
-</td>
-</tr>
-<tr>
-<td colspan="10" style="border-bottom: 1px solid black">
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-Student Covariates
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-Homeroom Covariates
-</td>
-<td>
-No
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-No
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-No
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-Teacher Covariates
-</td>
-<td>
-No
-</td>
-<td>
-No
-</td>
-<td>
-Yes
-</td>
-<td>
-No
-</td>
-<td>
-No
-</td>
-<td>
-Yes
-</td>
-<td>
-No
-</td>
-<td>
-No
-</td>
-<td>
-Yes
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-School FE
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-School clustered SE
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-Observations
-</td>
-<td>
-4,754
-</td>
-<td>
-4,754
-</td>
-<td>
-4,754
-</td>
-<td>
-4,855
-</td>
-<td>
-4,855
-</td>
-<td>
-4,855
-</td>
-<td>
-4,887
-</td>
-<td>
-4,887
-</td>
-<td>
-4,887
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-R<sup>2</sup>
-</td>
-<td>
-0.611
-</td>
-<td>
-0.614
-</td>
-<td>
-0.615
-</td>
-<td>
-0.709
-</td>
-<td>
-0.710
-</td>
-<td>
-0.711
-</td>
-<td>
-0.618
-</td>
-<td>
-0.620
-</td>
-<td>
-0.622
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-Adjusted R<sup>2</sup>
-</td>
-<td>
-0.604
-</td>
-<td>
-0.607
-</td>
-<td>
-0.607
-</td>
-<td>
-0.704
-</td>
-<td>
-0.705
-</td>
-<td>
-0.706
-</td>
-<td>
-0.612
-</td>
-<td>
-0.612
-</td>
-<td>
-0.615
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-Residual Std. Error
-</td>
-<td>
-0.618 (df = 4671)
-</td>
-<td>
-0.616 (df = 4662)
-</td>
-<td>
-0.615 (df = 4660)
-</td>
-<td>
-0.538 (df = 4771)
-</td>
-<td>
-0.537 (df = 4762)
-</td>
-<td>
-0.536 (df = 4760)
-</td>
-<td>
-0.617 (df = 4803)
-</td>
-<td>
-0.616 (df = 4794)
-</td>
-<td>
-0.614 (df = 4792)
-</td>
-</tr>
-<tr>
-<td colspan="10" style="border-bottom: 1px solid black">
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-<em>Note:</em>
-</td>
-<td colspan="9" style="text-align:left">
-<em>p&lt;0.05, <strong>p&lt;0.01, </strong></em>p&lt;0.001. Cells report
-coefficients and associated standard errors
-</td>
-</tr>
-</table>
-<table style="text-align:center">
-<tr>
-<td colspan="10" style="border-bottom: 1px solid black">
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td colspan="9">
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-Chinese
-</td>
-<td>
-Chinese
-</td>
-<td>
-Chinese
-</td>
-<td>
-English
-</td>
-<td>
-English
-</td>
-<td>
-English
-</td>
-<td>
-Math
-</td>
-<td>
-Math
-</td>
-<td>
-Math
-</td>
-</tr>
-<tr>
-<td colspan="10" style="border-bottom: 1px solid black">
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-tchexp6
-</td>
-<td>
--0.041
-</td>
-<td>
--0.008
-</td>
-<td>
-0.005
-</td>
-<td>
--0.040
-</td>
-<td>
--0.056
-</td>
-<td>
--0.069<sup>*</sup>
-</td>
-<td>
--0.054
-</td>
-<td>
--0.058
-</td>
-<td>
--0.046
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-(0.068)
-</td>
-<td>
-(0.074)
-</td>
-<td>
-(0.075)
-</td>
-<td>
-(0.040)
-</td>
-<td>
-(0.048)
-</td>
-<td>
-(0.033)
-</td>
-<td>
-(0.041)
-</td>
-<td>
-(0.043)
-</td>
-<td>
-(0.042)
-</td>
-</tr>
-<tr>
-<td colspan="10" style="border-bottom: 1px solid black">
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-Student Covariates
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-Homeroom Covariates
-</td>
-<td>
-No
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-No
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-No
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-Teacher Covariates
-</td>
-<td>
-No
-</td>
-<td>
-No
-</td>
-<td>
-Yes
-</td>
-<td>
-No
-</td>
-<td>
-No
-</td>
-<td>
-Yes
-</td>
-<td>
-No
-</td>
-<td>
-No
-</td>
-<td>
-Yes
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-School FE
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-School clustered SE
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-<td>
-Yes
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-Observations
-</td>
-<td>
-4,754
-</td>
-<td>
-4,754
-</td>
-<td>
-4,754
-</td>
-<td>
-4,855
-</td>
-<td>
-4,855
-</td>
-<td>
-4,855
-</td>
-<td>
-4,887
-</td>
-<td>
-4,887
-</td>
-<td>
-4,887
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-R<sup>2</sup>
-</td>
-<td>
-0.611
-</td>
-<td>
-0.614
-</td>
-<td>
-0.615
-</td>
-<td>
-0.709
-</td>
-<td>
-0.710
-</td>
-<td>
-0.712
-</td>
-<td>
-0.618
-</td>
-<td>
-0.620
-</td>
-<td>
-0.622
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-Adjusted R<sup>2</sup>
-</td>
-<td>
-0.605
-</td>
-<td>
-0.607
-</td>
-<td>
-0.607
-</td>
-<td>
-0.704
-</td>
-<td>
-0.705
-</td>
-<td>
-0.706
-</td>
-<td>
-0.612
-</td>
-<td>
-0.612
-</td>
-<td>
-0.615
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-Residual Std. Error
-</td>
-<td>
-0.617 (df = 4671)
-</td>
-<td>
-0.616 (df = 4662)
-</td>
-<td>
-0.615 (df = 4660)
-</td>
-<td>
-0.538 (df = 4771)
-</td>
-<td>
-0.537 (df = 4762)
-</td>
-<td>
-0.536 (df = 4760)
-</td>
-<td>
-0.617 (df = 4803)
-</td>
-<td>
-0.616 (df = 4794)
+0.615 (df = 4794)
 </td>
 <td>
 0.614 (df = 4792)

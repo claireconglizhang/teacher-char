@@ -656,3 +656,242 @@ stargazer(m1, m2, m3, m4, m5, m6, m7, m8, m9,
 ```
 
 
+How about bias in estimating teacher gender effects?
+
+
+```{r, include = TRUE, results = "asis"}
+chn1 <- chn %>% filter(female == 1)
+chn2 <- chn %>% filter(female == 0)
+
+m1 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, chn1)
+m2 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, chn1)
+m3 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 | schids, chn1)
+
+m4 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, chn2)
+m5 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, chn2)
+m6 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 | schids, chn2)
+
+m7 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, chn)
+m8 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, chn)
+m9 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 | schids, chn)
+
+
+stargazer(m1, m2, m3, m4, m5, m6, m7, m8, m9,
+          type = "html",
+          keep = c("\\btchfemale\\b"),
+          model.numbers = FALSE,
+          dep.var.caption = "",
+          dep.var.labels = c("", ""),
+          column.labels = c("Chinese score"),
+          star.cutoffs=c(0.05, 0.01, 0.001), 
+          digits = 3, 
+          flip = TRUE, 
+          no.space = TRUE,
+          notes.append=F, notes = c("*p$<$0.05, **p$<$0.01, ***p$<$0.001. Cells report coefficients and associated standard errors"),
+          notes.align="l",
+          add.lines = list(c("Student Covariates", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
+                           c("Homeroom Covariates", "No", "Yes", "Yes", "No", "Yes", "Yes", "No", "Yes", "Yes"),
+                           c("Teacher Covariates", "No", "No", "Yes", "No", "No", "Yes", "No", "No", "Yes"),
+                           c("School FE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
+                           c("School clustered SE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes")))
+
+```
+
+
+
+```{r, include = TRUE, results = "asis"}
+eng1 <- eng %>% filter(female == 1)
+eng2 <- eng %>% filter(female == 0)
+
+m1 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, eng1)
+m2 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, eng1)
+m3 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 | schids, eng1)
+
+m4 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, eng2)
+m5 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, eng2)
+m6 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 | schids, eng2)
+
+m7 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, eng)
+m8 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, eng)
+m9 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 | schids, eng)
+
+
+stargazer(m1, m2, m3, m4, m5, m6, m7, m8, m9,
+          type = "html",
+          keep = c("\\btchfemale\\b"),
+          model.numbers = FALSE,
+          dep.var.caption = "",
+          dep.var.labels = c("", ""),
+          column.labels = c("English score"),
+          star.cutoffs=c(0.05, 0.01, 0.001), 
+          digits = 3, 
+          flip = TRUE, 
+          no.space = TRUE,
+          notes.append=F, notes = c("*p$<$0.05, **p$<$0.01, ***p$<$0.001. Cells report coefficients and associated standard errors"),
+          notes.align="l",
+          add.lines = list(c("Student Covariates", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
+                           c("Homeroom Covariates", "No", "Yes", "Yes", "No", "Yes", "Yes", "No", "Yes", "Yes"),
+                           c("Teacher Covariates", "No", "No", "Yes", "No", "No", "Yes", "No", "No", "Yes"),
+                           c("School FE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
+                           c("School clustered SE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes")))
+
+```
+
+
+
+```{r, include = TRUE, results = "asis"}
+mat1 <- mat %>% filter(female == 1)
+mat2 <- mat %>% filter(female == 0)
+
+m1 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, mat1)
+m2 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, mat1)
+m3 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 | schids, mat1)
+
+m4 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, mat2)
+m5 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, mat2)
+m6 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 | schids, mat2)
+
+m7 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, mat)
+m8 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, mat)
+m9 <- felm(score ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 | schids, mat)
+
+
+stargazer(m1, m2, m3, m4, m5, m6, m7, m8, m9,
+          type = "html",
+          keep = c("\\btchfemale\\b"),
+          model.numbers = FALSE,
+          dep.var.caption = "",
+          dep.var.labels = c("", ""),
+          column.labels = c("Math score"),
+          star.cutoffs=c(0.05, 0.01, 0.001), 
+          digits = 3, 
+          flip = TRUE, 
+          no.space = TRUE,
+          notes.append=F, notes = c("*p$<$0.05, **p$<$0.01, ***p$<$0.001. Cells report coefficients and associated standard errors"),
+          notes.align="l",
+          add.lines = list(c("Student Covariates", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
+                           c("Homeroom Covariates", "No", "Yes", "Yes", "No", "Yes", "Yes", "No", "Yes", "Yes"),
+                           c("Teacher Covariates", "No", "No", "Yes", "No", "No", "Yes", "No", "No", "Yes"),
+                           c("School FE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
+                           c("School clustered SE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes")))
+
+```
+
+
+
+```{r, include = TRUE, results = "asis"}
+chn1 <- chn %>% filter(female == 1)
+chn2 <- chn %>% filter(female == 0)
+
+m1 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, chn1)
+m2 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, chn1)
+m3 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 | schids, chn1)
+
+m4 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, chn2)
+m5 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, chn2)
+m6 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 | schids, chn2)
+
+m7 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, chn)
+m8 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, chn)
+m9 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 | schids, chn)
+
+
+stargazer(m1, m2, m3, m4, m5, m6, m7, m8, m9,
+          type = "html",
+          keep = c("\\btchfemale\\b"),
+          model.numbers = FALSE,
+          dep.var.caption = "",
+          dep.var.labels = c("", ""),
+          column.labels = c("Chinese confidence"),
+          star.cutoffs=c(0.05, 0.01, 0.001), 
+          digits = 3, 
+          flip = TRUE, 
+          no.space = TRUE,
+          notes.append=F, notes = c("*p$<$0.05, **p$<$0.01, ***p$<$0.001. Cells report coefficients and associated standard errors"),
+          notes.align="l",
+          add.lines = list(c("Student Covariates", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
+                           c("Homeroom Covariates", "No", "Yes", "Yes", "No", "Yes", "Yes", "No", "Yes", "Yes"),
+                           c("Teacher Covariates", "No", "No", "Yes", "No", "No", "Yes", "No", "No", "Yes"),
+                           c("School FE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
+                           c("School clustered SE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes")))
+
+```
+
+
+```{r, include = TRUE, results = "asis"}
+eng1 <- eng %>% filter(female == 1)
+eng2 <- eng %>% filter(female == 0)
+
+m1 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, eng1)
+m2 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, eng1)
+m3 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 | schids, eng1)
+
+m4 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, eng2)
+m5 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, eng2)
+m6 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 | schids, eng2)
+
+m7 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, eng)
+m8 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, eng)
+m9 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 | schids, eng)
+
+
+stargazer(m1, m2, m3, m4, m5, m6, m7, m8, m9,
+          type = "html",
+          keep = c("\\btchfemale\\b"),
+          model.numbers = FALSE,
+          dep.var.caption = "",
+          dep.var.labels = c("", ""),
+          column.labels = c("English confidence"),
+          star.cutoffs=c(0.05, 0.01, 0.001), 
+          digits = 3, 
+          flip = TRUE, 
+          no.space = TRUE,
+          notes.append=F, notes = c("*p$<$0.05, **p$<$0.01, ***p$<$0.001. Cells report coefficients and associated standard errors"),
+          notes.align="l",
+          add.lines = list(c("Student Covariates", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
+                           c("Homeroom Covariates", "No", "Yes", "Yes", "No", "Yes", "Yes", "No", "Yes", "Yes"),
+                           c("Teacher Covariates", "No", "No", "Yes", "No", "No", "Yes", "No", "No", "Yes"),
+                           c("School FE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
+                           c("School clustered SE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes")))
+
+```
+
+
+
+```{r, include = TRUE, results = "asis"}
+mat1 <- mat %>% filter(female == 1)
+mat2 <- mat %>% filter(female == 0)
+
+m1 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, mat1)
+m2 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, mat1)
+m3 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 | schids, mat1)
+
+m4 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, mat2)
+m5 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, mat2)
+m6 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 | schids, mat2)
+
+m7 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, mat)
+m8 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, mat)
+m9 <- felm(conf ~ poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + tchfemale + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchexp + tchedu | schids | 0 | schids, mat)
+
+
+stargazer(m1, m2, m3, m4, m5, m6, m7, m8, m9,
+          type = "html",
+          keep = c("\\btchfemale\\b"),
+          model.numbers = FALSE,
+          dep.var.caption = "",
+          dep.var.labels = c("", ""),
+          column.labels = c("Math confidence"),
+          star.cutoffs=c(0.05, 0.01, 0.001), 
+          digits = 3, 
+          flip = TRUE, 
+          no.space = TRUE,
+          notes.append=F, notes = c("*p$<$0.05, **p$<$0.01, ***p$<$0.001. Cells report coefficients and associated standard errors"),
+          notes.align="l",
+          add.lines = list(c("Student Covariates", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
+                           c("Homeroom Covariates", "No", "Yes", "Yes", "No", "Yes", "Yes", "No", "Yes", "Yes"),
+                           c("Teacher Covariates", "No", "No", "Yes", "No", "No", "Yes", "No", "No", "Yes"),
+                           c("School FE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
+                           c("School clustered SE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes")))
+
+```
