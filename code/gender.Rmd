@@ -258,9 +258,8 @@ apply(chn, 2, na_percentage)
 apply(eng, 2, na_percentage)
 apply(mat, 2, na_percentage)
 ```
-
+ 
 ### Analytic sample descriptive stats
-
 
 ```{r, include = TRUE, results = "asis"}
 descript <- function(data){
@@ -283,6 +282,51 @@ descript(chn)
 descript(eng)
 descript(mat)
 ```
+
+
+### Distribution of match
+
+```{r, include = TRUE}
+chn %>% 
+  mutate(match = factor(match, levels = c(1, 0), labels = c("Yes", "No")),
+         female = factor(female, levels = c(1, 0), labels = c("Girls", "Boys"))) %>% 
+  ggplot(aes(match, fill = female), position = "dodge") +
+  geom_bar(aes(y = (..count..)/sum(..count..)), width = 0.8) +
+  labs(x = "Teacher-student gender matching",
+       y = "Proportion of students",
+       fill = "Student gender",
+       caption = "Fig.1. Distribution of student observations in Chinese sample, by gender matching and student gender") +
+  theme_bw() + 
+  theme(plot.caption = element_text(hjust = 0)) +
+  scale_fill_brewer(palette = "Paired")
+
+eng %>% 
+  mutate(match = factor(match, levels = c(1, 0), labels = c("Yes", "No")),
+         female = factor(female, levels = c(1, 0), labels = c("Girls", "Boys"))) %>% 
+  ggplot(aes(match, fill = female), position = "dodge") +
+  geom_bar(aes(y = (..count..)/sum(..count..)), width = 0.8) +
+  labs(x = "Teacher-student gender matching",
+       y = "Proportion of students",
+       fill = "Student gender",
+       caption = "Fig.2. Distribution of student observations in English sample, by gender matching and student gender") +
+  theme_bw() + 
+  theme(plot.caption = element_text(hjust = 0)) +
+  scale_fill_brewer(palette = "Paired")
+
+mat %>% 
+  mutate(match = factor(match, levels = c(1, 0), labels = c("Yes", "No")),
+         female = factor(female, levels = c(1, 0), labels = c("Girls", "Boys"))) %>% 
+  ggplot(aes(match, fill = female), position = "dodge") +
+  geom_bar(aes(y = (..count..)/sum(..count..)), width = 0.8) +
+  labs(x = "Teacher-student gender matching",
+       y = "Proportion of students",
+       fill = "Student gender",
+       caption = "Fig.3. Distribution of student observations in math sample, by gender matching and student gender") +
+  theme_bw() + 
+  theme(plot.caption = element_text(hjust = 0)) +
+  scale_fill_brewer(palette = "Paired")
+```
+
 
 ### Random assignment check
 

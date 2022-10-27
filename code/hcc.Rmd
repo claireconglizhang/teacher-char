@@ -134,12 +134,12 @@ stu_var <- full_stu %>%
    - education major (tchmajor) 
  - Teaching experience
    - years of teaching (tchexp)
-   - less than one year (tchexp1)
-   - more than one year but less than two years (tchexp2)
-   - 5-6 years (tchexp3)
-   - 7-9 years (tchexp4)
-   - 10-24 years (tchexp5)
-   - 25+ years (tchexp6)
+   - 2-3 years (tchexp1)
+   - 4-6 years (tchexp2)
+   - 7-9 years (tchexp3)
+   - 10-12 years (tchexp4)
+   - 13-24 years (tchexp5)
+   - more than 25 years (tchexp6)
 
  
 ```{r}
@@ -263,14 +263,15 @@ apply(mat, 2, na_percentage)
 ```{r, include = TRUE, results = "asis"}
 descript <- function(data){
   data %>%
-    select(tchedu, tchgrad, tchexp, tchexp1:tchexp6, score, conf) %>%
+    select(tchedu, tchgrad, tchmajor, tchexp, tchexp1:tchexp6, score, conf) %>%
     tbl_summary(
       type = list(c("tchedu", "tchexp", "score", "conf") ~ "continuous",
-                  c("tchgrad", "tchexp1", "tchexp2", "tchexp3", "tchexp4", "tchexp5", "tchexp6") ~ "dichotomous"),
+                  c("tchgrad", "tchmajor", "tchexp1", "tchexp2", "tchexp3", "tchexp4", "tchexp5", "tchexp6") ~ "dichotomous"),
       statistic = list(all_continuous() ~ "{mean} ({min}, {max})",
                        all_categorical() ~ "{n} / {N} ({p}%)"),
       label = list(tchedu ~ "Education (in years)", 
                    tchgrad ~ "Graduate degree", 
+                   tchmajor ~ "Education major",
                    tchexp ~ "Experience (in years)", 
                    tchexp1 ~ "1-2 years of experience",
                    tchexp2 ~ "3-4 years of experience",
@@ -288,8 +289,75 @@ descript(eng)
 descript(mat)
 ```
 
-### Random assignment check
+### distribution of student observations by teacher education attainment level in Chinese, English, and math
 
+```{r, include = TRUE}
+chn %>% 
+  mutate(tchedu = as.factor(tchedu)) %>% 
+  ggplot(aes(tchedu)) +
+  geom_bar(aes(y = (..count..)/sum(..count..)), width = 0.5) +
+  labs(x = "Teacher education attainment (years)",
+       y = "Proportion of students",
+       caption = "Fig.1. Distribution of student observations in Chinese sample, by teacher education attainment") +
+  theme_bw() + 
+  theme(plot.caption = element_text(hjust = 0)) 
+
+eng %>% 
+  mutate(tchedu = as.factor(tchedu)) %>% 
+  ggplot(aes(tchedu)) +
+  geom_bar(aes(y = (..count..)/sum(..count..)), width = 0.5) +
+  labs(x = "Teacher education attainment (years)",
+       y = "Proportion of students",
+       caption = "Fig.2. Distribution of student observations in English sample, by teacher education attainment") + 
+  theme_bw() + 
+  theme(plot.caption = element_text(hjust = 0))
+
+mat %>% 
+  mutate(tchedu = as.factor(tchedu)) %>% 
+  ggplot(aes(tchedu)) +
+  geom_bar(aes(y = (..count..)/sum(..count..)), width = 0.5) +
+  labs(x = "Teacher education attainment (years)",
+       y = "Proportion of students",
+       caption = "Fig.3. Distribution of student observations in math sample, by teacher education attainment") + 
+  theme_bw() + 
+  theme(plot.caption = element_text(hjust = 0))
+```
+
+### distribution of student observations by teacher experienc level in Chinese, English, and math
+
+```{r, include = TRUE}
+chn %>% 
+  mutate(tchexp = as.factor(tchexp)) %>% 
+  ggplot(aes(tchexp)) +
+  geom_bar(aes(y = (..count..)/sum(..count..))) +
+  labs(x = "Teacher experience (years)",
+       y = "Proportion of students",
+       caption = "Fig.4. Distribution of student observations in Chinese sample, by teacher experience") + 
+  theme_bw() + 
+  theme(plot.caption = element_text(hjust = 0))
+
+eng %>% 
+  mutate(tchexp = as.factor(tchexp)) %>% 
+  ggplot(aes(tchexp)) +
+  geom_bar(aes(y = (..count..)/sum(..count..))) +
+  labs(x = "Teacher experience (years)",
+       y = "Proportion of students",
+       caption = "Fig.5. Distribution of student observations in English sample, by teacher experience") + 
+  theme_bw() + 
+  theme(plot.caption = element_text(hjust = 0))
+
+mat %>% 
+  mutate(tchexp = as.factor(tchexp)) %>% 
+  ggplot(aes(tchexp)) +
+  geom_bar(aes(y = (..count..)/sum(..count..))) +
+  labs(x = "Teacher experience (years)",
+       y = "Proportion of students",
+       caption = "Fig.6. Distribution of student observations in math sample, by teacher experience") + 
+  theme_bw() + 
+  theme(plot.caption = element_text(hjust = 0))
+```
+
+### Random assignment check
 
 ```{r}
 add_f <- function(model){
@@ -385,6 +453,8 @@ stargazer(m1, m2, m3, m4, m5, m6, m7, m8, m9,
                            c("School clustered SE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes")))
 ```
 
+
+
 ```{r, include = TRUE, results = "asis"}
 m1 <- felm(score ~ tchgrad + poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + female + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, chn)
 m2 <- felm(score ~ tchgrad + poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, chn)
@@ -418,6 +488,8 @@ stargazer(m1, m2, m3, m4, m5, m6, m7, m8, m9,
                            c("School FE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
                            c("School clustered SE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes")))
 ```
+
+
 
 ```{r, include = TRUE, results = "asis"}
 m1 <- felm(score ~ tchmajor + poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + female + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, chn)
@@ -701,5 +773,31 @@ stargazer(m1, m2, m3, m4, m5, m6, m7, m8, m9,
                            c("Teacher Covariates", "No", "No", "Yes", "No", "No", "Yes", "No", "No", "Yes"),
                            c("School FE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
                            c("School clustered SE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes")))
+```
+
+
+```{r, include = TRUE, results = "asis"}
+m1 <- mgcv::gam(score ~ s(tchexp, bs='ps') + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchfemale, data = chn, method="REML")
+plot(m1)
+p <- predict(m1, type="lpmatrix")
+beta <- coef(m1)[grepl("tchexp", names(coef(m1)))]
+s <- p[,grepl("tchexp", colnames(p))] %*% beta
+ggplot(data=cbind.data.frame(s, chn$tchexp), aes(x=chn$tchexp, y=s)) + geom_line()
+
+
+m2 <- mgcv::gam(score ~ s(tchexp, bs='ps') + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchfemale, data = eng, method="REML")
+plot(m2)
+p <- predict(m2, type="lpmatrix")
+beta <- coef(m2)[grepl("tchexp", names(coef(m2)))]
+s <- p[,grepl("tchexp", colnames(p))] %*% beta
+ggplot(data=cbind.data.frame(s, eng$tchexp), aes(x=eng$tchexp, y=s)) + geom_line()
+
+
+m3 <- mgcv::gam(score ~ s(tchexp, bs='ps') + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchfemale, data = mat, method="REML")
+plot(m3)
+p <- predict(m3, type="lpmatrix")
+beta <- coef(m3)[grepl("tchexp", names(coef(m3)))]
+s <- p[,grepl("tchexp", colnames(p))] %*% beta
+ggplot(data=cbind.data.frame(s, mat$tchexp), aes(x=mat$tchexp, y=s)) + geom_line()
 ```
 
