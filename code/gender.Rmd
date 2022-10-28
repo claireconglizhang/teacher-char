@@ -151,7 +151,7 @@ tch_var_mat <- tch_var %>% filter(subject == 1)
 chn_full <- left_join(stu_var, tch_var_chn) %>% 
   ungroup()  %>% 
   mutate(match = ifelse(female == tchfemale, 1, 0)) %>% 
-  select(ids, clsids, w2clsids, schids, fall, match,
+  select(ids, clsids, w2clsids, schids, fall, subject, match, 
          score = chn, 
          conf = chnconf, 
          cog, chn1, eng1, mat1, cog1, female, age, only, rural, migrant, medu, fedu, income,
@@ -162,7 +162,7 @@ chn_full <- left_join(stu_var, tch_var_chn) %>%
 eng_full <- left_join(stu_var, tch_var_eng) %>% 
   ungroup()  %>% 
   mutate(match = ifelse(female == tchfemale, 1, 0)) %>% 
-  select(ids, clsids, w2clsids, schids, fall, match,
+  select(ids, clsids, w2clsids, schids, fall, subject, match, 
          score = eng, 
          conf = engconf, 
          cog, chn1, eng1, mat1, cog1, female, age, only, rural, migrant, medu, fedu, income,
@@ -173,7 +173,7 @@ eng_full <- left_join(stu_var, tch_var_eng) %>%
 mat_full <- left_join(stu_var, tch_var_mat) %>% 
   ungroup()  %>% 
   mutate(match = ifelse(female == tchfemale, 1, 0)) %>% 
-  select(ids, clsids, w2clsids, schids, fall, match,
+  select(ids, clsids, w2clsids, schids, fall, subject, match,
          score = mat, 
          conf = matconf, 
          cog, chn1, eng1, mat1, cog1, female, age, only, rural, migrant, medu, fedu, income,
@@ -283,48 +283,68 @@ descript(eng)
 descript(mat)
 ```
 
+### Gender gap
+
+```{r, include = TRUE}
+full <- rbind(chn, eng, mat) %>% 
+  mutate(subject = factor(subject, levels = c(2, 3, 1), labels = c("Chinese", "English", "Math")),
+         female = factor(female, levels = c(1, 0), labels = c("Girls", "Boys"))) 
+
+mean_score <- full %>% 
+  select(subject, score) %>% 
+  group_by(subject) %>% 
+  mutate(mean = mean(score)) %>% 
+  select(subject, mean) %>% 
+  unique() 
+
+ggplot(full, aes(female, score)) +
+  geom_boxplot(width = 0.8) +
+  geom_hline(data = mean_score, aes(yintercept = mean), color = "brown") +
+  facet_wrap(~ subject) +
+  labs(x = "Academic performance",
+       y = "Distribution",
+       fill = "Student gender",
+       caption = "Figure 1 Panel A. Distribution of student academic performance by student gender") +
+  theme_bw() + 
+  theme(plot.caption = element_text(hjust = 0)) 
+
+mean_conf <- full %>% 
+  select(subject, conf) %>% 
+  group_by(subject) %>% 
+  mutate(mean = mean(conf)) %>% 
+  select(subject, mean) %>% 
+  unique() 
+
+ggplot(full, aes(female, conf)) +
+  geom_boxplot(width = 0.8) +
+  geom_hline(data = mean_conf, aes(yintercept = mean), color = "brown") +
+  facet_wrap(~ subject) +
+  labs(x = "Academic performance",
+       y = "Distribution",
+       fill = "Student gender",
+       caption = "Figure 1 Panel B. Distribution of student academic confidence by student gender") +
+  theme_bw() + 
+  theme(plot.caption = element_text(hjust = 0)) 
+```
 
 ### Distribution of match
 
 ```{r, include = TRUE}
-chn %>% 
-  mutate(match = factor(match, levels = c(1, 0), labels = c("Yes", "No")),
-         female = factor(female, levels = c(1, 0), labels = c("Girls", "Boys"))) %>% 
+rbind(chn, eng, mat) %>% 
+  mutate(subject = factor(subject, levels = c(2, 3, 1), labels = c("Chinese", "English", "Math")),
+         match = factor(match, levels = c(1, 0), labels = c("Yes", "No")),
+         female = factor(female, levels = c(1, 0), labels = c("Female", "Male"))) %>% 
   ggplot(aes(match, fill = female), position = "dodge") +
   geom_bar(aes(y = (..count..)/sum(..count..)), width = 0.8) +
+  facet_wrap(~ subject) +
   labs(x = "Teacher-student gender matching",
        y = "Proportion of students",
        fill = "Student gender",
-       caption = "Fig.1. Distribution of student observations in Chinese sample, by gender matching and student gender") +
+       caption = "Figure 1. Distribution of student observations by teacher-studentgender matching and student gender") +
   theme_bw() + 
   theme(plot.caption = element_text(hjust = 0)) +
-  scale_fill_brewer(palette = "Paired")
+  scale_fill_brewer(palette = "Paired") 
 
-eng %>% 
-  mutate(match = factor(match, levels = c(1, 0), labels = c("Yes", "No")),
-         female = factor(female, levels = c(1, 0), labels = c("Girls", "Boys"))) %>% 
-  ggplot(aes(match, fill = female), position = "dodge") +
-  geom_bar(aes(y = (..count..)/sum(..count..)), width = 0.8) +
-  labs(x = "Teacher-student gender matching",
-       y = "Proportion of students",
-       fill = "Student gender",
-       caption = "Fig.2. Distribution of student observations in English sample, by gender matching and student gender") +
-  theme_bw() + 
-  theme(plot.caption = element_text(hjust = 0)) +
-  scale_fill_brewer(palette = "Paired")
-
-mat %>% 
-  mutate(match = factor(match, levels = c(1, 0), labels = c("Yes", "No")),
-         female = factor(female, levels = c(1, 0), labels = c("Girls", "Boys"))) %>% 
-  ggplot(aes(match, fill = female), position = "dodge") +
-  geom_bar(aes(y = (..count..)/sum(..count..)), width = 0.8) +
-  labs(x = "Teacher-student gender matching",
-       y = "Proportion of students",
-       fill = "Student gender",
-       caption = "Fig.3. Distribution of student observations in math sample, by gender matching and student gender") +
-  theme_bw() + 
-  theme(plot.caption = element_text(hjust = 0)) +
-  scale_fill_brewer(palette = "Paired")
 ```
 
 
