@@ -131,16 +131,26 @@ tch_var <- full_tch_2 %>%
          advisor = w2tchhr,
          subject = w2tchsubject,
          tchfemale = w2tchc01,
+         tchage = w2tchc02,
          tchexp = w2tchc08,
-         tchedu = w2tchc04) %>% 
+         tchedu = w2tchc04,
+         tchrank = w2tchc12) %>% 
   mutate(tchfemale = recode(tchfemale, '2' = 1, '1' = 0),
-         tchedu = recode(tchedu, '1' = 9, '2' = 12, '3' = 12, '4' = 14, '5' = 16, '6' = 16, '7' = 19)) %>% 
+         tchage = 2015 - tchage,
+         tchedu = recode(tchedu, '1' = 9, '2' = 12, '3' = 12, '4' = 14, '5' = 16, '6' = 16, '7' = 19),
+         tchrank = recode(tchrank, '0' = 0, '1' = 0, '2' = 1, '3' = 2, '4' = 3)) %>% 
   group_by(schids) %>% 
   mutate(schadvisor = mymean(advisor), # need these only for dealing with missing data purpose
          schexp = mymean(tchexp), 
-         schedu = mymean(tchedu)) %>% 
+         schedu = mymean(tchedu),
+         schage = mymean(tchage),
+         schrank = mymean(tchrank)) %>% 
   ungroup()
 
+```
+
+
+```{r}
 tch_var_chn <- tch_var %>% filter(subject == 2) 
 tch_var_eng <- tch_var %>% filter(subject == 3)
 tch_var_mat <- tch_var %>% filter(subject == 1)
@@ -155,9 +165,9 @@ chn_full <- left_join(stu_var, tch_var_chn) %>%
          score = chn, 
          conf = chnconf, 
          cog, chn1, eng1, mat1, cog1, female, age, only, rural, migrant, medu, fedu, income,
-         tchfemale, advisor, tchexp, tchedu,
+         tchfemale, advisor, tchexp, tchedu, tchage, tchrank,
          hrsize, hrfemale, hrage, hronly, hrrural, hrmigrant, hrmedu, hrfedu, hrincome,
-         schadvisor, schexp, schedu)
+         schadvisor, schexp, schedu, schage, schrank)
 
 eng_full <- left_join(stu_var, tch_var_eng) %>% 
   ungroup()  %>% 
@@ -166,9 +176,9 @@ eng_full <- left_join(stu_var, tch_var_eng) %>%
          score = eng, 
          conf = engconf, 
          cog, chn1, eng1, mat1, cog1, female, age, only, rural, migrant, medu, fedu, income,
-         tchfemale, advisor, tchexp, tchedu,
+         tchfemale, advisor, tchexp, tchedu, tchage, tchrank,
          hrsize, hrfemale, hrage, hronly, hrrural, hrmigrant, hrmedu, hrfedu, hrincome,
-         schadvisor, schexp, schedu)
+         schadvisor, schexp, schedu, schage, schrank)
 
 mat_full <- left_join(stu_var, tch_var_mat) %>% 
   ungroup()  %>% 
@@ -177,9 +187,9 @@ mat_full <- left_join(stu_var, tch_var_mat) %>%
          score = mat, 
          conf = matconf, 
          cog, chn1, eng1, mat1, cog1, female, age, only, rural, migrant, medu, fedu, income,
-         tchfemale, advisor, tchexp, tchedu,
+         tchfemale, advisor, tchexp, tchedu, tchage, tchrank,
          hrsize, hrfemale, hrage, hronly, hrrural, hrmigrant, hrmedu, hrfedu, hrincome,
-         schadvisor, schexp, schedu)
+         schadvisor, schexp, schedu, schage, schrank)
 ```
 
 
@@ -243,14 +253,20 @@ mat$income <- ifelse(!is.na(mat$income), mat$income, round(mat$hrincome))
 chn$advisor <- ifelse(!is.na(chn$advisor), chn$advisor, round(chn$schadvisor))
 chn$tchexp <- ifelse(!is.na(chn$tchexp), chn$tchexp, round(chn$schexp))
 chn$tchedu <- ifelse(!is.na(chn$tchedu), chn$tchedu, round(chn$schedu))
+chn$tchage <- ifelse(!is.na(chn$tchage), chn$tchage, round(chn$schage))
+chn$tchrank <- ifelse(!is.na(chn$tchrank), chn$tchrank, round(chn$schrank))
 
 eng$advisor <- ifelse(!is.na(eng$advisor), eng$advisor, round(eng$schadvisor))
 eng$tchexp <- ifelse(!is.na(eng$tchexp), eng$tchexp, round(eng$schexp))
 eng$tchedu <- ifelse(!is.na(eng$tchedu), eng$tchedu, round(eng$schedu))
+eng$tchage <- ifelse(!is.na(eng$tchage), eng$tchage, round(eng$schage))
+eng$tchrank <- ifelse(!is.na(eng$tchrank), eng$tchrank, round(eng$schrank))
 
 mat$advisor <- ifelse(!is.na(mat$advisor), mat$advisor, round(mat$schadvisor))
 mat$tchexp <- ifelse(!is.na(mat$tchexp), mat$tchexp, round(mat$schexp))
 mat$tchedu <- ifelse(!is.na(mat$tchedu), mat$tchedu, round(mat$schedu))
+mat$tchage <- ifelse(!is.na(mat$tchage), mat$tchage, round(mat$schage))
+mat$tchrank <- ifelse(!is.na(mat$tchrank), mat$tchrank, round(mat$schrank))
 ```
 
 ```{r, include = TRUE}
@@ -282,6 +298,8 @@ descript(chn)
 descript(eng)
 descript(mat)
 ```
+
+
 
 ### Gender gap
 
@@ -347,8 +365,44 @@ rbind(chn, eng, mat) %>%
 
 ```
 
+### Teacher balance (between female and male teachers)
 
-### Random assignment check
+```{r include = TRUE, echo = TRUE, results = "asis"}
+labels_tch <- list(tchfemale = "Teacher gender",
+                   tchage = "Age",
+                   tchexp = "Teaching experience (years)",
+                   tchedu = "Education attainment (years)",
+                   advisor = "Teacher-advisor",
+                   tchrank = "Professional rank")
+
+tchbalance <- function(df){
+  df %>% 
+  select(tchfemale, tchage, tchexp, tchedu, advisor, tchrank) %>% 
+  unique() %>% 
+  drop_na() %>% 
+  mutate(tchfemale = factor(tchfemale, levels = c(1,0), labels = c("Female", "Male")),
+         advisor = factor(advisor, levels = c(1,0), labels = c("Yes", "No")),
+         tchrank = factor(tchrank, levels = c(0,1,2,3), labels = c("Novice teacher", "Intermediate teacher", "Advanced teacher", "Senior teacher"))) %>% 
+  tbl_summary(by = tchfemale,
+              type = list(c("advisor") ~ "dichotomous",
+                          c("tchage", "tchexp", "tchedu") ~ "continuous",
+                          c("tchrank") ~ "categorical"),
+              statistic = list(all_continuous() ~ "{mean} ({sd})",
+                               all_categorical() ~ "{n} / {N} ({p}%)"),
+              label = labels_tch) %>% 
+  add_p() %>% 
+  modify_header(label ~ "Teacher Characteristics") %>% 
+  modify_footnote(update = everything() ~ NA) %>%
+  as_kable_extra()
+}
+
+tchbalance(chn)
+tchbalance(eng)
+tchbalance(mat)
+```
+
+
+### Student balance between students taught by female vs male teachers (random assignment check)
 
 
 ```{r}
@@ -404,7 +458,7 @@ stargazer(c1, c2, c3, c4, c5, c6,
           notes.append=F, notes = c("*p$<$0.05, **p$<$0.01, ***p$<$0.001. Cells report coefficients and associated standard errors"),
           notes.align="l",
           add.lines = list(c("School Fixed Effects", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
-                           c("Clusterred SE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
+                           c("School clustered SE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
                            c("F-Statistics", add_f(c1), add_f(c2), add_f(c3), add_f(c4), add_f(c5), add_f(c6))))
 
 ```
