@@ -134,12 +134,14 @@ stu_var <- full_stu %>%
    - education major (tchmajor) 
  - Teaching experience
    - years of teaching (tchexp)
-   - a series of indicator variables (omitted 1 year) representing teacher experience of
-     - 2-3 years (tchexp1)
-     - 4-6 years (tchexp2)
-     - 7-9 years (tchexp3)
-     - 10-12 years (tchexp4)
-     - 13-24 years (tchexp5)
+   - novice teacher (tchnew), dummy coded one for teachers having two year or less experience
+   - a series of indicator variables (omitted first level) representing teacher experience of:
+     - 0-2 years
+     - 3-6 years (tchexp1)
+     - 7-9 years (tchexp2)
+     - 10-12 years (tchexp3)
+     - 13-15 years (tchexp4)
+     - 16-24 years (tchexp5)
      - more than 25 years (tchexp6)
 
  
@@ -158,12 +160,14 @@ tch_var <- full_tch_2 %>%
          tchedu = recode(tchedu, '1' = 9, '2' = 12, '3' = 12, '4' = 14, '5' = 16, '6' = 16, '7' = 19),
          tchgrad = ifelse(tchedu == 19, 1, 0),
          tchmajor = ifelse(tchmajor == 1, 1, 0),
+         tchnew = ifelse(tchexp <= 2, 1, 0),
          tchexp_cat = case_when(tchexp <= 2 ~ "0",
-                                tchexp >= 3 & tchexp <= 4 ~ "1",
-                                tchexp >= 5 & tchexp <= 9 ~ "2",
-                                tchexp >= 10 & tchexp <= 14 ~ "3",
-                                tchexp >= 15 & tchexp <= 24 ~ "4",
-                                tchexp >= 25 ~ "5"))
+                                tchexp >= 3 & tchexp <= 6 ~ "1",
+                                tchexp >= 7 & tchexp <= 9 ~ "2",
+                                tchexp >= 10 & tchexp <= 12 ~ "3",
+                                tchexp >= 13 & tchexp <= 15 ~ "4",
+                                tchexp >= 16 & tchexp <= 24 ~ "5",
+                                tchexp >= 25 ~ "6"))
 
 tch_var_chn <- tch_var %>% filter(subject == 2) 
 tch_var_eng <- tch_var %>% filter(subject == 3)
@@ -175,7 +179,7 @@ tch_var_mat <- tch_var %>% filter(subject == 1)
 chn_full <- left_join(stu_var, tch_var_chn) %>% 
   ungroup()  %>% 
   select(ids, clsids, w2clsids, schids, fall, subject, 
-         tchedu, tchgrad, tchmajor, tchexp, tchexp_cat,
+         tchedu, tchgrad, tchmajor, tchexp, tchnew, tchexp_cat,
          score = chn, conf = chnconf, 
          cog, chn1, eng1, mat1, cog1, female, age, only, rural, migrant, medu, fedu, income,
          tchfemale, advisor, 
@@ -184,7 +188,7 @@ chn_full <- left_join(stu_var, tch_var_chn) %>%
 eng_full <- left_join(stu_var, tch_var_eng) %>% 
   ungroup()  %>% 
   select(ids, clsids, w2clsids, schids, fall, subject,
-         tchedu, tchgrad, tchmajor, tchexp, tchexp_cat,
+         tchedu, tchgrad, tchmajor, tchexp, tchnew, tchexp_cat,
          score = eng, conf = engconf, 
          cog, chn1, eng1, mat1, cog1, female, age, only, rural, migrant, medu, fedu, income,
          tchfemale, advisor, 
@@ -193,7 +197,7 @@ eng_full <- left_join(stu_var, tch_var_eng) %>%
 mat_full <- left_join(stu_var, tch_var_mat) %>% 
   ungroup()  %>% 
   select(ids, clsids, w2clsids, schids, fall, subject,
-         tchedu, tchgrad, tchmajor, tchexp, tchexp_cat,
+         tchedu, tchgrad, tchmajor, tchexp, tchnew, tchexp_cat,
          score = mat, conf = matconf, 
          cog, chn1, eng1, mat1, cog1, female, age, only, rural, migrant, medu, fedu, income,
          tchfemale, advisor, 
@@ -267,18 +271,19 @@ apply(mat, 2, na_percentage)
 ```{r, include = TRUE, results = "asis"}
 descript <- function(data){
   data %>%
-    select(tchedu, tchgrad, tchmajor, tchexp, tchexp_cat, score, conf) %>%
+    select(tchedu, tchgrad, tchmajor, tchexp, tchnew, tchexp_cat, score, conf) %>%
     mutate(tchexp_cat = factor(tchexp_cat, 
-                               levels = c(0, 1, 2, 3, 4, 5),
-                               labels = c("Less than one year experience (omitted)",
-                                          "2-4 years of experience",
-                                          "5-9 years of experience",
-                                          "10-14 years of experience",
-                                          "15-24 years of experience",
+                               levels = c(0, 1, 2, 3, 4, 5, 6),
+                               labels = c("<= 2 years of experience (omitted)",
+                                          "3-6 years of experience",
+                                          "7-9 years of experience",
+                                          "10-12 years of experience",
+                                          "13-15 years of experience",
+                                          "16-24 years of experience",
                                           "25+ years of experience"))) %>% 
     tbl_summary(
       type = list(c("tchedu", "tchexp", "score", "conf") ~ "continuous",
-                  c("tchgrad", "tchmajor") ~ "dichotomous",
+                  c("tchgrad", "tchmajor", "tchnew") ~ "dichotomous",
                   c("tchexp_cat") ~ "categorical"),
       statistic = list(all_continuous() ~ "{mean} ({min}, {max})",
                        all_categorical() ~ "{n} / {N} ({p}%)"),
@@ -286,6 +291,7 @@ descript <- function(data){
                    tchgrad ~ "Graduate degree", 
                    tchmajor ~ "Education major",
                    tchexp ~ "Experience (years)",
+                   tchnew ~ "Novice teacher (<= 2 yrs)",
                    tchexp_cat ~ "Experience (binned)",
                    score ~ "Score", 
                    conf ~ "Confidence")
@@ -304,7 +310,7 @@ rbind(chn, eng, mat) %>%
   mutate(subject = factor(subject, levels = c(2, 3, 1), labels = c("Chinese", "English", "Math")),
          tchedu = as.factor(tchedu)) %>% 
   ggplot(aes(tchedu)) +
-  geom_bar(aes(y = (..count..)/sum(..count..)), width = 0.5) +
+  geom_bar(aes(y = (..count..)/sum(..count..)), width = 0.5, fill = "steelblue") +
   facet_wrap(~ subject) +
   labs(x = "Teacher education attainment (years)",
        y = "Proportion of students",
@@ -319,15 +325,15 @@ rbind(chn, eng, mat) %>%
 rbind(chn, eng, mat) %>% 
   mutate(subject = factor(subject, levels = c(2, 3, 1), labels = c("Chinese", "English", "Math")),
          tchexp_cat = factor(tchexp_cat, 
-                               levels = c(0, 1, 2, 3, 4, 5),
-                               labels = c("0-1",
-                                          "2-4",
+                             levels = c(0, 1, 2, 3, 4, 5),
+                             labels = c("0-1",
+                                        "2-4",
                                           "5-9",
                                           "10-14",
                                           "15-24",
                                           "25+"))) %>% 
   ggplot(aes(tchexp_cat)) +
-  geom_bar(aes(y = (..count..)/sum(..count..))) +
+  geom_bar(aes(y = (..count..)/sum(..count..)), fill = "steelblue") +
   facet_wrap(~ subject) +
   labs(x = "Teacher experience (binned)",
        y = "Proportion of students",
@@ -335,6 +341,41 @@ rbind(chn, eng, mat) %>%
   theme_bw() + 
   theme(plot.caption = element_text(hjust = 0),
         axis.text.x = element_text(size=9, angle=45)) 
+```
+
+### Visualize the relationship between experience and score
+
+```{r, include = TRUE}
+rbind(chn, eng, mat) %>% 
+  mutate(subject = factor(subject, levels = c(2, 3, 1), labels = c("Chinese", "English", "Math"))) %>% 
+  ggplot(aes(tchexp, score)) +
+  geom_boxplot(aes(as.factor(tchexp), score), color = "steelblue") +
+  geom_smooth(method = "loess", color = "brown", fill = "red") +
+  facet_wrap(~ subject) +
+  labs(x = "Teacher experience (years)",
+       y = "Student score",
+       caption = "Figure 3 Panel A. Relationship between teacher experience and student score") +
+  theme_bw() + 
+  theme(plot.caption = element_text(hjust = 0),
+        axis.text.x = element_text(size=9, angle=45)) +
+  scale_x_discrete(breaks = c(5, 10, 15, 20, 25, 30, 35))
+```
+
+
+```{r, include = TRUE}
+rbind(chn, eng, mat) %>% 
+  mutate(subject = factor(subject, levels = c(2, 3, 1), labels = c("Chinese", "English", "Math"))) %>% 
+  ggplot(aes(tchexp, conf)) +
+  geom_boxplot(aes(as.factor(tchexp), conf), color = "steelblue") +
+  geom_smooth(method = "loess", color = "brown", fill = "red") +
+  facet_wrap(~ subject) +
+  labs(x = "Teacher experience (years)",
+       y = "Student confidence",
+       caption = "Figure 3 Panel B. Relationship between teacher experience and student confidence") +
+  theme_bw() + 
+  theme(plot.caption = element_text(hjust = 0),
+        axis.text.x = element_text(size=9, angle=45)) +
+  scale_x_discrete(breaks = c(5, 10, 15, 20, 25, 30, 35))
 ```
 
 ### Random assignment check
@@ -544,6 +585,41 @@ stargazer(m1, m2, m3, m4, m5, m6, m7, m8, m9,
 
 
 ```{r, include = TRUE, results = "asis"}
+m1 <- felm(score ~ tchnew + poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + female + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, chn)
+m2 <- felm(score ~ tchnew + poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, chn)
+m3 <- felm(score ~ tchnew + poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchfemale | schids | 0 | schids, chn)
+
+m4 <- felm(score ~ tchnew + poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + female + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, eng)
+m5 <- felm(score ~ tchnew + poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, eng)
+m6 <- felm(score ~ tchnew + poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchfemale | schids | 0 | schids, eng)
+
+m7 <- felm(score ~ tchnew + poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + female + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, mat)
+m8 <- felm(score ~ tchnew + poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, mat)
+m9 <- felm(score ~ tchnew + poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchfemale | schids | 0 | schids, mat)
+
+
+stargazer(m1, m2, m3, m4, m5, m6, m7, m8, m9,
+          type = "html",
+          keep = c("\\btchnew\\b"),
+          model.numbers = FALSE,
+          dep.var.caption = "",
+          dep.var.labels = c("", ""),
+          column.labels = c("Chinese", "Chinese", "Chinese", "English", "English", "English", "Math", "Math", "Math"),
+          star.cutoffs=c(0.05, 0.01, 0.001), 
+          digits = 3, 
+          flip = TRUE, 
+          no.space = TRUE,
+          notes.append=F, notes = c("*p$<$0.05, **p$<$0.01, ***p$<$0.001. Cells report coefficients and associated standard errors"),
+          notes.align="l",
+          add.lines = list(c("Student Covariates", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
+                           c("Homeroom Covariates", "No", "Yes", "Yes", "No", "Yes", "Yes", "No", "Yes", "Yes"),
+                           c("Teacher Covariates", "No", "No", "Yes", "No", "No", "Yes", "No", "No", "Yes"),
+                           c("School FE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
+                           c("School clustered SE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes")))
+```
+
+
+```{r, include = TRUE, results = "asis"}
 m1 <- felm(score ~ tchexp_cat + poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + female + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, chn)
 m2 <- felm(score ~ tchexp_cat + poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids, chn)
 m3 <- felm(score ~ tchexp_cat + poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + female + age + only + rural + migrant + medu + fedu + income + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + advisor + tchfemale | schids | 0 | schids, chn)
@@ -559,7 +635,7 @@ m9 <- felm(score ~ tchexp_cat + poly(cog1, 3) + poly(chn1, 3) + poly(eng1, 3) + 
 
 stargazer(m1, m2, m3, m4, m5, m6, m7, m8, m9,
           type = "html",
-          keep = c("\\btchexp_cat1\\b", "\\btchexp_cat2\\b", "\\btchexp_cat3\\b", "\\btchexp_cat4\\b", "\\btchexp_cat5\\b"),
+          keep = c("\\btchexp_cat1\\b", "\\btchexp_cat2\\b", "\\btchexp_cat3\\b", "\\btchexp_cat4\\b", "\\btchexp_cat5\\b", "\\btchexp_cat6\\b"),
           model.numbers = FALSE,
           dep.var.caption = "",
           dep.var.labels = c("", ""),
