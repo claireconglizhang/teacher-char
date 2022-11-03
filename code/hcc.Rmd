@@ -219,6 +219,13 @@ mat0 <- right_join(mat_full, schid_nosorting) %>% ungroup()
 ### Missing data
 
 ```{r, include = TRUE}
+# apply(chn0, 2, na_percentage)
+# School id 92 only has one chinese teacher who is also missing tchexp and everything, need to drop the entire school
+# foo <- chn0 %>% filter(is.na(subject))
+# fooo <- chn_full %>% filter(schids == 92)
+
+chn0 <- chn0 %>% filter(schids != 92)
+
 apply(chn0, 2, na_percentage)
 apply(eng0, 2, na_percentage)
 apply(mat0, 2, na_percentage)
