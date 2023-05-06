@@ -1,0 +1,282 @@
+---
+title: "Gender paper analytic samples"
+names: "Claire"
+output: html_document
+date: '2023-03'
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      include = FALSE,
+                      message = FALSE)
+pacman::p_load(tidyverse, janitor, gtsummary, modelsummary, stargazer, huxtable, lfe, lubridate, psych)
+```
+
+
+```{r, functions}
+`%!in%` <- Negate(`%in%`)
+
+percentage <- function(x){
+  paste(round(100*x, 2), "%", sep="")
+}
+
+round3 <- function(x){
+  paste(round(x, digits = 3))
+}
+
+nmlz <- function(x){
+  x = (x-mean(x, na.rm = TRUE))/sd(x, na.rm = TRUE)
+  x
+}
+
+na_percentage <- function(x){
+  y = sum(is.na(x))/length(x)
+  paste(round(100*y, 2), "%", sep="")
+}
+
+mymean = function(x){
+  x = combn(rev(x), n()-1, FUN = mean, na.rm = TRUE)
+  x
+}
+```
+
+
+```{r}
+schid_full <- rio::import(here::here("data", "schid_full.csv"))
+schid_random <- rio::import(here::here("data", "schid_random.csv"))
+schid_nosorting <- rio::import(here::here("data", "schid_nosorting.csv"))
+schid_nochange <- rio::import(here::here("data", "schid_nochange.csv"))
+schid_nochange_2cls <- rio::import(here::here("data", "schid_nochange_2cls.csv"))
+
+full_stu_1 <- rio::import(here::here("data", "cepsw1studentEN.dta")) 
+full_stu_2 <- rio::import(here::here("data", "cepsw2studentEN.dta")) 
+# w2status, followed-up = 1, missing = 2, newcomer = 3
+full_stu <- inner_join(full_stu_1, full_stu_2) %>% ungroup() %>% filter(w2status == 1)
+
+full_tch_1 <- rio::import(here::here("data", "cepsw1teacherEN.dta")) %>% filter(grade9 == 0)
+full_tch_2 <- rio::import(here::here("data", "cepsw2teacherEN.dta"))
+```
+
+
+```{r, student variables}
+stu_var <- full_stu %>% 
+  select(ids,
+         schids,
+         clsids,
+         w2clsids,
+         fall,
+         mat = w2mat, # raw score
+         chn = w2chn, # raw score
+         eng = w2eng, # raw score
+         cog = w2cog3pl, # CEPS standardized, score/mean = 0, sd = 1
+         mat1 = stdmat, # CEPS standardized score/mean = 70, sd = 10
+         chn1 = stdchn, # CEPS standardized score/mean = 70, sd = 10
+         eng1 = stdeng, # CEPS standardized score/mean = 70, sd = 10
+         cog1 = cog3pl, # CEPS standardized score/mean = 0, sd = 1
+         female = stsex,
+         birthyear= a02a, #some birthyear are coded as 2020, which may be a typo for 2002, swap 2020 for 2002 
+         birthmonth = a02b, #some birthmonth are missing, recode 1 for NA
+         only = stonly,
+         rural = sthktype, 
+         migrant = stmigrant, 
+         medu = stmedu, 
+         fedu = stfedu,
+         income = steco_3c,
+         matconf = w2b02,
+         chnconf = w2b03,
+         engconf = w2b04) %>% 
+  mutate(birthyear = ifelse(birthyear == 2020, 2002, birthyear),
+         birthmonth = ifelse(is.na(birthmonth), 1, birthmonth)) %>% 
+  mutate(birth = ym(paste(birthyear, birthmonth, sep = "-")),
+         entry = ym("2013-9"),
+         age = floor(decimal_date(entry) - decimal_date(birth)), 
+         female = recode(female, '1' = 0, '0' = 1),
+         only = recode(only,'1' = 1, '2' = 0),
+         migrant = recode(migrant,'1' = 0, '2' = 1, '3' = 1),
+         medu = recode(medu, '1' = 0, '2' = 6, '3' = 9, '4' = 12, '5' = 12, '6' = 12, '7' = 14, '8' = 16, '9' = 19),
+         fedu = recode(fedu, '1' = 0, '2' = 6, '3' = 9, '4' = 12, '5' = 12, '6' = 12, '7' = 14, '8' = 16, '9' = 19),
+         income = recode(income, '1' = 0, '2' = 1, '3' = 2),
+         mat1 = (mat1-70)/10,
+         chn1 = (chn1-70)/10,
+         eng1 = (eng1-70)/10,
+         matconf = recode(matconf,'1' = 0, '2' = 1, '3' = 2, '4' = 3),
+         chnconf = recode(chnconf,'1' = 0, '2' = 1, '3' = 2, '4' = 3),
+         engconf = recode(engconf,'1' = 0, '2' = 1, '3' = 2, '4' = 3)) %>% 
+  group_by(schids) %>% 
+  mutate(chn = nmlz(chn),
+         eng = nmlz(eng),
+         mat = nmlz(mat),
+         chnconf = nmlz(chnconf),
+         engconf = nmlz(engconf),
+         matconf = nmlz(matconf)) %>% 
+  ungroup() %>% 
+  group_by(clsids) %>% 
+  mutate(hrsize = n(),
+         hrfemale = mymean(female),
+         hrage = mymean(age),
+         hronly = mymean(only),
+         hrrural = mymean(rural),
+         hrmigrant = mymean(migrant),
+         hrmedu = mymean(medu),
+         hrfedu = mymean(fedu),
+         hrincome = mymean(income)) %>% 
+  ungroup() 
+```
+
+
+```{r}
+tch_var <- full_tch_2 %>% 
+  select(schids,
+         w2clsids,
+         tchids,
+         tchadvisor = w2tchhr,
+         subject = w2tchsubject,
+         tchfemale = w2tchc01,
+         tchage = w2tchc02,
+         tchexp = w2tchc08,
+         tchedu = w2tchc04,
+         tchrank = w2tchc12) %>% 
+  mutate(tchfemale = recode(tchfemale, '2' = 1, '1' = 0),
+         tchage = 2015 - tchage,
+         tchedu = recode(tchedu, '1' = 9, '2' = 12, '3' = 12, '4' = 14, '5' = 16, '6' = 16, '7' = 19),
+         tchrank = recode(tchrank, '0' = 0, '1' = 0, '2' = 1, '3' = 2, '4' = 3)) %>% 
+  group_by(schids) %>% 
+  mutate(schadvisor = mymean(tchadvisor), # need these only for dealing with missing data purpose
+         schexp = mymean(tchexp), 
+         schedu = mymean(tchedu),
+         schage = mymean(tchage),
+         schrank = mymean(tchrank)) %>% 
+  ungroup()
+
+```
+
+
+```{r}
+tch_var_chn <- tch_var %>% filter(subject == 2) 
+tch_var_eng <- tch_var %>% filter(subject == 3)
+tch_var_mat <- tch_var %>% filter(subject == 1)
+```
+
+
+```{r match students with teachers}
+chn_full <- left_join(stu_var, tch_var_chn) %>% 
+  ungroup()  %>% 
+  mutate(match = ifelse(female == tchfemale, 1, 0)) %>% 
+  select(ids, clsids, w2clsids, schids, fall, subject, match, 
+         score = chn, 
+         conf = chnconf, 
+         cog, chn1, eng1, mat1, cog1, female, age, only, rural, migrant, medu, fedu, income,
+         tchfemale, tchadvisor, tchexp, tchedu, tchage, tchrank,
+         hrsize, hrfemale, hrage, hronly, hrrural, hrmigrant, hrmedu, hrfedu, hrincome,
+         schadvisor, schexp, schedu, schage, schrank)
+
+eng_full <- left_join(stu_var, tch_var_eng) %>% 
+  ungroup()  %>% 
+  mutate(match = ifelse(female == tchfemale, 1, 0)) %>% 
+  select(ids, clsids, w2clsids, schids, fall, subject, match, 
+         score = eng, 
+         conf = engconf, 
+         cog, chn1, eng1, mat1, cog1, female, age, only, rural, migrant, medu, fedu, income,
+         tchfemale, tchadvisor, tchexp, tchedu, tchage, tchrank,
+         hrsize, hrfemale, hrage, hronly, hrrural, hrmigrant, hrmedu, hrfedu, hrincome,
+         schadvisor, schexp, schedu, schage, schrank)
+
+mat_full <- left_join(stu_var, tch_var_mat) %>% 
+  ungroup()  %>% 
+  mutate(match = ifelse(female == tchfemale, 1, 0)) %>% 
+  select(ids, clsids, w2clsids, schids, fall, subject, match,
+         score = mat, 
+         conf = matconf, 
+         cog, chn1, eng1, mat1, cog1, female, age, only, rural, migrant, medu, fedu, income,
+         tchfemale, tchadvisor, tchexp, tchedu, tchage, tchrank,
+         hrsize, hrfemale, hrage, hronly, hrrural, hrmigrant, hrmedu, hrfedu, hrincome,
+         schadvisor, schexp, schedu, schage, schrank)
+```
+
+
+```{r}
+chn0 <- right_join(chn_full, schid_random) %>% ungroup() # for robustness check
+eng0 <- right_join(eng_full, schid_random) %>% ungroup()
+mat0 <- right_join(mat_full, schid_random) %>% ungroup()
+
+chn0 <- right_join(chn_full, schid_nosorting) %>% ungroup() # for main analysis
+eng0 <- right_join(eng_full, schid_nosorting) %>% ungroup()
+mat0 <- right_join(mat_full, schid_nosorting) %>% ungroup()
+```
+
+### Missing data
+
+```{r, include = TRUE}
+apply(chn0, 2, na_percentage)
+apply(eng0, 2, na_percentage)
+apply(mat0, 2, na_percentage)
+```
+
+
+```{r}
+# drop incomplete observations on predictor and outcome variables
+chn <- chn0 %>% drop_na(c(score, conf, match, cog, cog1, chn1, eng1, mat1))
+eng <- eng0 %>% drop_na(c(score, conf, match, cog, cog1, chn1, eng1, mat1))
+mat <- mat0 %>% drop_na(c(score, conf, match, cog, cog1, chn1, eng1, mat1))
+```
+
+
+```{r}
+# replace missing value on student covariates with homeroom mean
+chn$age <- ifelse(!is.na(chn$age), chn$age, round(chn$hrage))
+chn$only <- ifelse(!is.na(chn$only), chn$only, round(chn$hronly))
+chn$rural <- ifelse(!is.na(chn$rural), chn$rural, round(chn$hrrural))
+chn$migrant <- ifelse(!is.na(chn$migrant), chn$migrant, round(chn$hrmigrant))
+chn$medu <- ifelse(!is.na(chn$medu), chn$medu, round(chn$hrmedu))
+chn$fedu <- ifelse(!is.na(chn$fedu), chn$fedu, round(chn$hrfedu))
+chn$income <- ifelse(!is.na(chn$income), chn$income, round(chn$hrincome))
+
+eng$age <- ifelse(!is.na(eng$age), eng$age, round(eng$hrage))
+eng$only <- ifelse(!is.na(eng$only), eng$only, round(eng$hronly))
+eng$rural <- ifelse(!is.na(eng$rural), eng$rural, round(eng$hrrural))
+eng$migrant <- ifelse(!is.na(eng$migrant), eng$migrant, round(eng$hrmigrant))
+eng$medu <- ifelse(!is.na(eng$medu), eng$medu, round(eng$hrmedu))
+eng$fedu <- ifelse(!is.na(eng$fedu), eng$fedu, round(eng$hrfedu))
+eng$income <- ifelse(!is.na(eng$income), eng$income, round(eng$hrincome))
+
+mat$age <- ifelse(!is.na(mat$age), mat$age, round(mat$hrage))
+mat$only <- ifelse(!is.na(mat$only), mat$only, round(mat$hronly))
+mat$rural <- ifelse(!is.na(mat$rural), mat$rural, round(mat$hrrural))
+mat$migrant <- ifelse(!is.na(mat$migrant), mat$migrant, round(mat$hrmigrant))
+mat$medu <- ifelse(!is.na(mat$medu), mat$medu, round(mat$hrmedu))
+mat$fedu <- ifelse(!is.na(mat$fedu), mat$fedu, round(mat$hrfedu))
+mat$income <- ifelse(!is.na(mat$income), mat$income, round(mat$hrincome))
+```
+
+
+```{r}
+# replace missing value on teacher covariates with school mean
+chn$tchadvisor <- ifelse(!is.na(chn$tchadvisor), chn$tchadvisor, round(chn$schadvisor))
+chn$tchexp <- ifelse(!is.na(chn$tchexp), chn$tchexp, round(chn$schexp))
+chn$tchedu <- ifelse(!is.na(chn$tchedu), chn$tchedu, round(chn$schedu))
+chn$tchage <- ifelse(!is.na(chn$tchage), chn$tchage, round(chn$schage))
+chn$tchrank <- ifelse(!is.na(chn$tchrank), chn$tchrank, round(chn$schrank))
+
+eng$tchadvisor <- ifelse(!is.na(eng$tchadvisor), eng$tchadvisor, round(eng$schadvisor))
+eng$tchexp <- ifelse(!is.na(eng$tchexp), eng$tchexp, round(eng$schexp))
+eng$tchedu <- ifelse(!is.na(eng$tchedu), eng$tchedu, round(eng$schedu))
+eng$tchage <- ifelse(!is.na(eng$tchage), eng$tchage, round(eng$schage))
+eng$tchrank <- ifelse(!is.na(eng$tchrank), eng$tchrank, round(eng$schrank))
+
+mat$tchadvisor <- ifelse(!is.na(mat$tchadvisor), mat$tchadvisor, round(mat$schadvisor))
+mat$tchexp <- ifelse(!is.na(mat$tchexp), mat$tchexp, round(mat$schexp))
+mat$tchedu <- ifelse(!is.na(mat$tchedu), mat$tchedu, round(mat$schedu))
+mat$tchage <- ifelse(!is.na(mat$tchage), mat$tchage, round(mat$schage))
+mat$tchrank <- ifelse(!is.na(mat$tchrank), mat$tchrank, round(mat$schrank))
+```
+
+```{r, include = TRUE}
+apply(chn, 2, na_percentage)
+apply(eng, 2, na_percentage)
+apply(mat, 2, na_percentage)
+
+rio::export(chn, here::here("data", "gender_chn_nosorting.csv"))
+rio::export(eng, here::here("data", "gender_eng_nosorting.csv"))
+rio::export(mat, here::here("data", "gender_mat_nosorting.csv"))
+```
+ 

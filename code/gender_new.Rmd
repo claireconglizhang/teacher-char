@@ -1,0 +1,664 @@
+---
+title: "The effects of teacher gender and teacher-student gender match"
+output: html_document
+date: '2023-3-4'
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      include = FALSE,
+                      message = FALSE)
+pacman::p_load(tidyverse, janitor, gtsummary, modelsummary, fixest, pander, lfe, lubridate, psych)
+```
+
+
+```{r, functions}
+`%!in%` <- Negate(`%in%`)
+
+percentage <- function(x){
+  paste(round(100*x, 2), "%", sep="")
+}
+
+round3 <- function(x){
+  paste(round(x, digits = 3))
+}
+
+nmlz <- function(x){
+  x = (x-mean(x, na.rm = TRUE))/sd(x, na.rm = TRUE)
+  x
+}
+
+na_percentage <- function(x){
+  y = sum(is.na(x))/length(x)
+  paste(round(100*y, 2), "%", sep="")
+}
+
+mymean = function(x){
+  x = combn(rev(x), n()-1, FUN = mean, na.rm = TRUE)
+  x
+}
+```
+
+
+```{r}
+chn <- rio::import(here::here("data", "gender_chn_nosorting.csv"))
+eng <- rio::import(here::here("data", "gender_eng_nosorting.csv"))
+mat <- rio::import(here::here("data", "gender_mat_nosorting.csv"))
+
+#colnames(chn)
+#apply(chn, 2, na_percentage)
+```
+ 
+### Analytic sample descriptive stats
+
+```{r, include = TRUE, results = "asis"}
+labels1 <- list(
+  "match" ~ "Match",
+  "female" ~ "Female student",
+  "score" ~ "Score",
+  "conf" ~ "Self-concept"
+)
+
+descript <- function(data){
+  data %>%
+    select(match, female, score, conf) %>%
+    mutate(female = factor(female, levels = c(1, 0), labels = c("Female students", "Male students"))) %>% 
+    tbl_summary(
+      by = female,
+      label = labels1,
+      type = list(c("score", "conf") ~ "continuous",
+                  c("match") ~ "dichotomous"),
+      statistic = list(all_continuous() ~ "{mean} ({sd})",
+                       all_categorical() ~ "{p}%"),
+      digits = list(
+        all_categorical() ~ 2,
+        all_continuous() ~ 3
+      )
+      )
+}
+
+descript(chn)
+descript(eng)
+descript(mat)
+```
+
+### Nuances in gender gap estimates
+
+```{r, include = TRUE}
+full <- rbind(chn, eng, mat) %>% 
+  mutate(subject = factor(subject, levels = c(2, 3, 1), labels = c("Chinese", "English", "Math")),
+         female = factor(female, levels = c(1, 0), labels = c("Girls", "Boys"))) 
+
+mean_score <- full %>% 
+  select(subject, score) %>% 
+  group_by(subject) %>% 
+  mutate(mean = mean(score)) %>% 
+  select(subject, mean) %>% 
+  unique() 
+
+ggplot(full, aes(female, score)) +
+  geom_boxplot(width = 0.8) +
+  geom_hline(data = mean_score, aes(yintercept = mean), color = "brown") +
+  facet_wrap(~ subject) +
+  labs(x = "Academic performance",
+       y = "Distribution",
+       fill = "Student gender",
+       caption = "Figure 1. Distribution of student academic performance by student gender") +
+  theme_bw(base_size = 14) + 
+  theme(plot.caption = element_text(hjust = 0)) +
+  stat_summary(fun.y=mean,shape=1,col='red',geom='point')
+
+mean_conf <- full %>% 
+  select(subject, conf) %>% 
+  group_by(subject) %>% 
+  mutate(mean = mean(conf)) %>% 
+  select(subject, mean) %>% 
+  unique() 
+
+ggplot(full, aes(female, conf)) +
+  geom_boxplot(width = 0.8) +
+  geom_hline(data = mean_conf, aes(yintercept = mean), color = "brown") +
+  facet_wrap(~ subject) +
+  labs(x = "Subject self-concept",
+       y = "Distribution",
+       fill = "Student gender",
+       caption = "Figure 2. Distribution of subject self-concept by student gender") +
+  theme_bw(base_size = 14) + 
+  theme(plot.caption = element_text(hjust = 0)) +
+  stat_summary(fun.y=mean,shape=1,col='red',geom='point')
+```
+
+### Distribution of match
+
+```{r, include = TRUE}
+rbind(chn, eng, mat) %>% 
+  mutate(subject = factor(subject, levels = c(2, 3, 1), labels = c("Chinese", "English", "Math")),
+         match = factor(match, levels = c(1, 0), labels = c("X", " ")),
+         female = factor(female, levels = c(1, 0), labels = c("Female", "Male"))) %>% 
+  ggplot(aes(match, fill = female), position = "dodge") +
+  geom_bar(aes(y = (..count..)), width = 0.8) +
+  facet_wrap(~ subject) +
+  labs(x = "Teacher-student gender matching",
+       y = "Number of students",
+       fill = "Student gender",
+       caption = "Figure 3. Teacher-student gender matching by student gender") +
+  theme_bw(base_size = 14) + 
+  theme(plot.caption = element_text(hjust = 0)) +
+  scale_fill_brewer(palette = "Paired") 
+
+```
+
+### Teacher balance (between female and male teachers)
+
+```{r include = TRUE, echo = TRUE, results = "asis"}
+labels2 <- list(tchfemale = "Teacher gender",
+                tchage = "Age",
+                tchexp = "Teaching experience (years)",
+                tchedu = "Education attainment (years)",
+                tchadvisor = "Teacher-advisor",
+                tchrank = "Professional rank")
+
+tchbalance <- function(df){
+  df %>% 
+  select(tchfemale, tchage, tchexp, tchedu, tchadvisor, tchrank) %>% 
+  unique() %>% 
+  drop_na() %>% 
+  mutate(tchfemale = factor(tchfemale, levels = c(1,0), labels = c("Female", "Male")),
+         tchadvisor = factor(tchadvisor, levels = c(1,0), labels = c("Yes", "No")),
+         tchrank = factor(tchrank, levels = c(0,1,2,3), labels = c("Novice teacher", "Intermediate teacher", "Advanced teacher", "Senior teacher"))) %>% 
+  tbl_summary(by = tchfemale,
+              type = list(c("tchadvisor") ~ "dichotomous",
+                          c("tchage", "tchexp", "tchedu") ~ "continuous",
+                          c("tchrank") ~ "categorical"),
+              statistic = list(all_continuous() ~ "{mean} ({sd})",
+                               all_categorical() ~ "{p}%"),
+              label = labels2) %>% 
+  add_p() %>% 
+  modify_header(label ~ "Teacher Characteristics") %>% 
+  modify_footnote(update = everything() ~ NA) %>%
+  as_kable_extra()
+}
+
+tchbalance(chn)
+tchbalance(eng)
+tchbalance(mat)
+```
+
+
+
+### Student balance between students taught by female vs male teachers (random assignment check)
+
+```{r}
+add_f <- function(model){
+  f <- summary(model)$P.fstat
+  star <- case_when(
+    f[4] >= 0.05 ~ "",
+    f[4]<0.05 & f[4]>=0.01 ~ "*",
+    f[4]<0.01 & f[4]>=0.001 ~ "**",
+    f[4] < 0.001 ~ "***")
+  paste(round(f[5], 3), star, " (df = ", f[3], "; ", f[6], ")", sep = "")
+}  
+```
+
+
+```{r, include = TRUE, results = "asis"}
+random <- function(data, var){
+  felm(var ~ chn1 + eng1 + mat1 + cog1 + female + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, data)
+}
+
+labels <- c("Baseline Chinese",
+            "Baseline English",
+            "Baseline math",
+            "Baseline cognitive",
+            "Female student",
+            "Age",
+            "Only child",
+            "Rural residency",
+            "Migrant worker family",
+            "Mother education (years)",
+            "Father education (years)",
+            "Family income")
+
+c1 <- random(chn, chn$tchfemale)
+c2 <- random(chn, chn$match)
+c3 <- random(eng, eng$tchfemale)
+c4 <- random(eng, eng$match)
+c5 <- random(mat, mat$tchfemale)
+c6 <- random(mat, mat$match)
+
+library(stargazer)
+stargazer(c1, c2, c3, c4, c5, c6,
+          type = "html",
+          omit = c("Constant"),
+          dep.var.caption = "",
+          dep.var.labels = "",
+          keep.stat = c("n", "rsq"),
+          covariate.labels = labels,
+          model.numbers = TRUE,
+          column.labels = c("Female teacher", "Matched gender", "Female teacher", "Matched gender", "Female teacher", "Matched gender"),
+          star.cutoffs=c(0.05, 0.01, 0.001), 
+          digits = 3, 
+          flip = TRUE, 
+          no.space = TRUE,
+          notes.append=F, notes = c("*p$<$0.05, **p$<$0.01, ***p$<$0.001. Cells report coefficients and associated standard errors"),
+          notes.align="l",
+          add.lines = list(c("School Fixed Effects", "X", "X", "X", "X", "X", "X"),
+                           c("School clustered SE", "X", "X", "X", "X", "X", "X"),
+                           c("F-Statistics", add_f(c1), add_f(c2), add_f(c3), add_f(c4), add_f(c5), add_f(c6))))
+
+```
+
+## Gender gap
+
+Baseline gender gap:
+
+```{r, include = TRUE, results = "asis"}
+m1 <- felm(chn1 ~ female + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids,  chn)
+m2 <- felm(chn1 ~ female + cog1 + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, chn)
+m3 <- felm(chn1 ~ female + eng1 + mat1 + cog1 + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, chn)
+
+m4 <- felm(eng1 ~ female + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids,  eng)
+m5 <- felm(eng1 ~ female + cog1 + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, eng)
+m6 <- felm(eng1 ~ female + chn1 + mat1 + cog1 + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, eng)
+
+m7 <- felm(mat1 ~ female + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids,  mat)
+m8 <- felm(mat1 ~ female + cog1 + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, mat)
+m9 <- felm(mat1 ~ female + eng1 + chn1 + cog1 + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, mat)
+
+stargazer(m1, m2, m3, m4, m5, m6, m7, m8, m9,
+          type = "html",
+          keep = c("\\bfemale\\b"),
+          keep.stat = c("n", "rsq", "f"),
+          covariate.labels = "Female",
+          model.numbers = FALSE,
+          dep.var.caption = "Wave 1 Score",
+          dep.var.labels = c("", "", ""),
+          column.labels = c("Chinese", "Chinese", "Chinese", "English", "English", "English", "Math", "Math", "Math"),
+          star.cutoffs=c(0.05, 0.01, 0.001), 
+          digits = 3, 
+          flip = TRUE, 
+          no.space = TRUE,
+          notes.append=F, notes = c("*p$<$0.05, **p$<$0.01, ***p$<$0.001. Cells report coefficients and associated standard errors"),
+          notes.align="l",
+          add.lines = list(c("Student characteristics", "X", "X", "X", "X", "X", "X", "X", "X", "X"),
+                           c("Cognitive score", " ", "X", "X", " ", "X", "X", " ", "X", "X"),
+                           c("Other subject scores", " ", " ", "X", " ", " ", "X", " ", " ", "X"),
+                           c("School FE", "X", "X", "X", "X", "X", "X", "X", "X", "X"),
+                           c("School clustered SE", "X", "X", "X", "X", "X", "X", "X", "X", "X")))
+
+
+```
+
+
+Wave 2 gender gap:
+
+```{r, include = TRUE, results = "asis"}
+m1 <- felm(score ~ female + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids,  chn)
+m2 <- felm(score ~ female + chn1 + cog1 + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, chn)
+m3 <- felm(score ~ female + chn1 + eng1 + mat1 + cog1 + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, chn)
+
+m4 <- felm(score ~ female + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids,  eng)
+m5 <- felm(score ~ female + eng1 + cog1 + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, eng)
+m6 <- felm(score ~ female + eng1 + chn1 + mat1 + cog1 + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, eng)
+
+m7 <- felm(score ~ female + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids,  mat)
+m8 <- felm(score ~ female + mat1 + cog1 + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, mat)
+m9 <- felm(score ~ female + mat1 + eng1 + chn1 + cog1 + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, mat)
+
+stargazer(m1, m2, m3, m4, m5, m6, m7, m8, m9,
+          type = "html",
+          keep = c("\\bfemale\\b"),
+          keep.stat = c("n", "rsq"),
+          covariate.labels = "Female",
+          model.numbers = FALSE,
+          dep.var.caption = "Wave 2 Score",
+          dep.var.labels = c("", "", ""),
+          column.labels = c("Chinese", "Chinese", "Chinese", "English", "English", "English", "Math", "Math", "Math"),
+          star.cutoffs=c(0.05, 0.01, 0.001), 
+          digits = 3, 
+          flip = TRUE, 
+          no.space = TRUE,
+          notes.append=F, notes = c("*p$<$0.05, **p$<$0.01, ***p$<$0.001. Cells report coefficients and associated standard errors"),
+          notes.align="l",
+          add.lines = list(c("Student characteristics", "X", "X", "X", "X", "X", "X", "X", "X", "X"),
+                           c("Wave 1 cognitive & same subject score", " ", "X", "X", " ", "X", "X", " ", "X", "X"),
+                           c("Wave 1 all scores", " ", " ", "X", " ", " ", "X", " ", " ", "X"),
+                           c("School FE", "X", "X", "X", "X", "X", "X", "X", "X", "X"),
+                           c("School clustered SE", "X", "X", "X", "X", "X", "X", "X", "X", "X")))
+
+
+```
+
+
+```{r, include = TRUE, results = "asis"}
+m1 <- felm(conf ~ female + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids,  chn)
+m2 <- felm(conf ~ female + chn1 + cog1 + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, chn)
+m3 <- felm(conf ~ female + chn1 + eng1 + mat1 + cog1 + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, chn)
+
+m4 <- felm(conf ~ female + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids,  eng)
+m5 <- felm(conf ~ female + eng1 + cog1 + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, eng)
+m6 <- felm(conf ~ female + eng1 + chn1 + mat1 + cog1 + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, eng)
+
+m7 <- felm(conf ~ female + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids,  mat)
+m8 <- felm(conf ~ female + mat1 + cog1 + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, mat)
+m9 <- felm(conf ~ female + mat1 + eng1 + chn1 + cog1 + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, mat)
+
+stargazer(m1, m2, m3, m4, m5, m6, m7, m8, m9,
+          type = "html",
+          keep = c("\\bfemale\\b"),
+          keep.stat = c("n", "rsq"),
+          covariate.labels = "Female",
+          model.numbers = FALSE,
+          dep.var.caption = "Wave 2 Self-Concept",
+          dep.var.labels = c("", "", ""),
+          column.labels = c("Chinese", "Chinese", "Chinese", "English", "English", "English", "Math", "Math", "Math"),
+          star.cutoffs=c(0.05, 0.01, 0.001), 
+          digits = 3, 
+          flip = TRUE, 
+          no.space = TRUE,
+          notes.append=F, notes = c("*p$<$0.05, **p$<$0.01, ***p$<$0.001. Cells report coefficients and associated standard errors"),
+          notes.align="l",
+          add.lines = list(c("Student characteristics", "X", "X", "X", "X", "X", "X", "X", "X", "X"),
+                           c("Wave 1 cognitive & same subject score", " ", "X", "X", " ", "X", "X", " ", "X", "X"),
+                           c("Wave 1 all scores", " ", " ", "X", " ", " ", "X", " ", " ", "X"),
+                           c("School FE", "X", "X", "X", "X", "X", "X", "X", "X", "X"),
+                           c("School clustered SE", "X", "X", "X", "X", "X", "X", "X", "X", "X")))
+
+
+```
+
+Covariates decision: use polynomial functions of all wave 1 scores going forward in the main analysis.
+
+Naive estimates of match effects:
+
+```{r}
+ols1 <- function(df, var){
+  felm(var ~ match + age + only + rural + migrant + medu + fedu + income + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + poly(cog1, 3) | schids | 0 | schids,  df)
+}
+
+ols2 <- function(df, var){
+  felm(var ~ match + age + only + rural + migrant + medu + fedu + income + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + poly(cog1, 3) + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids,  df)
+}
+
+ols3 <- function(df, var){
+  felm(var ~ match + age + only + rural + migrant + medu + fedu + income + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + poly(cog1, 3) + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + tchage + tchexp + tchedu + tchadvisor | schids | 0 | schids,  df)
+}
+```
+
+
+```{r, include = TRUE, results = "asis"}
+m1 <- ols1(chn, chn$score)
+m2 <- ols2(chn, chn$score)
+m3 <- ols3(chn, chn$score)
+
+m4 <- ols1(eng, eng$score)
+m5 <- ols2(eng, eng$score)
+m6 <- ols3(eng, eng$score)
+
+m7 <- ols1(mat, mat$score)
+m8 <- ols2(mat, mat$score)
+m9 <- ols3(mat, mat$score)
+
+stargazer(m1, m2, m3, m4, m5, m6, m7, m8, m9,
+          type = "html",
+          keep = c("\\bmatch\\b"),
+          keep.stat = c("n", "rsq"),
+          covariate.labels = "Match",
+          model.numbers = FALSE,
+          dep.var.caption = "Wave 2 Score",
+          dep.var.labels = c("", "", ""),
+          column.labels = c("Chinese", "Chinese", "Chinese", "English", "English", "English", "Math", "Math", "Math"),
+          star.cutoffs=c(0.05, 0.01, 0.001), 
+          digits = 3, 
+          flip = TRUE, 
+          no.space = TRUE,
+          notes.append=F, notes = c("*p$<$0.05, **p$<$0.01, ***p$<$0.001. Cells report coefficients and associated standard errors"),
+          notes.align="l",
+          add.lines = list(c("Student Covariates", "X", "X", "X", "X", "X", "X", "X", "X", "X"),
+                           c("Homeroom Covariates", " ", "X", "X", " ", "X", "X", " ", "X", "X"),
+                           c("Teacher Covariates", " ", " ", "X", " ", " ", "X", " ", " ", "X"),
+                           c("School FE", "X", "X", "X", "X", "X", "X", "X", "X", "X"),
+                           c("School clustered SE", "X", "X", "X", "X", "X", "X", "X", "X", "X")))
+
+m1 <- ols1(chn, chn$conf)
+m2 <- ols2(chn, chn$conf)
+m3 <- ols3(chn, chn$conf)
+
+m4 <- ols1(eng, eng$conf)
+m5 <- ols2(eng, eng$conf)
+m6 <- ols3(eng, eng$conf)
+
+m7 <- ols1(mat, mat$conf)
+m8 <- ols2(mat, mat$conf)
+m9 <- ols3(mat, mat$conf)
+
+stargazer(m1, m2, m3, m4, m5, m6, m7, m8, m9,
+          type = "html",
+          keep = c("\\bmatch\\b"),
+          keep.stat = c("n", "rsq"),
+          covariate.labels = "Match",
+          model.numbers = FALSE,
+          dep.var.caption = "Wave 2 Self-Concept",
+          dep.var.labels = c("", "", ""),
+          column.labels = c("Chinese", "Chinese", "Chinese", "English", "English", "English", "Math", "Math", "Math"),
+          star.cutoffs=c(0.05, 0.01, 0.001), 
+          digits = 3, 
+          flip = TRUE, 
+          no.space = TRUE,
+          notes.append=F, notes = c("*p$<$0.05, **p$<$0.01, ***p$<$0.001. Cells report coefficients and associated standard errors"),
+          notes.align="l",
+          add.lines = list(c("Student Covariates", "X", "X", "X", "X", "X", "X", "X", "X", "X"),
+                           c("Homeroom Covariates", " ", "X", "X", " ", "X", "X", " ", "X", "X"),
+                           c("Teacher Covariates", " ", " ", "X", " ", " ", "X", " ", " ", "X"),
+                           c("School FE", "X", "X", "X", "X", "X", "X", "X", "X", "X"),
+                           c("School clustered SE", "X", "X", "X", "X", "X", "X", "X", "X", "X")))
+```
+
+
+Due to the gender gap heterogeneity across different subjects (reversed gap in math), separate girls and boys, gender match effects:
+
+For female students:
+
+```{r, include = TRUE, results = "asis"}
+chnf <- chn %>% filter(female == 1)
+engf <- eng %>% filter(female == 1)
+matf <- mat %>% filter(female == 1)
+
+m1 <- ols1(chnf, chnf$score)
+m2 <- ols2(chnf, chnf$score)
+m13 <- ols3(chnf, chnf$score)
+
+m4 <- ols1(engf, engf$score)
+m5 <- ols2(engf, engf$score)
+m16 <- ols3(engf, engf$score)
+
+m7 <- ols1(matf, matf$score)
+m8 <- ols2(matf, matf$score)
+m19 <- ols3(matf, matf$score)
+
+stargazer(m1, m2, m13, m4, m5, m16, m7, m8, m19,
+          type = "html",
+          keep = c("\\bmatch\\b"),
+          keep.stat = c("n", "rsq"),
+          covariate.labels = "Match",
+          model.numbers = FALSE,
+          dep.var.caption = "Wave 2 Score (Female Students Only)",
+          dep.var.labels = c("", "", ""),
+          column.labels = c("Chinese", "Chinese", "Chinese", "English", "English", "English", "Math", "Math", "Math"),
+          star.cutoffs=c(0.05, 0.01, 0.001), 
+          digits = 3, 
+          flip = TRUE, 
+          no.space = TRUE,
+          notes.append=F, notes = c("*p$<$0.05, **p$<$0.01, ***p$<$0.001. Cells report coefficients and associated standard errors"),
+          notes.align="l",
+          add.lines = list(c("Student Covariates", "X", "X", "X", "X", "X", "X", "X", "X", "X"),
+                           c("Homeroom Covariates", " ", "X", "X", " ", "X", "X", " ", "X", "X"),
+                           c("Teacher Covariates", " ", " ", "X", " ", " ", "X", " ", " ", "X"),
+                           c("School FE", "X", "X", "X", "X", "X", "X", "X", "X", "X"),
+                           c("School clustered SE", "X", "X", "X", "X", "X", "X", "X", "X", "X")))
+
+m1 <- ols1(chnf, chnf$conf)
+m2 <- ols2(chnf, chnf$conf)
+m23 <- ols3(chnf, chnf$conf)
+
+m4 <- ols1(engf, engf$conf)
+m5 <- ols2(engf, engf$conf)
+m26 <- ols3(engf, engf$conf)
+
+m7 <- ols1(matf, matf$conf)
+m8 <- ols2(matf, matf$conf)
+m29 <- ols3(matf, matf$conf)
+
+stargazer(m1, m2, m23, m4, m5, m26, m7, m8, m29,
+          type = "html",
+          keep = c("\\bmatch\\b"),
+          keep.stat = c("n", "rsq"),
+          covariate.labels = "Match",
+          model.numbers = FALSE,
+          dep.var.caption = "Wave 2 Self-Concept (Female Students Only)",
+          dep.var.labels = c("", "", ""),
+          column.labels = c("Chinese", "Chinese", "Chinese", "English", "English", "English", "Math", "Math", "Math"),
+          star.cutoffs=c(0.05, 0.01, 0.001), 
+          digits = 3, 
+          flip = TRUE, 
+          no.space = TRUE,
+          notes.append=F, notes = c("*p$<$0.05, **p$<$0.01, ***p$<$0.001. Cells report coefficients and associated standard errors"),
+          notes.align="l",
+          add.lines = list(c("Student Covariates", "X", "X", "X", "X", "X", "X", "X", "X", "X"),
+                           c("Homeroom Covariates", " ", "X", "X", " ", "X", "X", " ", "X", "X"),
+                           c("Teacher Covariates", " ", " ", "X", " ", " ", "X", " ", " ", "X"),
+                           c("School FE", "X", "X", "X", "X", "X", "X", "X", "X", "X"),
+                           c("School clustered SE", "X", "X", "X", "X", "X", "X", "X", "X", "X")))
+
+```
+
+
+
+```{r, include = TRUE}
+library(wesanderson)
+
+p1 <- c("match" = "Gender match")
+list("Chinese score" = m13,
+     "Chinese self-concept" = m23,
+     "English score" = m16,
+     "English self-concept" = m26,
+     "Math score" = m19,
+     "Math self-concept" = m29) %>%
+  modelplot(coef_map = p1) +
+  scale_color_manual(values = c("#e6a447", "#ebe6bf", "#47ace6", "#a9d7f2", "#8757ff", "#cfbcf5")) +
+  geom_vline(xintercept = 0, color = "brown", linetype = "dashed") +
+  coord_flip() +
+  theme_classic(base_size = 14) +
+  labs(x = "Point estimates and 95% CIs",
+       caption = "Figure 4. The effects of teacher-student gender match for female students")+ 
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = "top")
+
+```
+
+For male students:
+
+
+```{r, include = TRUE, results = "asis"}
+chnm <- chn %>% filter(female == 0)
+engm <- eng %>% filter(female == 0)
+matm <- mat %>% filter(female == 0)
+
+m1 <- ols1(chnm, chnm$score)
+m2 <- ols2(chnm, chnm$score)
+m13 <- ols3(chnm, chnm$score)
+
+m4 <- ols1(engm, engm$score)
+m5 <- ols2(engm, engm$score)
+m16 <- ols3(engm, engm$score)
+
+m7 <- ols1(matm, matm$score)
+m8 <- ols2(matm, matm$score)
+m19 <- ols3(matm, matm$score)
+
+stargazer(m1, m2, m13, m4, m5, m16, m7, m8, m19,
+          type = "html",
+          keep = c("\\bmatch\\b"),
+          keep.stat = c("n", "rsq"),
+          covariate.labels = "Match",
+          model.numbers = FALSE,
+          dep.var.caption = "Wave 2 Score (Male Students Only)",
+          dep.var.labels = c("", "", ""),
+          column.labels = c("Chinese", "Chinese", "Chinese", "English", "English", "English", "Math", "Math", "Math"),
+          star.cutoffs=c(0.05, 0.01, 0.001), 
+          digits = 3, 
+          flip = TRUE, 
+          no.space = TRUE,
+          notes.append=F, notes = c("*p$<$0.05, **p$<$0.01, ***p$<$0.001. Cells report coefficients and associated standard errors"),
+          notes.align="l",
+          add.lines = list(c("Student Covariates", "X", "X", "X", "X", "X", "X", "X", "X", "X"),
+                           c("Homeroom Covariates", " ", "X", "X", " ", "X", "X", " ", "X", "X"),
+                           c("Teacher Covariates", " ", " ", "X", " ", " ", "X", " ", " ", "X"),
+                           c("School FE", "X", "X", "X", "X", "X", "X", "X", "X", "X"),
+                           c("School clustered SE", "X", "X", "X", "X", "X", "X", "X", "X", "X")))
+
+m1 <- ols1(chnm, chnm$conf)
+m2 <- ols2(chnm, chnm$conf)
+m23 <- ols3(chnm, chnm$conf)
+
+m4 <- ols1(engm, engm$conf)
+m5 <- ols2(engm, engm$conf)
+m26 <- ols3(engm, engm$conf)
+
+m7 <- ols1(matm, matm$conf)
+m8 <- ols2(matm, matm$conf)
+m29 <- ols3(matm, matm$conf)
+
+stargazer(m1, m2, m23, m4, m5, m26, m7, m8, m29,
+          type = "html",
+          keep = c("\\bmatch\\b"),
+          keep.stat = c("n", "rsq"),
+          covariate.labels = "Match",
+          model.numbers = FALSE,
+          dep.var.caption = "Wave 2 Self-Concept (Male Students Only)",
+          dep.var.labels = c("", "", ""),
+          column.labels = c("Chinese", "Chinese", "Chinese", "English", "English", "English", "Math", "Math", "Math"),
+          star.cutoffs=c(0.05, 0.01, 0.001), 
+          digits = 3, 
+          flip = TRUE, 
+          no.space = TRUE,
+          notes.append=F, notes = c("*p$<$0.05, **p$<$0.01, ***p$<$0.001. Cells report coefficients and associated standard errors"),
+          notes.align="l",
+          add.lines = list(c("Student Covariates", "X", "X", "X", "X", "X", "X", "X", "X", "X"),
+                           c("Homeroom Covariates", " ", "X", "X", " ", "X", "X", " ", "X", "X"),
+                           c("Teacher Covariates", " ", " ", "X", " ", " ", "X", " ", " ", "X"),
+                           c("School FE", "X", "X", "X", "X", "X", "X", "X", "X", "X"),
+                           c("School clustered SE", "X", "X", "X", "X", "X", "X", "X", "X", "X")))
+```
+
+
+```{r, include = TRUE}
+list("Chinese score" = m13,
+     "Chinese self-concept" = m23,
+     "English score" = m16,
+     "English self-concept" = m26,
+     "Math score" = m19,
+     "Math self-concept" = m29) %>%
+  modelplot(coef_map = p1) +
+  scale_color_manual(values = c("#e6a447", "#ebe6bf", "#47ace6", "#a9d7f2", "#8757ff", "#cfbcf5")) +
+  geom_vline(xintercept = 0, color = "brown", linetype = "dashed") +
+  coord_flip() +
+  theme_classic(base_size = 14) +
+  labs(x = "Point estimates and 95% CIs",
+       caption = "Figure 5. The effects of teacher-student gender match for male students")+ 
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = "top")
+```
+
+
+
+
+
+AEFP
+ - Matching theoretical frameworks:
+   - Representative bureaucracy
+   - Cultural synchronicity
+   - Rainbow coalition theory
+
+Adding baseline self-concept to the estimates
+Using within-school estimation has certain limitations - gender stereotype in different regions

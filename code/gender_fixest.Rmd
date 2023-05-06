@@ -1,0 +1,506 @@
+---
+title: "The effects of teacher gender and teacher-student gender match"
+output: html_document
+date: '2023-3-4'
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      include = FALSE,
+                      message = FALSE)
+pacman::p_load(tidyverse, janitor, gtsummary, modelsummary, fixest, pander, lfe, lubridate, psych)
+```
+
+
+```{r, functions}
+`%!in%` <- Negate(`%in%`)
+
+percentage <- function(x){
+  paste(round(100*x, 2), "%", sep="")
+}
+
+round3 <- function(x){
+  paste(round(x, digits = 3))
+}
+
+nmlz <- function(x){
+  x = (x-mean(x, na.rm = TRUE))/sd(x, na.rm = TRUE)
+  x
+}
+
+na_percentage <- function(x){
+  y = sum(is.na(x))/length(x)
+  paste(round(100*y, 2), "%", sep="")
+}
+
+mymean = function(x){
+  x = combn(rev(x), n()-1, FUN = mean, na.rm = TRUE)
+  x
+}
+```
+
+
+```{r}
+chn <- rio::import(here::here("data", "gender_chn_nosorting.csv"))
+eng <- rio::import(here::here("data", "gender_eng_nosorting.csv"))
+mat <- rio::import(here::here("data", "gender_mat_nosorting.csv"))
+
+#colnames(chn)
+#apply(chn, 2, na_percentage)
+```
+ 
+### Analytic sample descriptive stats
+
+```{r, include = TRUE, results = "asis"}
+labels1 <- list(
+  "match" ~ "Match",
+  "female" ~ "Female student",
+  "tchfemale" ~ "Female teacher",
+  "score" ~ "Score",
+  "conf" ~ "Self-concept"
+)
+
+descript <- function(data){
+  data %>%
+    select(match, tchfemale, female, score, conf) %>%
+    mutate(female = factor(female, levels = c(1, 0), labels = c("Female students", "Male students"))) %>% 
+    tbl_summary(
+      by = female,
+      label = labels1,
+      type = list(c("score", "conf") ~ "continuous",
+                  c("match", "tchfemale") ~ "dichotomous"),
+      statistic = list(all_continuous() ~ "{mean} ({sd})",
+                       all_categorical() ~ "{p}%"),
+      digits = list(
+        all_categorical() ~ 2,
+        all_continuous() ~ 3
+      )
+      )
+}
+
+descript(chn)
+descript(eng)
+descript(mat)
+```
+
+### Nuances in gender gap estimates
+
+```{r, include = TRUE}
+full <- rbind(chn, eng, mat) %>% 
+  mutate(subject = factor(subject, levels = c(2, 3, 1), labels = c("Chinese", "English", "Math")),
+         female = factor(female, levels = c(1, 0), labels = c("Girls", "Boys"))) 
+
+mean_score <- full %>% 
+  select(subject, score) %>% 
+  group_by(subject) %>% 
+  mutate(mean = mean(score)) %>% 
+  select(subject, mean) %>% 
+  unique() 
+
+ggplot(full, aes(female, score)) +
+  geom_boxplot(width = 0.8) +
+  geom_hline(data = mean_score, aes(yintercept = mean), color = "brown") +
+  facet_wrap(~ subject) +
+  labs(x = "Academic performance",
+       y = "Distribution",
+       fill = "Student gender",
+       caption = "Figure 1. Distribution of student academic performance by student gender") +
+  theme_bw(base_size = 14) + 
+  theme(plot.caption = element_text(hjust = 0)) +
+  stat_summary(fun.y=mean,shape=1,col='red',geom='point')
+
+mean_conf <- full %>% 
+  select(subject, conf) %>% 
+  group_by(subject) %>% 
+  mutate(mean = mean(conf)) %>% 
+  select(subject, mean) %>% 
+  unique() 
+
+ggplot(full, aes(female, conf)) +
+  geom_boxplot(width = 0.8) +
+  geom_hline(data = mean_conf, aes(yintercept = mean), color = "brown") +
+  facet_wrap(~ subject) +
+  labs(x = "Subject self-concept",
+       y = "Distribution",
+       fill = "Student gender",
+       caption = "Figure 2. Distribution of subject self-concept by student gender") +
+  theme_bw(base_size = 14) + 
+  theme(plot.caption = element_text(hjust = 0)) +
+  stat_summary(fun.y=mean,shape=1,col='red',geom='point')
+```
+
+### Distribution of match
+
+```{r, include = TRUE}
+rbind(chn, eng, mat) %>% 
+  mutate(subject = factor(subject, levels = c(2, 3, 1), labels = c("Chinese", "English", "Math")),
+         match = factor(match, levels = c(1, 0), labels = c("Yes", "No")),
+         female = factor(female, levels = c(1, 0), labels = c("Female", "Male"))) %>% 
+  ggplot(aes(match, fill = female), position = "dodge") +
+  geom_bar(aes(y = (..count..)/sum(..count..)), width = 0.8) +
+  facet_wrap(~ subject) +
+  labs(x = "Teacher-student gender matching",
+       y = "Proportion of students",
+       fill = "Student gender",
+       caption = "Figure 3. Teacher-student gender matching and student gender") +
+  theme_bw(base_size = 14) + 
+  theme(plot.caption = element_text(hjust = 0)) +
+  scale_fill_brewer(palette = "Paired") 
+
+```
+
+### Teacher balance (between female and male teachers)
+
+```{r include = TRUE, echo = TRUE, results = "asis"}
+labels2 <- list(tchfemale = "Teacher gender",
+                tchage = "Age",
+                tchexp = "Teaching experience (years)",
+                tchedu = "Education attainment (years)",
+                tchadvisor = "Teacher-advisor",
+                tchrank = "Professional rank")
+
+tchbalance <- function(df){
+  df %>% 
+  select(tchfemale, tchage, tchexp, tchedu, tchadvisor, tchrank) %>% 
+  unique() %>% 
+  drop_na() %>% 
+  mutate(tchfemale = factor(tchfemale, levels = c(1,0), labels = c("Female", "Male")),
+         tchadvisor = factor(tchadvisor, levels = c(1,0), labels = c("Yes", "No")),
+         tchrank = factor(tchrank, levels = c(0,1,2,3), labels = c("Novice teacher", "Intermediate teacher", "Advanced teacher", "Senior teacher"))) %>% 
+  tbl_summary(by = tchfemale,
+              type = list(c("tchadvisor") ~ "dichotomous",
+                          c("tchage", "tchexp", "tchedu") ~ "continuous",
+                          c("tchrank") ~ "categorical"),
+              statistic = list(all_continuous() ~ "{mean} ({sd})",
+                               all_categorical() ~ "{p}%"),
+              label = labels2) %>% 
+  add_p() %>% 
+  modify_header(label ~ "Teacher Characteristics") %>% 
+  modify_footnote(update = everything() ~ NA) %>%
+  as_kable_extra()
+}
+
+tchbalance(chn)
+tchbalance(eng)
+tchbalance(mat)
+```
+
+
+
+### Student balance between students taught by female vs male teachers (random assignment check)
+
+```{r}
+add_f <- function(model){
+  f <- summary(model)$P.fstat
+  star <- case_when(
+    f[4] >= 0.05 ~ "",
+    f[4]<0.05 & f[4]>=0.01 ~ "*",
+    f[4]<0.01 & f[4]>=0.001 ~ "**",
+    f[4] < 0.001 ~ "***")
+  paste(round(f[5], 3), star, " (df = ", f[3], "; ", f[6], ")", sep = "")
+}  
+```
+
+
+```{r, include = TRUE, results = "asis"}
+random <- function(data, var){
+  felm(var ~ chn1 + eng1 + mat1 + cog1 + female + age + only + rural + migrant + medu + fedu + income | schids | 0 | schids, data)
+}
+
+labels <- c("Baseline Chinese",
+            "Baseline English",
+            "Baseline math",
+            "Baseline cognitive",
+            "Female student",
+            "Age",
+            "Only child",
+            "Rural residency",
+            "Migrant worker family",
+            "Mother education (years)",
+            "Father education (years)",
+            "Family income")
+
+c1 <- random(chn, chn$tchfemale)
+c2 <- random(chn, chn$match)
+c3 <- random(eng, eng$tchfemale)
+c4 <- random(eng, eng$match)
+c5 <- random(mat, mat$tchfemale)
+c6 <- random(mat, mat$match)
+
+library(stargazer)
+stargazer(c1, c2, c3, c4, c5, c6,
+          type = "html",
+          omit = c("Constant"),
+          dep.var.caption = "",
+          dep.var.labels = "",
+          covariate.labels = labels,
+          model.numbers = TRUE,
+          column.labels = c("Female teacher", "Matched gender", "Female teacher", "Matched gender", "Female teacher", "Matched gender"),
+          star.cutoffs=c(0.05, 0.01, 0.001), 
+          digits = 3, 
+          flip = TRUE, 
+          no.space = TRUE,
+          notes.append=F, notes = c("*p$<$0.05, **p$<$0.01, ***p$<$0.001. Cells report coefficients and associated standard errors"),
+          notes.align="l",
+          add.lines = list(c("School Fixed Effects", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
+                           c("School clustered SE", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
+                           c("F-Statistics", add_f(c1), add_f(c2), add_f(c3), add_f(c4), add_f(c5), add_f(c6))))
+
+```
+
+## Gender gap
+
+
+```{r}
+labels <- c(
+  "match" = "Match",
+  "female" = "Female student",
+  "tchfemale" = "Female teacher",
+  "score" = "Score",
+  "conf" = "Self-concept",
+  "cog" = "Cognitive test score",
+  "chn1" = "Baseline Chinese",
+  "eng1" = "Baseline English",
+  "mat1" = "Baseline math",
+  "age" = "Age",
+  "only" = "Only child",
+  "rural" = "Rural residency",
+  "migrant" = "Migrant family",
+  "medu" = "Mother education (yrs)",
+  "fedu" = "Father education (yrs)",
+  "income" = "Family wealth",
+  "tchadvisor" = "Teacher-advisor",
+  "tchexp" = "Teacer experience (yrs)",
+  "tchage" = "Teacher age (yrs)",
+  "tchrank" = "Teacher professional rank"
+)
+
+setFixest_fml(
+  ..stuvar1 = ~ age + only + rural + migrant + medu + fedu + income,
+  ..stuvar2 = ~ poly(chn1) + poly(eng1) + poly(mat1) + poly(cog1) + age + only + rural + migrant + medu + fedu + income,
+  ..tchvar = ~ tchage + tchexp + tchedu + tchadvisor + tchrank,
+  ..hrvar = ~ hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome
+)
+
+```
+
+Baseline gender gap:
+
+```{r, include = TRUE, results = "asis"}
+m1 <- feols(chn1 ~ female + ..stuvar1 | schids,  chn)
+m2 <- feols(chn1 ~ female + ..stuvar1 + cog1 | schids, chn)
+m3 <- feols(chn1 ~ female + ..stuvar1+ cog1 + eng1 + mat1| schids, chn)
+
+m4 <- feols(eng1 ~ female + ..stuvar1 | schids, eng)
+m5 <- feols(eng1 ~ female + ..stuvar1 + cog1 | schids, eng)
+m6 <- feols(eng1 ~ female + ..stuvar1 + cog1 + chn1 + mat1 | schids, eng)
+
+m7 <- feols(mat1 ~ female + ..stuvar1 | schids, mat)
+m8 <- feols(mat1 ~ female + ..stuvar1 + cog1 | schids, mat)
+m9 <- feols(mat1 ~ female + ..stuvar1 + cog1 + eng1 + chn1 | schids, mat)
+
+list(m1, m2, m3, m4, m5, m6, m7, m8, m9) %>% 
+  huxtable::huxreg()
+
+```
+
+
+Wave 2 gender gap:
+
+```{r, include = TRUE, results = "asis"}
+m1 <- feols(score ~ female + ..stuvar1 | schids,  chn)
+m2 <- feols(score ~ female + ..stuvar1 + chn1 | schids, chn)
+m3 <- feols(score ~ female + ..stuvar1 + chn1 + eng1 + mat1 + cog1 | schids, chn)
+
+m4 <- feols(score ~ female + ..stuvar1 | schids, eng)
+m5 <- feols(score ~ female + ..stuvar1 + eng1 | schids, eng)
+m6 <- feols(score ~ female + ..stuvar1 + chn1 + eng1 + mat1 + cog1 | schids, eng)
+
+m7 <- feols(score ~ female + ..stuvar1 | schids, mat)
+m8 <- feols(score ~ female + ..stuvar1 + mat1 | schids, mat)
+m9 <- feols(score ~ female + ..stuvar1 + chn1 + eng1 + mat1 + cog1 | schids, mat)
+
+etable(m1, m2, m3, m4, m5, m6, m7, m8, m9,
+       fitstat = ~ n + r2,
+       keep = "^Female student$",
+       vcov = "cluster",
+       dict = labels,
+       signifCode = c("***" = 0.001, "**" = 0.01, "*" = 0.05),
+       style.tex = style.tex("aer"), tex = TRUE, view = TRUE, 
+       notes = "$^{*}p<$0.05; $^{**}p<$0.01; $^{***}p<$0.001. Cells present coefficients and cluster-robust standard errors in parentheses.")
+```
+
+
+```{r, include = TRUE, results = "asis"}
+m1 <- feols(conf ~ female + ..stuvar1 | schids,  chn)
+m2 <- feols(conf ~ female + ..stuvar1 + chn1 | schids, chn)
+m3 <- feols(conf ~ female + ..stuvar1 + chn1 + eng1 + mat1 + cog1 | schids, chn)
+
+m4 <- feols(conf ~ female + ..stuvar1 | schids, eng)
+m5 <- feols(conf ~ female + ..stuvar1 + eng1 | schids, eng)
+m6 <- feols(conf ~ female + ..stuvar1 + chn1 + eng1 + mat1 + cog1 | schids, eng)
+
+m7 <- feols(conf ~ female + ..stuvar1 | schids, mat)
+m8 <- feols(conf ~ female + ..stuvar1 + mat1 | schids, mat)
+m9 <- feols(conf ~ female + ..stuvar1 + chn1 + eng1 + mat1 + cog1 | schids, mat)
+
+etable(m1, m2, m3, m4, m5, m6, m7, m8, m9,
+       fitstat = ~ n + r2,
+       keep = "^Female student$",
+       vcov = "cluster",
+       dict = labels,
+       signifCode = c("***" = 0.001, "**" = 0.01, "*" = 0.05))
+```
+
+
+## Teacher effects on gender gap
+
+The coefficient on the interaction term "female:tchfemale" represents how being taught by a female teacher changes the gap between female and male students. 
+
+
+```{r}
+m1 <- feols(score ~ female*tchfemale + ..stuvar2 | schids,  chn)
+m2 <- feols(score ~ female*tchfemale + ..stuvar2 + ..hrvar | schids, chn)
+m3 <- feols(score ~ female*tchfemale + ..stuvar2 + ..hrvar + ..tchvar | schids, chn)
+
+m4 <- feols(score ~ female*tchfemale + ..stuvar2 | schids, eng)
+m5 <- feols(score ~ female*tchfemale + ..stuvar2 + ..hrvar | schids, eng)
+m6 <- feols(score ~ female*tchfemale + ..stuvar2 + ..hrvar + ..tchvar | schids, eng)
+
+m7 <- feols(score ~ female*tchfemale + ..stuvar2 | schids, mat)
+m8 <- feols(score ~ female*tchfemale + ..stuvar2 + ..hrvar | schids, mat)
+m9 <- feols(score ~ female*tchfemale + ..stuvar2 + ..hrvar + ..tchvar | schids, mat)
+
+etable(m1, m2, m3, m4, m5, m6, m7, m8, m9,
+       fitstat = ~ n + r2,
+       keep = "Female",
+       vcov = "cluster",
+       dict = labels,
+       signifCode = c("***" = 0.001, "**" = 0.01, "*" = 0.05))
+```
+
+
+```{r}
+m1 <- feols(conf ~ female*tchfemale + ..stuvar2 | schids,  chn)
+m2 <- feols(conf ~ female*tchfemale + ..stuvar2 + ..hrvar | schids, chn)
+m3 <- feols(conf ~ female*tchfemale + ..stuvar2 + ..hrvar + ..tchvar | schids, chn)
+
+m4 <- feols(conf ~ female*tchfemale + ..stuvar2 | schids, eng)
+m5 <- feols(conf ~ female*tchfemale + ..stuvar2 + ..hrvar | schids, eng)
+m6 <- feols(conf ~ female*tchfemale + ..stuvar2 + ..hrvar + ..tchvar | schids, eng)
+
+m7 <- feols(conf ~ female*tchfemale + ..stuvar2 | schids, mat)
+m8 <- feols(conf ~ female*tchfemale + ..stuvar2 + ..hrvar | schids, mat)
+m9 <- feols(conf ~ female*tchfemale + ..stuvar2 + ..hrvar + ..tchvar | schids, mat)
+
+etable(m1, m2, m3, m4, m5, m6, m7, m8, m9,
+       fitstat = ~ n + r2,
+       keep = "Female",
+       vcov = "cluster",
+       dict = labels,
+       signifCode = c("***" = 0.001, "**" = 0.01, "*" = 0.05))
+```
+
+
+Separate girsl and boys, gender match effects on score:
+
+For female students,
+
+```{r}
+chnf <- chn %>% filter(female == 1)
+engf <- eng %>% filter(female == 1)
+matf <- mat %>% filter(female == 1)
+
+m1 <- feols(score ~ match + ..stuvar2 | schids,  chnf)
+m2 <- feols(score ~ match + ..stuvar2 + ..hrvar | schids, chnf)
+m3 <- feols(score ~ match + ..stuvar2 + ..hrvar + ..tchvar | schids, chnf)
+
+m4 <- feols(score ~ match + ..stuvar2 | schids,  engf)
+m5 <- feols(score ~ match + ..stuvar2 + ..hrvar | schids, engf)
+m6 <- feols(score ~ match + ..stuvar2 + ..hrvar + ..tchvar | schids, engf)
+
+m7 <- feols(score ~ match + ..stuvar2 | schids,  matf)
+m8 <- feols(score ~ match + ..stuvar2 + ..hrvar | schids, matf)
+m9 <- feols(score ~ match + ..stuvar2 + ..hrvar + ..tchvar | schids, matf)
+
+etable(m1, m2, m3, m4, m5, m6, m7, m8, m9,
+       fitstat = ~ n + r2,
+       keep = "Match",
+       vcov = "cluster",
+       dict = labels,
+       signifCode = c("***" = 0.001, "**" = 0.01, "*" = 0.05))
+```
+
+```{r}
+m1 <- feols(conf ~ match + ..stuvar2 | schids,  chnf)
+m2 <- feols(conf ~ match + ..stuvar2 + ..hrvar | schids, chnf)
+m3 <- feols(conf ~ match + ..stuvar2 + ..hrvar + ..tchvar | schids, chnf)
+
+m4 <- feols(conf ~ match + ..stuvar2 | schids,  engf)
+m5 <- feols(conf ~ match + ..stuvar2 + ..hrvar | schids, engf)
+m6 <- feols(conf ~ match + ..stuvar2 + ..hrvar + ..tchvar | schids, engf)
+
+m7 <- feols(conf ~ match + ..stuvar2 | schids,  matf)
+m8 <- feols(conf ~ match + ..stuvar2 + ..hrvar | schids, matf)
+m9 <- feols(conf ~ match + ..stuvar2 + ..hrvar + ..tchvar | schids, matf)
+
+etable(m1, m2, m3, m4, m5, m6, m7, m8, m9,
+       fitstat = ~ n + r2,
+       keep = "Match",
+       vcov = "cluster",
+       dict = labels,
+       signifCode = c("***" = 0.001, "**" = 0.01, "*" = 0.05))
+```
+
+For male students,
+
+```{r}
+chnm <- chn %>% filter(female == 0)
+engm <- eng %>% filter(female == 0)
+matm <- mat %>% filter(female == 0)
+
+m1 <- feols(score ~ match + ..stuvar2 | schids,  chnm)
+m2 <- feols(score ~ match + ..stuvar2 + ..hrvar | schids, chnm)
+m3 <- feols(score ~ match + ..stuvar2 + ..hrvar + ..tchvar | schids, chnm)
+
+m4 <- feols(score ~ match + ..stuvar2 | schids,  engm)
+m5 <- feols(score ~ match + ..stuvar2 + ..hrvar | schids, engm)
+m6 <- feols(score ~ match + ..stuvar2 + ..hrvar + ..tchvar | schids, engm)
+
+m7 <- feols(score ~ match + ..stuvar2 | schids,  matm)
+m8 <- feols(score ~ match + ..stuvar2 + ..hrvar | schids, matm)
+m9 <- feols(score ~ match + ..stuvar2 + ..hrvar + ..tchvar | schids, matm)
+
+etable(m1, m2, m3, m4, m5, m6, m7, m8, m9,
+       fitstat = ~ n + r2,
+       keep = "Match",
+       vcov = "cluster",
+       dict = labels,
+       signifCode = c("***" = 0.001, "**" = 0.01, "*" = 0.05))
+```
+
+
+```{r}
+chnm <- chn %>% filter(female == 0)
+engm <- eng %>% filter(female == 0)
+matm <- mat %>% filter(female == 0)
+
+m1 <- feols(conf ~ match + ..stuvar2 | schids,  chnm)
+m2 <- feols(conf ~ match + ..stuvar2 + ..hrvar | schids, chnm)
+m3 <- feols(conf ~ match + ..stuvar2 + ..hrvar + ..tchvar | schids, chnm)
+
+m4 <- feols(conf ~ match + ..stuvar2 | schids,  engm)
+m5 <- feols(conf ~ match + ..stuvar2 + ..hrvar | schids, engm)
+m6 <- feols(conf ~ match + ..stuvar2 + ..hrvar + ..tchvar | schids, engm)
+
+m7 <- feols(conf ~ match + ..stuvar2 | schids,  matm)
+m8 <- feols(conf ~ match + ..stuvar2 + ..hrvar | schids, matm)
+m9 <- feols(conf ~ match + ..stuvar2 + ..hrvar + ..tchvar | schids, matm)
+
+etable(m1, m2, m3, m4, m5, m6, m7, m8, m9,
+       fitstat = ~ n + r2,
+       keep = "Match",
+       vcov = "cluster",
+       dict = labels,
+       signifCode = c("***" = 0.001, "**" = 0.01, "*" = 0.05))
+```
