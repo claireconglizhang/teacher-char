@@ -133,7 +133,7 @@ ggplot(full, aes(female, conf)) +
 ```{r, include = TRUE}
 rbind(chn, eng, mat) %>% 
   mutate(subject = factor(subject, levels = c(2, 3, 1), labels = c("Chinese", "English", "Math")),
-         match = factor(match, levels = c(1, 0), labels = c("X", " ")),
+         match = factor(match, levels = c(1, 0), labels = c("Yes", "No")),
          female = factor(female, levels = c(1, 0), labels = c("Female", "Male"))) %>% 
   ggplot(aes(match, fill = female), position = "dodge") +
   geom_bar(aes(y = (..count..)), width = 0.8) +
@@ -385,6 +385,23 @@ ols3 <- function(df, var){
 }
 ```
 
+Naive estimates of female teacher effects:
+
+```{r}
+ols1 <- function(df, var){
+  felm(var ~ tchfemale + age + only + rural + migrant + medu + fedu + income + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + poly(cog1, 3) | schids | 0 | schids,  df)
+}
+
+ols2 <- function(df, var){
+  felm(var ~ tchfemale + age + only + rural + migrant + medu + fedu + income + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + poly(cog1, 3) + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome | schids | 0 | schids,  df)
+}
+
+ols3 <- function(df, var){
+  felm(var ~ tchfemale + age + only + rural + migrant + medu + fedu + income + poly(chn1, 3) + poly(eng1, 3) + poly(mat1, 3) + poly(cog1, 3) + hrsize + hrfemale + hrage + hronly + hrrural + hrmigrant + hrmedu + hrfedu + hrincome + tchage + tchexp + tchedu + tchadvisor | schids | 0 | schids,  df)
+}
+```
+
+
 
 ```{r, include = TRUE, results = "asis"}
 m1 <- ols1(chn, chn$score)
@@ -401,9 +418,9 @@ m9 <- ols3(mat, mat$score)
 
 stargazer(m1, m2, m3, m4, m5, m6, m7, m8, m9,
           type = "html",
-          keep = c("\\bmatch\\b"),
+          keep = c("\\btchfemale\\b"),
           keep.stat = c("n", "rsq"),
-          covariate.labels = "Match",
+          covariate.labels = "Female teacher",
           model.numbers = FALSE,
           dep.var.caption = "Wave 2 Score",
           dep.var.labels = c("", "", ""),
@@ -434,9 +451,9 @@ m9 <- ols3(mat, mat$conf)
 
 stargazer(m1, m2, m3, m4, m5, m6, m7, m8, m9,
           type = "html",
-          keep = c("\\bmatch\\b"),
+          keep = c("\\btchfemale\\b"),
           keep.stat = c("n", "rsq"),
-          covariate.labels = "Match",
+          covariate.labels = "Female teacher",
           model.numbers = FALSE,
           dep.var.caption = "Wave 2 Self-Concept",
           dep.var.labels = c("", "", ""),
@@ -478,9 +495,9 @@ m19 <- ols3(matf, matf$score)
 
 stargazer(m1, m2, m13, m4, m5, m16, m7, m8, m19,
           type = "html",
-          keep = c("\\bmatch\\b"),
+          keep = c("\\btchfemale\\b"),
           keep.stat = c("n", "rsq"),
-          covariate.labels = "Match",
+          covariate.labels = "Femal teacher",
           model.numbers = FALSE,
           dep.var.caption = "Wave 2 Score (Female Students Only)",
           dep.var.labels = c("", "", ""),
@@ -511,9 +528,9 @@ m29 <- ols3(matf, matf$conf)
 
 stargazer(m1, m2, m23, m4, m5, m26, m7, m8, m29,
           type = "html",
-          keep = c("\\bmatch\\b"),
+          keep = c("\\btchfemale\\b"),
           keep.stat = c("n", "rsq"),
-          covariate.labels = "Match",
+          covariate.labels = "Female teacher",
           model.numbers = FALSE,
           dep.var.caption = "Wave 2 Self-Concept (Female Students Only)",
           dep.var.labels = c("", "", ""),
@@ -537,7 +554,7 @@ stargazer(m1, m2, m23, m4, m5, m26, m7, m8, m29,
 ```{r, include = TRUE}
 library(wesanderson)
 
-p1 <- c("match" = "Gender match")
+p1 <- c("tchfemale" = "Female teacher")
 list("Chinese score" = m13,
      "Chinese self-concept" = m23,
      "English score" = m16,
@@ -549,8 +566,9 @@ list("Chinese score" = m13,
   geom_vline(xintercept = 0, color = "brown", linetype = "dashed") +
   coord_flip() +
   theme_classic(base_size = 14) +
-  labs(x = "Point estimates and 95% CIs",
-       caption = "Figure 4. The effects of teacher-student gender match for female students")+ 
+  labs(color = "",
+       x = "Point estimates and 95% CIs",
+       caption = "Figure 4. The effects of female teacher for female students")+ 
   theme(plot.caption = element_text(hjust = 0),
         legend.position = "top")
 
@@ -578,9 +596,9 @@ m19 <- ols3(matm, matm$score)
 
 stargazer(m1, m2, m13, m4, m5, m16, m7, m8, m19,
           type = "html",
-          keep = c("\\bmatch\\b"),
+          keep = c("\\btchfemale\\b"),
           keep.stat = c("n", "rsq"),
-          covariate.labels = "Match",
+          covariate.labels = "Female teacher",
           model.numbers = FALSE,
           dep.var.caption = "Wave 2 Score (Male Students Only)",
           dep.var.labels = c("", "", ""),
@@ -611,9 +629,9 @@ m29 <- ols3(matm, matm$conf)
 
 stargazer(m1, m2, m23, m4, m5, m26, m7, m8, m29,
           type = "html",
-          keep = c("\\bmatch\\b"),
+          keep = c("\\btchfemale\\b"),
           keep.stat = c("n", "rsq"),
-          covariate.labels = "Match",
+          covariate.labels = "Female teacher",
           model.numbers = FALSE,
           dep.var.caption = "Wave 2 Self-Concept (Male Students Only)",
           dep.var.labels = c("", "", ""),
@@ -644,8 +662,9 @@ list("Chinese score" = m13,
   geom_vline(xintercept = 0, color = "brown", linetype = "dashed") +
   coord_flip() +
   theme_classic(base_size = 14) +
-  labs(x = "Point estimates and 95% CIs",
-       caption = "Figure 5. The effects of teacher-student gender match for male students")+ 
+  labs(color = "",
+       x = "Point estimates and 95% CIs",
+       caption = "Figure 5. The effects of female teacher for male students")+ 
   theme(plot.caption = element_text(hjust = 0),
         legend.position = "top")
 ```
